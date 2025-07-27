@@ -17,10 +17,11 @@ Feel free to use the material in these slides or in the folders. If you find thi
 {% assign slide_pdfs = site.static_files 
   | where_exp: "file", "file.path contains '/SLIDES/'" 
   | where_exp: "file", "file.extname == '.pdf'" 
-  | where_exp: "file", "file.path contains '/SLIDES/FIGS/' == false" %}
-
+%}
 {% for slide_pdf in slide_pdfs %}
+  {% unless slide_pdf.path contains '/SLIDES/FIGS/' %}
 - [{{ slide_pdf.name }}]({{ slide_pdf.path | relative_url }})
+  {% endunless %}
 {% endfor %}
 
 ### Additional slides and videos
