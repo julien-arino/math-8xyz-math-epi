@@ -14,7 +14,7 @@ Feel free to use the material in these slides or in the folders. If you find thi
 
 
 {% assign slide_pdfs = site.static_files | where_exp: "file", "file.path contains '/SLIDES/'" | where_exp: "file", "file.extname == '.pdf'" %}
-{% assign slide_pdfs = slide_pdfs | reject: "path", "/FIGS/" %}
+{% assign slide_pdfs = slide_pdfs | reject: "path", "/SLIDES/FIGS/" %}
 
 {% for slide_pdf in slide_pdfs %}
 - [{{ slide_pdf.name }}]({{ slide_pdf.path | relative_url }})
