@@ -61,8 +61,8 @@ cat(input_setup)
 %% TITLE AND OUTLINE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
-\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4qvst54qvst54qvs.png}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_d0uu54d0uu54d0uu.png}
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
@@ -71,7 +71,7 @@ cat(input_setup)
 % Some information
 \section{General information about the course}
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
 
 \begin{frame}{Why this course?}
 \bbullet I may have sent you a link to this course because you just started an MSc or PhD with me. This course will serve as the base to a reading/topics course on mathematical epidemiology (\emph{math epi}) that we will do together
@@ -103,12 +103,12 @@ If I don't reply, don't hesitate to try again... I am bad with emails
 \begin{frame}{GitHub repository for the course}
 Most course material is available from this GitHub repository:
 \begin{center}
-	\href{https://julien-arino.github.io/math8xyz-reading-course-math-epi}{https://julien-arino.github.io/math8xyz-reading-course-math-epi}
+	\href{https://julien-arino.github.io/math-8xyz-math-epi}{https://julien-arino.github.io/math-8xyz-math-epi}
 \end{center}
 \vfill
 This repo includes the slides, code and data samples
 \vfill
-This \boldred{does not} include pdf of the bibliographic references, although there are links to articles and books and, where needed, bibliographic information at the end of a slide set. As much as possible, I link to Open Access sources
+This \boldred{does not} include pdf of the bibliographic references, although there are links to articles and books and, where relevant, bibliographic information at the end of slide sets. As much as possible, I link to Open Access sources
 \vfill
 One remark: I sometimes refer to Wikipedia. For the younger students here: this can be where you first look, not what you cite in proper work
 \end{frame} 
@@ -159,6 +159,15 @@ We will have these particular problems in mind:
 It is important to do the 4 interactively
 \end{frame} 
 
+\begin{frame}{I will try to give you two perspectives}
+\bbullet\textbf{As a modeller and mathematician} these are fun problems to look at. You need to know the theory in order to carry out relevant work
+\vfill
+\bbullet\textbf{As someone working in public health} these are important problems to look at.
+As a modeller, you will be called on to provide guidance to public health authorities. Know what you can and cannot do. Know how to communicate with said authorities
+\vfill
+(As a general rule, know your audience and adapt to it, don't expect it to adapt to you)
+\end{frame}
+
 
 \begin{frame}{Course project (if taking this course for credit)}
 	If you are at the University of Manitoba and are taking this course for credit:
@@ -190,7 +199,7 @@ It is important to do the 4 interactively
 %%%%%%%%%%%%%%%%%%%%
 \section{General remarks}    
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_ufgejfufgejfufge.png}
 
 
 \begin{frame}{About modelling}
@@ -248,18 +257,25 @@ It is important to do the 4 interactively
 \begin{frame}{Reading recommendations}
     \begin{itemize}
     \item Waltman. \href{https://doi.org/10.1007/978-3-642-80820-3}{Deterministic threshold models in the theory of epidemics} (1974)
+    \nocite{waltman2013deterministic}
 		\vfill
     \item Capasso. \href{https://doi.org/10.1007/978-3-540-70514-7}{Mathematical structures of epidemic systems} (1993)
+    \nocite{capasso1993mathematical}
+		\vfill
+    \item Daley \& Gani. Epidemic modelling: An introduction (1999)
+    \nocite{daley1999epidemic}
 		\vfill
     \item Hethcote. \href{https://doi.org/10.1137/S0036144500371907}{The mathematics of infectious diseases}. SIAM Review (2000)
-		\vfill
-    \item Daley \& Gani. Epidemic modelling (2001)
+    \nocite{Hethcote2000}
 		\vfill
     \item Brauer, PvdD \& Wu. \href{https://doi.org/10.1007/978-3-540-78911-6}{Mathematical Epidemiology} (2008)
+    \nocite{brauer2008mathematical}
 		\vfill
     \item Brauer \& C$^3$. \href{https://doi.org/10.1007/978-1-4614-1686-9}{Mathematical Models in Population Biology and Epidemiology} (2012)
+    \nocite{brauer2012mathematical}
 		\vfill
     \item Brauer, C$^3$ \& Feng. \href{https://doi.org/10.1007/978-1-4939-9828-9}{Mathematical Models in Epidemiology} (2019)
+    \nocite{brauer2019mathematical}
     \end{itemize}
 \end{frame}
 
@@ -294,7 +310,7 @@ It is important to do the 4 interactively
 %%%%%%%%%%%%%%%%%%%%
 \section{Introduction to R}
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_1d5vb51d5vb51d5v.png}
 
 
 \begin{frame}
@@ -354,13 +370,13 @@ It is important to do the 4 interactively
 \end{itemize}
 \end{frame} 
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-\subsection{Crash course on programming in R}
-% The subsection page
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% \subsection{Crash course on programming in R}
+% % The subsection page
+% \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
 
 
 \begin{frame}{R is similar to matlab..}
@@ -646,13 +662,13 @@ You can split this list, use it on different machines, etc. And can use {\tt fut
 \end{frame} 
 
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-\subsection{Dealing with data in \code{R}}
-% The subsection page
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% \subsection{Dealing with data in \code{R}}
+% % The subsection page
+% \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
 
 
 \begin{frame}{It is important to be ``data aware''}
@@ -716,13 +732,13 @@ ggplot(pop_data_CTRY, aes(x = date, y = value)) +
 
 \maxFrameImage{\Sexpr{fig_chunk('population-of-Canada', 'pdf')}}
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-\subsection{Solving ODE with \code{R}}
-% The subsection page
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% \subsection{Solving ODE with \code{R}}
+% % The subsection page
+% \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
 
 \begin{frame}{The \code{deSolve} library}
 As I have already pointed out, \href{https://cran.r-project.org/web/packages/deSolve/index.html}{\code{deSolve}}:
@@ -795,7 +811,330 @@ You can even implement your own integration method
 %%%%%%%%%%%%%%%%%%%%
 \section{Very brief introduction to julia}
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_ubwp96ubwp96ubwp.png}
+
+\begin{frame}
+  \frametitle{What is Julia?}
+  \begin{itemize}
+    \item A \textbf{high-level}, \textbf{high-performance}, \textbf{dynamic} programming language
+    \vfill
+    \item Designed for scientific computing, machine learning, data science, and large-scale linear algebra
+    \vfill
+    \item First appeared in 2012, with version 1.0 released in 2018
+    \vfill
+    \item Aims to solve the \textbf{"two-language problem"}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The "Two-Language Problem"}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \textbf{Prototyping}
+      \begin{itemize}
+        \item Languages like Python, R, MATLAB
+        \item Easy to write, flexible
+        \item Often too slow for production/large-scale computations
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \textbf{Production}
+      \begin{itemize}
+        \item Languages like C++, Fortran
+        \item Very fast
+        \item Steeper learning curve, more verbose, slower development time
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{alertblock}{The Solution: Julia}
+    Julia provides the speed of C/C++ with a syntax as friendly as Python's. Write readable code that is also fast
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Key Features of Julia}
+  \begin{itemize}
+    \item \textbf{Fast:} Just-In-Time (JIT) compiled using LLVM, approaching speeds of statically-compiled languages like C
+    \vfill
+    \item \textbf{Dynamic:} Dynamically typed, interactive
+    \vfill
+    \item \textbf{Composable:} The core design principle is \textit{multiple dispatch}, allowing functions to be extended with new methods
+    \vfill
+    \item \textbf{Parallelism:} Designed from the ground up for parallel and distributed computing
+    \vfill
+    \item \textbf{Metaprogramming:} Code can generate other code, leading to powerful abstractions (macros)
+    \vfill
+    \item \textbf{Great Package Manager:} Easy to manage dependencies and create reproducible environments
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Basic Syntax: Variables and Types}
+  Variables are assigned with `=`. Types are inferred automatically
+  \begin{lstlisting}
+# Numbers
+x = 10         # Integer (Int64)
+y = 3.14       # Floating point (Float64)
+z = 1 + 2im    # Complex number
+
+# Strings and Characters
+greeting = "Hello, Julia!" # String
+initial = 'J'             # Char
+
+# Booleans
+is_fast = true            # Bool\end{lstlisting}
+  \vfill
+  You can also explicitly annotate types using `::`.
+  \begin{lstlisting}
+radius::Float64 = 5.0\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arrays: Vectors and Matrices}
+  Arrays are fundamental for numerical computing. Indexing is \textbf{1-based}
+  \begin{lstlisting}
+# A 1D array (Vector)
+A = [1, 2, 3, 4, 5]
+println(A[1])  # Prints 1
+println(A[end]) # Prints 5
+
+# A 2D array (Matrix)
+M = [1 2 3; 4 5 6]
+# 1 2 3
+# 4 5 6
+
+println(M[2, 3]) # Prints 6 (row 2, column 3)\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Control Flow: Loops and Conditionals}
+  Syntax requires an `end` keyword
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \textbf{For Loop}
+      \begin{lstlisting}
+for i in 1:5
+  println(i)
+end\end{lstlisting}
+      \textbf{While Loop}
+      \begin{lstlisting}
+n = 3
+while n > 0
+  println(n)
+  n -= 1
+end\end{lstlisting}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \textbf{If-Else}
+      \begin{lstlisting}
+x = 10
+if x > 0
+  println("Positive")
+elseif x < 0
+  println("Negative")
+else
+  println("Zero")
+end\end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Defining Functions}
+  Two common ways to define functions
+  
+  \textbf{Standard long-form definition:}
+  \begin{lstlisting}
+function cylinder_volume(r, h)
+    return pi * r^2 * h
+end\end{lstlisting}
+  
+  \vfill
+  \textbf{Compact one-line definition:}
+  \begin{lstlisting}
+cylinder_volume(r, h) = pi * r^2 * h\end{lstlisting}
+  
+  \vfill
+  Calling the function:
+\begin{lstlisting}
+volume = cylinder_volume(2, 10) # 125.66\end{lstlisting}
+The `return` keyword is optional for the last expression
+\end{frame}
+
+\begin{frame}
+  \frametitle{Multiple dispatch}
+  \begin{itemize}
+    \item In most languages (like Python/Java), methods belong to objects (single dispatch). \code{obj.method()} depends on the type of \code{obj}
+    \vfill
+    \item In Julia, functions are defined on combinations of argument types
+    \vfill
+    \item The specific function \textit{method} that is called depends on the \textbf{types of all arguments}
+    \vfill
+    \item This allows for writing generic code that is automatically specialized and fast. It's a natural way to express many mathematical and scientific problems
+  \end{itemize}
+  \vfill
+  \begin{exampleblock}{Core Idea}
+  Instead of \code{data.process()}, you write \code{process(data)}. You can then create a new \code{process} method for a new data type without touching the original code
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple dispatch: example}
+  Define a generic function \code{combine} and add methods for it
+  \begin{lstlisting}
+# Method for two numbers
+combine(x::Number, y::Number) = x + y
+
+# Method for two strings
+combine(x::String, y::String) = x * " " * y
+
+# Method for a number and a string
+combine(x::Number, y::String) = y^x # Repeat string x times\end{lstlisting}
+  \vfill
+  Julia chooses the correct method at runtime:
+  \begin{lstlisting}
+combine(2, 3)         # Returns 5
+combine("Hello", "World") # Returns "Hello World"
+combine(3, "Ha")      # Returns "HaHaHa"\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A growing scientific ecosystem}
+  Rich ecosystem of packages for various domains
+  \vfill
+  \begin{itemize}
+    \item \textbf{DataFrames.jl}: For working with tabular data (like data frames in \code{R})
+    \vfill
+    \item \textbf{Plots.jl}: A powerful and flexible plotting library
+    \vfill
+    \item \textbf{Flux.jl} \& \textbf{Lux.jl}: For machine learning and deep learning
+    \vfill
+    \item \textbf{JuMP.jl}: For mathematical optimization and modeling
+    \vfill
+    \item \textbf{DifferentialEquations.jl}: State-of-the-art suite for solving differential equations
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plotting example with Plots.jl}
+  Creating plots is straightforward
+  \begin{lstlisting}
+# First, add the package and load it
+# Pkg.add("Plots")
+using Plots
+
+# Generate data
+x = 0:0.1:2*pi
+y1 = sin.(x)
+y2 = cos.(x)
+
+# Create a plot
+plot(x, y1, label="sin(x)", lw=2)
+plot!(x, y2, label="cos(x)", linestyle=:dash)
+title!("Trigonometric Functions")
+xlabel!("x-axis")\end{lstlisting}
+The \code{.} in \code{sin.(x)} is Julia's syntax for broadcasting a function over an array
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Metaprogramming: macros}
+  \begin{itemize}
+    \item Julia's code is represented as a data structure (an Abstract Syntax Tree) that is accessible from the language itself
+    \item This allows you to write \textbf{macros} - functions that run at parse time and transform code
+    \item Macros are denoted with an \code{@} symbol
+  \end{itemize}
+  \vfill
+  A very common built-in macro is \code{@time}
+  \begin{lstlisting}
+@time begin
+    sleep(1)
+    A = rand(1000, 1000)
+    B = A * A'
+end\end{lstlisting}
+Executes the code block and prints the execution time, memory allocation and GC time
+\end{frame}
+
+\begin{frame}
+  \frametitle{Solving differential equations}
+  \begin{itemize}
+    \item Use the \textbf{DifferentialEquations.jl} suite
+    \vfill
+    \item Feature-rich ecosystem that is often faster than traditional Fortran/C++ solvers
+    \vfill
+    \item Supports a wide variety of problems:
+    \begin{itemize}
+        \item Ordinary Differential Equations (ODEs)
+        \item Stochastic Differential Equations (SDEs)
+        \item Delay Differential Equations (DDEs)
+        \item Differential-Algebraic Equations (DAEs)
+    \end{itemize}
+    \vfill
+    \item High-level syntax composable with the rest of the Julia ecosystem (e.g., automatic differentiation, machine learning)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{ODE example}
+  \begin{lstlisting}
+# 1. Load packages
+using DifferentialEquations, Plots
+
+# 2. Define the ODE function
+#    Note the argument order: u (state), p (params), t (time)
+function logistic_growth(u, p, t)
+    r, K = p.r, p.K
+    return r * u * (1 - u/K)
+end
+
+# 3. Set up the problem
+u0 = 50.0                       # Initial condition
+tspan = (0.0, 100.0)            # Time span
+p = (r=0.1, K=100.0)            # Parameters (as a NamedTuple)
+prob = ODEProblem(logistic_growth, u0, tspan, p)
+
+# 4. Solve and plot
+sol = solve(prob)
+plot(sol, label="N(t)", lw=2)\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Advanced Control: ODE Callbacks}
+\bbullet Callbacks allow to intervene during the ODE solution process to perform actions or modify the state. Useful for event handling, data logging, or enforcing constraints
+\vfill
+\bbullet For example, we can ensure a population model never becomes negative
+\vfill
+\begin{lstlisting}
+# A condition: trigger when state is negative
+condition(u, t, integrator) = u < 0.0
+
+# An affect function: what to do when triggered
+function affect!(integrator)
+  integrator.u = 0.0 # Reset state to zero
+end
+
+# Create the callback
+cb = DiscreteCallback(condition, affect!)
+
+# Solve the problem with the callback
+sol = solve(prob, callback = cb)
+plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Getting started}
+  \begin{itemize}
+    \item \textbf{Download Julia:} go to \href{https://julialang.org/downloads/}{\textcolor{blue}{https://julialang.org/downloads/}}
+    \vfill
+    \item \textbf{Official documentation:} \href{https://docs.julialang.org}{\textcolor{blue}{https://docs.julialang.org}}
+    \vfill
+    \item \textbf{IDE/Editor Support:}
+    I recommend using VS Code
+    \vfill
+    \item \textbf{Start the REPL:}
+    Open your terminal and type `julia` to start the interactive Read-Eval-Print Loop
+  \end{itemize}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%

@@ -115,6 +115,49 @@
    morestring=[d]'% 2001 Robert Denham
   }%
 
+% Custom color for listings
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%------------------------------------------------------------
+% Listings configuration for Julia
+%------------------------------------------------------------
+% Define the Julia language for the listings package
+\lstdefinelanguage{Julia}
+{
+  morekeywords={abstract,baremodule,begin,break,catch,const,continue,do,else,elseif,end,export,false,finally,for,function,global,if,import,let,local,macro,module,quote,return,struct,true,try,using,while,in},
+  sensitive=true,
+  comment=[l]{\#},
+  morecomment=[n]{\#=}{=\#}, % For block comments like #= ... =#
+  string=[b]",
+  morestring=[b]',
+  alsoletter={!}, % Allow ! in identifiers for mutating functions
+}
+
+% Define the style for the code blocks
+\lstdefinestyle{JuliaStyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=Julia % Use the newly defined Julia language
+}
+\lstset{style=JuliaStyle}
+
 %%%%%%% 
 %% Definitions in yellow boxes
 \usepackage{etoolbox}
