@@ -1,0 +1,842 @@
+\documentclass[aspectratio=169]{beamer}
+
+<<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
+# Load required libraries
+required_packages = c("deSolve",
+                      "dplyr", 
+                      "ggplot2", 
+                      "knitr", 
+                      "scales",
+                      "viridis",
+                      "wbstats")
+
+for (p in required_packages) {
+  if (!require(p, character.only = TRUE)) {
+    install.packages(p, dependencies = TRUE)
+    require(p, character.only = TRUE)
+	}
+}
+# Knitr options
+opts_chunk$set(echo = TRUE, 
+warning = FALSE, 
+message = FALSE, 
+dev = c("pdf", "png"),
+fig.width = 6, 
+fig.height = 4, 
+fig.path = "FIGS/L01-",
+fig.keep = "high",
+fig.show = "hide")
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+options(knitr.table.format = "latex")
+# Date for front title page (if needed)
+yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
+@
+
+<<set-slide-background,echo=FALSE,results='asis'>>=
+# Are we plotting for a dark background?
+plot_blackBG = FALSE
+if (plot_blackBG) {
+	bg_color = "black"
+	fg_color = "white"
+	input_setup = "\\input{slides-setup-blackBG.tex}"
+} else {
+	bg_color = "white"
+	fg_color = "black"
+	input_setup = "\\input{slides-setup-whiteBG.tex}"
+}
+cat(input_setup)
+@
+
+\title{MATH 8xyz -- Lecture 01}
+\subtitle{General information about the course \& (brief) Introduction to \code{R} and \code{julia}}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+
+\begin{document}
+%\stretchon
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% Some information
+\section{General information about the course}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+\begin{frame}{Why this course?}
+\bbullet I may have sent you a link to this course because you just started an MSc or PhD with me. This course will serve as the base to a reading/topics course on mathematical epidemiology (\emph{math epi}) that we will do together
+\vfill
+(Hence the name: this will be an 8000 level course whose number will be decided when the course is calendared)
+\vfill
+\bbullet I teach math epi in Summer Schools and short courses, for which I prepare slides (and sometimes videos). However, this is a more complete version, so that students in these events can dig into the topics more
+\vfill
+\bbullet More generally, perhaps you want to learn about math epi
+\end{frame}
+
+\begin{frame}{Who is this course for?}
+\bbullet Students in mathematics, physics or engineering
+\vfill
+\bbullet I am assuming some working knowledge of ordinary differential equations (ODE) and a few related topics. For instance, I am not going into details and will assume that you know the link between local asymptotic stability of an equilibrium of an ODE and the location of the eigenvalues of the Jacobian of the ODE at that equilibrium
+\vfill
+\bbullet This could also be interesting to students in less mathematically heavy areas... but will need some ground work to understand some concepts. (I plan a course for non specialists, but it is not finalised yet)
+\end{frame}
+
+\begin{frame}{Getting in touch}
+Email me (email is on all lecture title pages)
+\vfill
+Use a tag like [MathEpi8xyz] in your subject line, I get a lot of emails
+\vfill
+If I don't reply, don't hesitate to try again... I am bad with emails
+\end{frame} 
+
+
+\begin{frame}{GitHub repository for the course}
+Most course material is available from this GitHub repository:
+\begin{center}
+	\href{https://julien-arino.github.io/math8xyz-reading-course-math-epi}{https://julien-arino.github.io/math8xyz-reading-course-math-epi}
+\end{center}
+\vfill
+This repo includes the slides, code and data samples
+\vfill
+This \boldred{does not} include pdf of the bibliographic references, although there are links to articles and books and, where needed, bibliographic information at the end of a slide set. As much as possible, I link to Open Access sources
+\vfill
+One remark: I sometimes refer to Wikipedia. For the younger students here: this can be where you first look, not what you cite in proper work
+\end{frame} 
+
+\begin{frame}{Code}
+    I use \code{R} and (less often) \code{julia} --\code{Python} would be a good choice as well but I prefer \code{R} and \code{julia}
+    \vfill
+    Instructions on setting up \code{R} and \code{julia} for the course can be found in the GitHub repo
+    \vfill
+    Some code is in the repo
+    \vfill
+    For the epi side of things, a very useful open reference: \href{https://epirhandbook.com/en/index.html}{R for applied epidemiology and public health}
+\end{frame} 
+    
+    
+\begin{frame}{Slides}
+Slides are written in \LaTeX\ and Beamer and rendered using pdf\LaTeX\ (for the pdf slides) or \LaTeX\ and \code{knitr} and rendered \code{R} (typically in \code{RStudio})
+\vfill
+See the SLIDES folder on GitHub for instructions on how to compile
+\vfill
+As much as possible, I have indicated provenance (by linking the file on the original website); when not possible, the file is saved with the name of the source indicated, or the source \code{tex} or \code{md} files include the link commented
+\end{frame} 
+
+\begin{frame}{Videos}
+Videos are being recorded for the course
+\vfill
+They will be/are posted on YouTube
+\vfill
+You can access the playlist \href{https://youtube.com/playlist?list=PLfRaznSpWo2sHwiQ04IT5STYdwarcMtRA}{here}. Links to individual videos are also available on the \href{https://julien-arino.github.io/3MC-course-epidemiological-modelling/}{webpage}
+\end{frame} 
+
+
+\begin{frame}{Course objectives}
+Introduction to Mathematical Epidemiology
+\begin{itemize}
+    \item Problems
+    \item Methods
+\end{itemize}
+\vfill
+We will have these particular problems in mind:
+\begin{enumerate}
+    \item Modelling techniques
+    \item Mathematical analysis of models
+    \item Computational analysis of models
+    \item Use of data
+\end{enumerate}
+\vfill
+It is important to do the 4 interactively
+\end{frame} 
+
+
+\begin{frame}{Course project (if taking this course for credit)}
+	If you are at the University of Manitoba and are taking this course for credit:
+	\vfill
+	\begin{itemize}
+		\item The mark for the course will be decided based on a project you will have to return
+		\vfill
+		\item The project will be quite involved
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Content of the course -- Lecture-oriented}
+    The slides for the course are organised by lecture
+    \vfill
+    Each lecture is intended to be roughly 1 hour and 15 minutes (as a course taught Tuesday and Thursday at UM)
+    \vfill
+    There are 26 sets of slides, each corresponding to a lecture
+    \vfill
+    Some content will continue across several slide sets; this will be explicit from the slide set title
+    \vfill
+    Ultimately, there will also be 26 videos
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{General remarks}    
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+
+\begin{frame}{About modelling}
+	\begin{itemize}
+		\item Do not neglect this \emph{crucial} step
+		\vfill
+		\item Think outside the box
+		\vfill
+		\item Take the time
+		\vfill
+		\item Try to remain ``as simple as possible without being too simple''
+		\vfill
+		\item Do not hesitate to modify your model, even when you have already done work on it: if something doesn't ``smell right'', your model might need fixing
+	\end{itemize}
+\vfill
+\end{frame} 
+
+\begin{frame}{About mathematical analysis}
+	\begin{itemize}
+		\item Used to be the sole purpose of most papers
+		\vfill
+		\item Important to carry out to understand the basic properties of models
+		\vfill
+		\item Judge your audience: global asymptotic stability is cool, but is it really required if you want to present work to a public health person?
+		\vfill
+		\item Do as much as possible (for instance, knowing the value of $\mathcal{R}_0$ can be useful to set parameters), do not hesitate to move to an appendix 
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}{About numerics}
+	\begin{itemize}
+		\item Numerics should be used to \boldred{complement} the mathematical analysis
+		\vfill
+		\item If you have shown the global stability of some equilibrium point, \boldred{do not} show a simulation where solutions converge to this equilibrium
+		\vfill
+		\item In fact, it is rarely useful to show a solution (cases where it is okay: before going to zero the number of infectious does something really cool, you have a period doubling, etc.)
+		\vfill
+		\item Instead, use numerics to investigate scenarios or test the effect of varying parameters
+		\vfill
+		\item A good figure tells a story, it is worth spending time thinking about how to make good figures
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}{About data}
+	\begin{itemize}
+		\item Acquiring data has become much easier than even 20 years ago
+		\vfill
+		\item As a modeller, it is not necessary that everything be data-driven, but it is necessary to be "context-aware" (this means getting a sense of the quantities involved in the process you want to model)
+		\vfill
+		\item Fred Brauer (1932-2021): ``If your model and the data disagree, question the quality of your data''
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Reading recommendations}
+    \begin{itemize}
+    \item Waltman. \href{https://doi.org/10.1007/978-3-642-80820-3}{Deterministic threshold models in the theory of epidemics} (1974)
+		\vfill
+    \item Capasso. \href{https://doi.org/10.1007/978-3-540-70514-7}{Mathematical structures of epidemic systems} (1993)
+		\vfill
+    \item Hethcote. \href{https://doi.org/10.1137/S0036144500371907}{The mathematics of infectious diseases}. SIAM Review (2000)
+		\vfill
+    \item Daley \& Gani. Epidemic modelling (2001)
+		\vfill
+    \item Brauer, PvdD \& Wu. \href{https://doi.org/10.1007/978-3-540-78911-6}{Mathematical Epidemiology} (2008)
+		\vfill
+    \item Brauer \& C$^3$. \href{https://doi.org/10.1007/978-1-4614-1686-9}{Mathematical Models in Population Biology and Epidemiology} (2012)
+		\vfill
+    \item Brauer, C$^3$ \& Feng. \href{https://doi.org/10.1007/978-1-4939-9828-9}{Mathematical Models in Epidemiology} (2019)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Word of warning!}
+	The references on the previous slide are \boldred{my} favourite references
+	\vfill
+	This extends to the entire content of this course: the topics I treat and the way I treat them originate in \boldred{my} personal itinerary through math epi and as a consequence
+	\begin{itemize}
+		\item Some stuff might be understood (and therefore explained) differently by someone else
+		\item I focus on some topics that I think are cool and omit others that I like less
+		\item This doesn't mean these topics are less worthy of consideration
+	\end{itemize}
+	\vfill
+	$\implies$ Don't trust me blindly and ``shop around'': other colleagues have courses that are also really worth your time
+\end{frame}
+
+\begin{frame}{Some common abbreviations}
+- EP: equilibrium point
+\vfill
+- DFE: disease-free equilibrium
+\vfill
+- EEP: endemic equilibrium point
+\vfill
+- LAS: locally asymptotically stable / local asymptotic stability
+\vfill
+- GAS: globally asymptotically stable / global asymptotic stability
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Introduction to R}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+
+\begin{frame}
+	Most of the programming in this course is done using the \code{R} language
+	\vfill
+	Code that you see in these slides is executable (and executed to create the slides)
+	\vfill
+	Each slide set with code (most of them) also generates a corresponding \code{R} file in the CODE directory of the repo. This file strips all the \LaTeX formatting and just keeps the \code{R} code
+\end{frame}
+
+\begin{frame}{R was originally for stats but is now more}
+\begin{itemize}
+\item Open source version of S \vfill
+\item Appeared in 1993 \vfill
+\item Now version 4.2 \vfill
+\item One major advantage in my view: uses a lot of C and Fortran code. E.g., \code{deSolve}:
+\begin{quote}
+    The functions provide an interface to the FORTRAN functions \code{lsoda}, \code{lsodar}, \code{lsode}, \code{lsodes} of the \code{ODEPACK} collection, to the FORTRAN functions \code{dvode}, \code{zvode} and \code{daspk} and a C-implementation of solvers of the Runge-Kutta family with fixed or variable time steps  
+\end{quote} \vfill
+\item Very active community on the web, easy to find solutions (same true of \code{Python}, I just prefer \code{R})
+\end{itemize}
+\end{frame} 
+
+\begin{frame}{Development environments}
+\begin{itemize}
+    \item Terminal version, not very friendly \vfill
+    \item Nicer terminal: \href{https://github.com/randy3k/radian}{radian} \vfill
+    \item Execute R scripts by using `Rscript name\_of\_script.R`. Useful to run code in `cron`, for instance \vfill
+    \item Use IDEs:
+    \begin{itemize}
+        \item \href{https://www.rstudio.com/products/rstudio/}{RStudio} has become the reference
+        \item \href{https://invent.kde.org/education/rkward}{RKWard} is useful if you are for instance using an ARM processor (Raspberry Pi, some Chromebooks..)
+    \end{itemize} \vfill
+    \item Integrate into jupyter notebooks
+\end{itemize}
+\end{frame} 
+
+\begin{frame}{Going further}
+\begin{itemize}
+\item \href{https://posit.co/products/open-source/rstudio-server/}{RStudio server}: run RStudio on a Linux server and connect via a web interface \vfill
+\item Shiny: easily create an interactive web site running R code \vfill
+\item \href{https://www.rstudio.com/products/shiny/shiny-server/}{Shiny server}: run Shiny apps on a Linux server \vfill
+\item Rmarkdown: markdown that incorporates R commands. Useful for generating reports in html or pdf, can make slides as well.. \vfill
+\item RSweave: LaTeX incorporating R commands. Useful for generating reports. Not used as much as Rmarkdown these days
+\end{itemize}
+\end{frame} 
+
+\begin{frame}{R is a scripted language}
+\begin{itemize}
+    \item Interactive
+    \vfill
+    \item Allows you to work in real time
+    \begin{itemize}
+        \item Be careful: what is in memory might involve steps not written down in a script
+        \item If you want to reproduce your steps, it is good to write all the steps down in a script and to test from time to time running using `Rscript`: this will ensure that all that is required to run is indeed loaded to memory when it needs to, i.e., that it is not already there..
+    \end{itemize}
+\end{itemize}
+\end{frame} 
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Crash course on programming in R}
+% The subsection page
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+
+\begin{frame}{R is similar to matlab..}
+.. with some differences, of course! Otherwise, where would the fun be? \code{;)}
+\end{frame} 
+
+\begin{frame}[fragile]{Assignment}
+Two ways:
+<<>>=
+X <- 10
+X = 10
+@
+First version is preferred by \code{R} purists.. I don't really care (but be ready for an argument if you use $=$ in a discussion with an \code{R} purist)
+\end{frame} 
+
+
+\begin{frame}[fragile]{Lists}
+A very useful data structure, quite flexible and versatile. Empty list: \code{L <- list()}. Convenient for things like parameters. For instance
+<<>>=
+L <- list()
+L$a <- 10
+L$b <- 3
+L[["another_name"]] <- "Plouf plouf"
+@
+Could also set some or all entries right away
+<<>>=
+L <- list(a = 10, b = 3, another_name = "Plouf plouf")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Accessing list entries}
+<<>>=
+L[1]
+L[[2]]
+L$a
+L[["b"]]
+@
+\end{frame} 
+
+
+
+
+\begin{frame}[fragile]{Vectors}
+<<>>=
+x = 1:10
+y <- c(x, 12) # Append 12 to x
+y
+z = c("red", "blue")
+z = c(z, 1) # Append 1 to z
+z
+@
+In \code{z}, since the first two entries are characters, the added entry is also a character. Contrary to lists, vectors have all entries of the same type
+\end{frame} 
+
+
+
+
+\begin{frame}[fragile]{Matrices}
+<<>>=
+A <- mat.or.vec(nr = 2, nc = 3)
+B <- matrix(c(1,2,3,4), nr = 2, nc = 2)
+B
+C <- matrix(c(1,2,3,4), nr = 2, nc = 2, 
+            byrow = TRUE)
+C
+@
+Naming the arguments (e.g., \code{nr = 2}) allows to use arguments in any order
+\end{frame} 
+
+\begin{frame}{Matrix operations -- Be careful!}
+Probably the biggest annoyance in \code{R} compared to other languages
+\vfill
+\begin{itemize}
+\item The notation \code{A*B} is the \emph{Hadamard product} $A\circ B$ (what is denoted \code{A.*B} in most other languages), not the standard matrix multiplication
+\vfill
+\item Standard matrix multiplication is written \code{A \%*\% B}
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{Vector operations}
+Vector addition is also frustrating. Say you write \code{x=1:10}, i.e., make the vector
+<<>>=
+x
+@
+Then \code{x+1} should give an error but instead gives
+<<>>=
+x+1
+@
+i.e., adds a vector of all ones to the vector
+\vfill
+Beware of this in particular when addressing sets of indices in lists, vectors or matrices
+\end{frame} 
+
+\begin{frame}{For the matlab-ers here}
+\bbullet \code{R} does not have the keyword \code{end} to access the last entry in a matrix/vector/list..
+\vfill
+\bbullet Use \code{length} (lists or vectors), \code{nchar} (character chains), \code{dim} (matrices.. careful, of course returns 2 values), \code{nrow}, \code{ncol}...
+\end{frame} 
+
+
+\begin{frame}{Data frames}
+\bbullet Specific to \code{R}, although they are now present in many other languages
+\vfill
+\bbullet Like matrices under steroids
+\vfill
+\bbullet Like lists, can contain entries of different types, e.g., a column with numbers and a column with characters
+\end{frame}
+
+\begin{frame}[fragile]{Data frames}
+<<>>=
+A = data.frame(column_1 = runif(9),
+               colour = ifelse(runif(9) < 0.5, 
+                               "red", "green"))
+A
+@
+\end{frame}
+  
+\begin{frame}[fragile]{The \code{summary} function}
+<<>>=
+summary(A)
+@
+\vfill
+Also works on other data types
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Naming positions/rows/columns/etc}
+Very useful: it is possible to name entries in a \code{list} but also positions in vectors, matrices, data frames
+<<>>=
+v = c(alpha = 2, beta = 3, gamma = 4, delta = 5)
+v
+@
+is a vector and 
+<<>>=
+v["beta"]
+@
+\end{frame}
+
+\begin{frame}[fragile]{Sometimes you need to get rid of names}
+<<>>=
+3 * v["beta"]
+3 * as.numeric(v["beta"])
+@
+\end{frame}
+
+\begin{frame}[fragile]{Assign a name \emph{a posteriori}}
+<<>>=
+v = c(1,2,3)
+names(v) = c("alpha", "beta", "gamma")
+v
+@
+\end{frame}
+
+\begin{frame}[fragile]
+<<>>=
+A = matrix(c(1,2,3,4), nrow = 2, byrow = TRUE)
+rownames(A) = c("alpha","beta")
+colnames(A) = c("thingama","doodle")
+A
+A[1,2]
+A["alpha","doodle"]
+@
+\end{frame}
+
+\begin{frame}{Tibbles}
+\bbullet
+New data format part of the \code{tidyverse} (set of libraries facilitating data wrangling)
+\vfill
+\bbullet
+Quite similar to data frame, with variations
+\vfill
+\bbullet Will be the default output if you use \code{tidyverse} functions
+\end{frame}
+
+
+\begin{frame}[fragile]{Flow control}
+\begin{lstlisting}
+if (condition is true) {
+  list of stuff to do
+}
+\end{lstlisting}
+Even if \code{list of stuff to do} is a single instruction, best to use curly braces
+\begin{lstlisting}
+if (condition is true) {
+  list of stuff to do
+} else if (another condition) {
+  ...
+} else {
+  ...
+}
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{For loops}
+\code{for} applies to lists or vectors
+\begin{lstlisting}
+for (i in 1:10) {
+  something using integer i
+}
+for (j in c(1,3,4)) {
+  something using integer j
+}
+for (n in c("truc", "muche", "chose")) {
+  something using string n
+}
+for (m in list("truc", "muche", "chose", 1, 2)) {
+  something using string n or integer n, depending
+}
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{lapply}
+Very useful function (a few others in the same spirit: \code{sapply}, \code{vapply}, \code{mapply})
+\vfill
+Applies a function to each entry in a list (/vector/matrix for \code{sapply} and \code{vapply})
+\vfill
+There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implies$ worth learning
+\end{frame}
+
+\begin{frame}[fragile]{lapply -- Setup an example list}
+<<>>=
+L = list()
+for (i in 1:3) {
+        L[[i]] = runif(i) # i=1 has 1 entry, i=2 has 2 entries, etc.
+}
+L
+@
+\end{frame}
+
+\begin{frame}[fragile]{lapply}
+<<>>=
+lapply(X = L, FUN = mean)
+@
+\end{frame}
+
+\begin{frame}[fragile]{To make a vector from \code{lapply}}
+To make a vector
+<<>>=
+unlist(lapply(X = L, FUN = mean))
+@
+or
+<<>>=
+sapply(X = L, FUN = mean)
+@
+\end{frame} 
+
+\begin{frame}[fragile]{``Advanced'' lapply}
+Can ``pick up'' nontrivial list entries
+<<>>=
+L = list()
+for (i in 1:10) {
+        L[[i]] = list()
+        L[[i]]$a = runif(i)
+        L[[i]]$b = runif(2*i)
+}
+sapply(X = L, FUN = function(x) length(x$b))
+@
+The argument to the function you define is a list entry ({\tt L[[1]]}, {\tt L[[2]]}, etc., here)
+\end{frame} 
+
+
+
+
+\begin{frame}[fragile]{Avoid parameter variation loops with \code{expand.grid}}
+<<>>=
+variations = list(
+    p1 = seq(1, 10, length.out = 10),
+    p2 = seq(0, 1, length.out = 10),
+    p3 = seq(-1, 1, length.out = 10)
+)
+# Create the list
+tmp = expand.grid(variations)
+PARAMS = list()
+for (i in 1:dim(tmp)[1]) {
+    PARAMS[[i]] = list()
+    for (k in 1:length(variations)) {
+        PARAMS[[i]][[names(variations)[k]]] = tmp[i, k]     
+    }
+}
+@
+You can split this list, use it on different machines, etc. And can use {\tt future\_lapply}
+\end{frame} 
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Dealing with data in \code{R}}
+% The subsection page
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+
+\begin{frame}{It is important to be ``data aware''}
+See, e.g., JA. \href{http://dx.doi.org/10.1016/j.idm.2019.12.008}{Mathematical epidemiology in a data-rich world}. \emph{Infectious Disease Modelling} \textbf{5}:161-188 (2020) and the \href{https://github.com/julien-arino/modelling-with-data}{GitHub repo} for that paper
+\vfill
+Using \code{R}, it is really easy to grab data from the web, e.g., from Open Data sources
+\vfill
+\begin{itemize}
+\item More and more locations have an open data policy
+\vfill
+\item As a modeller, you do not need to use data everywhere, but you should be \emph{acutely} aware of the context in which your model operates
+\vfill
+\item If you want your work to have an impact, for instance in public health, you cannot be completely disconnected from reality
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Data is everywhere}
+\textbf{Closed data}
+\begin{itemize}
+    \item Often generated by companies, governments or research labs
+    \item When available, come with multiple restrictions
+\end{itemize}
+\vfill
+\textbf{Open data}
+\begin{itemize}
+    \item Often generated by the same entities but ``liberated'' after a certain period
+    \item More and more frequent with governments/public entities 
+    \item Wide variety of licenses, so beware 
+    \item Wide variety of qualities, so beware
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Open Data initiatives}
+Recent movement (5-10 years): governments (local or higher) create portals where data are centralised and published
+\begin{itemize}
+    \item \href{https://data.winnipeg.ca/}{Winnipeg}
+    \item \href{https://open.alberta.ca/opendata}{Alberta}, \href{https://catalogue.data.gov.bc.ca/}{B.C.}, \href{https://data.ontario.ca/}{Ontario}
+    \item \href{https://open.canada.ca/en/open-data}{Canada}
+    \item \href{https://data.europa.eu/euodp/data/}{Europe}
+    \item \href{http://data.un.org/}{UN}
+    \item \href{https://data.worldbank.org/}{World Bank}
+    \item \href{https://www.who.int/gho/database/en/}{WHO}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example: population of Canada}
+(using libraries \code{wbstats}, \code{ggplot2} and \code{scales})
+<<population-of-Canada>>=
+pop_data_CTRY <- wb_data(country = "CAN", indicator = "SP.POP.TOTL",
+                         mrv = 100, return_wide = FALSE)
+
+ggplot(pop_data_CTRY, aes(x = date, y = value)) +
+  geom_line() +
+  labs(title = "Population of Canada", x = "Year", y = "Population") +
+  scale_y_continuous(
+    labels = label_number(scale = 1e-6, suffix = "M")) +
+  theme_minimal()
+@
+\end{frame}
+
+\maxFrameImage{\Sexpr{fig_chunk('population-of-Canada', 'pdf')}}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Solving ODE with \code{R}}
+% The subsection page
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+\begin{frame}{The \code{deSolve} library}
+As I have already pointed out, \href{https://cran.r-project.org/web/packages/deSolve/index.html}{\code{deSolve}}:
+\begin{quotation}
+    The functions provide an interface to the FORTRAN functions 'lsoda', 'lsodar', 'lsode', 'lsodes' of the 'ODEPACK' collection, to the FORTRAN functions 'dvode', 'zvode' and 'daspk' and a C-implementation of solvers of the 'Runge-Kutta' family with fixed or variable time steps
+\end{quotation}
+\vfill
+\begin{itemize}
+  \item You are benefiting from years of experience: \href{https://computing.llnl.gov/projects/odepack}{ODEPACK} is a set of Fortran (originally 77!) solvers developed at Lawrence Livermore National Laboratory (LLNL) starting in the late 70s
+  \vfill
+  \item Other good solvers are also included, those written in \code{C}
+  \vfill
+  \item Refer to the \href{https://cran.r-project.org/web/packages/deSolve/deSolve.pdf}{package help} for details
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Using deSolve for simple ODEs}
+    As with more numerical solvers, you need to write a function returning the value of the right hand side of your equation (the vector field) at a given point in phase space, then call this function from the solver
+<<>>=
+library(deSolve)
+rhs_logistic <- function(t, x, p) {
+    with(as.list(x), {
+    dN <- p$r * N *(1-N/p$K)
+    return(list(dN))
+    })
+}
+params = list(r = 0.1, K = 100)
+IC = c(N = 50)
+times = seq(0, 100, 1)
+sol <- ode(IC, times, rhs_logistic, params)    
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+This also works: add \code{p} to arguments of \code{as.list} and thus use without \code{p\$} prefix
+    
+<<>>=
+library(deSolve)
+rhs_logistic <- function(t, x, p) {
+    with(as.list(c(x, p)), {
+    dN <- r * N *(1-N/K)
+    return(list(dN))
+    })
+}
+params = list(r = 0.1, K = 100)
+IC = c(N = 50)
+times = seq(0, 100, 1)
+sol <- ode(IC, times, rhs_logistic, params)
+@
+
+In this case, beware of not having a variable and a parameter with the same name..
+\end{frame}
+
+
+\begin{frame}[fragile]{Default method: \code{lsoda}}
+\code{lsoda} switches automatically between stiff and nonstiff methods
+\vfill
+You can also specify other methods: "lsode", "lsodes", "lsodar", "vode", "daspk", "euler", "rk4", "ode23", "ode45", "radau", "bdf", "bdf\_d", "adams", "impAdams" or "impAdams\_d" ,"iteration" (the latter for discrete-time systems)
+
+\begin{lstlisting}
+ode(y, times, func, parms, method = "ode45")    
+\end{lstlisting}
+You can even implement your own integration method
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Very brief introduction to julia}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
+To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-and-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
+\vfill
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
+# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
+rmd_chunks_to_r_temp <- function(file){
+  callr::r(function(file, temp){
+    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
+    knitr::purl(file, output = out_file, documentation = 1)
+  }, args = list(file))
+}
+rmd_chunks_to_r_temp("L01-course-organisation-and-intro-R-julia.Rnw")
+@
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{About that \code{R} file}
+Source the file \code{L01-course-organisation-and-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
+\vfill
+Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
+\vfill
+<<eval=FALSE>>=
+pp = ggplot(...)
+print(pp)
+@
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{local-bibliography}
+\end{frame}
+
+\end{document}
