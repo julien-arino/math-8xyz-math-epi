@@ -578,16 +578,16 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hldef{A}
 \end{alltt}
 \begin{verbatim}
-##    column_1 colour
-## 1 0.9631626  green
-## 2 0.9107371  green
-## 3 0.5331099    red
-## 4 0.2534915    red
-## 5 0.5627666  green
-## 6 0.7702779    red
-## 7 0.8580199  green
-## 8 0.1195917  green
-## 9 0.5527279  green
+##     column_1 colour
+## 1 0.51222753  green
+## 2 0.59350090    red
+## 3 0.89183149  green
+## 4 0.42014508  green
+## 5 0.38118905  green
+## 6 0.05101221    red
+## 7 0.03382671  green
+## 8 0.78932288    red
+## 9 0.10278947  green
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -600,13 +600,13 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hlkwd{summary}\hldef{(A)}
 \end{alltt}
 \begin{verbatim}
-##     column_1         colour         
-##  Min.   :0.1196   Length:9          
-##  1st Qu.:0.5331   Class :character  
-##  Median :0.5628   Mode  :character  
-##  Mean   :0.6138                     
-##  3rd Qu.:0.8580                     
-##  Max.   :0.9632
+##     column_1          colour         
+##  Min.   :0.03383   Length:9          
+##  1st Qu.:0.10279   Class :character  
+##  Median :0.42015   Mode  :character  
+##  Mean   :0.41954                     
+##  3rd Qu.:0.59350                     
+##  Max.   :0.89183
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -777,13 +777,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.4587355
+## [1] 0.0219305
 ## 
 ## [[2]]
-## [1] 0.4016765 0.3087594
+## [1] 0.7734483 0.3326537
 ## 
 ## [[3]]
-## [1] 0.1132049 0.1802939 0.9746232
+## [1] 0.7160211 0.2161526 0.9035807
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -797,13 +797,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.4587355
+## [1] 0.0219305
 ## 
 ## [[2]]
-## [1] 0.355218
+## [1] 0.553051
 ## 
 ## [[3]]
-## [1] 0.4227073
+## [1] 0.6119181
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -817,7 +817,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.4587355 0.3552180 0.4227073
+## [1] 0.0219305 0.5530510 0.6119181
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -828,7 +828,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.4587355 0.3552180 0.4227073
+## [1] 0.0219305 0.5530510 0.6119181
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
