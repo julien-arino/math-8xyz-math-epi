@@ -1,8 +1,8 @@
 ## Math 8xyz - Mathematical epidemiology
 
-This GitHub repo contains slides for a graduate course on Mathematical epidemiology.
+This GitHub repo contains material (slides and code) for a graduate course on Mathematical epidemiology.
 
-Here, you will find code and slides. I am adding slides progressively: those that are present are "ready for consumption".
+I am adding slides progressively: those that are present are "ready for consumption".
 I will be recording videos to match the slides but have not started yet.
 
 ### This GitHub repo
@@ -20,7 +20,7 @@ Feel free to use the material in these slides or in the folders. If you find thi
 %}
 {% for slide_pdf in slide_pdfs %}
   {% unless slide_pdf.path contains '/SLIDES/FIGS/' %}
-- [{{ slide_pdf.name }}]({{ slide_pdf.path | relative_url }})
+- [{{ slide_pdf.name | remove: '.pdf' }}]({{ slide_pdf.path | relative_url }})
   {% endunless %}
 {% endfor %}
 
