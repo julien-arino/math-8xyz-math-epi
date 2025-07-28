@@ -625,7 +625,7 @@ In other words
 
 \begin{frame}{}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/course-01-SIRS_one_sim_prevalence-1.pdf}
+    \includegraphics[width=\textwidth]{FIGS/L08-SIRS_one_sim_prevalence-1.pdf}
   \end{center}
 \end{frame}
 
@@ -640,7 +640,7 @@ Let us make things a bit better. See the \href{https://raw.githubusercontent.com
 
 \begin{frame}{}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/course-01-SIRS_3_sims_prevalence-1.pdf}
+    \includegraphics[width=\textwidth]{FIGS/L08-SIRS_3_sims_prevalence-1.pdf}
   \end{center}
 \end{frame}
 
@@ -656,7 +656,7 @@ We saw that when $\R_0<1$, $I\to 0$, whereas when $\R_0>1$, $I\to (1-1/\R_0)N$. 
 
 \begin{frame}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/course-01-SIRS_bifurcation_R0-1.pdf}
+    \includegraphics[width=\textwidth]{FIGS/L08-SIRS_bifurcation_R0-1.pdf}
   \end{center}
 \end{frame}
 
@@ -1813,25 +1813,11 @@ To finish, we use the command \code{purl} to generate an \code{R} file (\code{co
     \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
   \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
 \hldef{\}}
-\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"course-01-introduction-math-epi.Rnw"}\hldef{)}
+\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L08-PvdD-Watmough.Rnw"}\hldef{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}\end{kframe}
-\end{knitrout}
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{About that \code{R} file}
-Source the file \code{course-01-introduction-math-epi.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
-\vfill
-Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
-\vfill
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hldef{pp} \hlkwb{=} \hlkwd{ggplot}\hldef{(...)}
-\hlkwd{print}\hldef{(pp)}
-\end{alltt}
+\begin{verbatim}
+## [1] "../CODE/L08-PvdD-Watmough.R"
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 \end{frame}

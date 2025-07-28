@@ -359,11 +359,12 @@ To finish, we use the command \code{purl} to generate an \code{R} file (\code{co
     \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
   \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
 \hldef{\}}
-\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"course-01-introduction-math-epi.Rnw"}\hldef{)}
+\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L09-endemic-SLIRS.Rnw"}\hldef{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}\end{kframe}
+\begin{verbatim}
+## [1] "../CODE/L09-endemic-SLIRS.R"
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 \end{frame}
 

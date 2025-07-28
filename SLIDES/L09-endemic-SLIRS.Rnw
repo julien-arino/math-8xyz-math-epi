@@ -26,7 +26,7 @@ opts_chunk$set(echo = TRUE,
                dev = c("pdf", "png"),
                fig.width = 6, 
                fig.height = 4, 
-               fig.path = "FIGS/course-01-",
+               fig.path = "FIGS/L09-",
                fig.keep = "high",
                fig.show = "hide")
 knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
@@ -353,7 +353,7 @@ rmd_chunks_to_r_temp <- function(file){
     knitr::purl(file, output = out_file, documentation = 1)
   }, args = list(file))
 }
-rmd_chunks_to_r_temp("course-01-introduction-math-epi.Rnw")
+rmd_chunks_to_r_temp("L09-endemic-SLIRS.Rnw")
 @
 \end{frame}
 

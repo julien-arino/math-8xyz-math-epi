@@ -579,15 +579,15 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \end{alltt}
 \begin{verbatim}
 ##     column_1 colour
-## 1 0.24201771    red
-## 2 0.16976439  green
-## 3 0.51503341    red
-## 4 0.02659399    red
-## 5 0.80828923  green
-## 6 0.69818490  green
-## 7 0.27183147    red
-## 8 0.14216787    red
-## 9 0.16816047    red
+## 1 0.36224348    red
+## 2 0.81767408  green
+## 3 0.78495856    red
+## 4 0.42505283  green
+## 5 0.60906093    red
+## 6 0.77238437    red
+## 7 0.04814118  green
+## 8 0.25104987  green
+## 9 0.43110030    red
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -601,12 +601,12 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \end{alltt}
 \begin{verbatim}
 ##     column_1          colour         
-##  Min.   :0.02659   Length:9          
-##  1st Qu.:0.16816   Class :character  
-##  Median :0.24202   Mode  :character  
-##  Mean   :0.33800                     
-##  3rd Qu.:0.51503                     
-##  Max.   :0.80829
+##  Min.   :0.04814   Length:9          
+##  1st Qu.:0.36224   Class :character  
+##  Median :0.43110   Mode  :character  
+##  Mean   :0.50019                     
+##  3rd Qu.:0.77238                     
+##  Max.   :0.81767
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -777,13 +777,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.3158243
+## [1] 0.3860381
 ## 
 ## [[2]]
-## [1] 0.8485653 0.1745965
+## [1] 0.05714279 0.79960675
 ## 
 ## [[3]]
-## [1] 0.6073391 0.5804605 0.3823973
+## [1] 0.1267614 0.1484392 0.9706349
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -797,13 +797,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.3158243
+## [1] 0.3860381
 ## 
 ## [[2]]
-## [1] 0.5115809
+## [1] 0.4283748
 ## 
 ## [[3]]
-## [1] 0.523399
+## [1] 0.4152785
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -817,7 +817,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.3158243 0.5115809 0.5233990
+## [1] 0.3860381 0.4283748 0.4152785
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -828,7 +828,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.3158243 0.5115809 0.5233990
+## [1] 0.3860381 0.4283748 0.4152785
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -943,7 +943,10 @@ Recent movement (5-10 years): governments (local or higher) create portals where
 \begin{alltt}
 \hldef{pop_data_CTRY} \hlkwb{<-} \hlkwd{wb_data}\hldef{(}\hlkwc{country} \hldef{=} \hlsng{"CAN"}\hldef{,} \hlkwc{indicator} \hldef{=} \hlsng{"SP.POP.TOTL"}\hldef{,}
                          \hlkwc{mrv} \hldef{=} \hlnum{100}\hldef{,} \hlkwc{return_wide} \hldef{=} \hlnum{FALSE}\hldef{)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in wb\_data(country = "{}CAN"{}, indicator = "{}SP.POP.TOTL"{}, mrv = 100, : could not find function "{}wb\_data"{}}}\begin{alltt}
 \hlkwd{ggplot}\hldef{(pop_data_CTRY,} \hlkwd{aes}\hldef{(}\hlkwc{x} \hldef{= date,} \hlkwc{y} \hldef{= value))} \hlopt{+}
   \hlkwd{geom_line}\hldef{()} \hlopt{+}
   \hlkwd{labs}\hldef{(}\hlkwc{title} \hldef{=} \hlsng{"Population of Canada"}\hldef{,} \hlkwc{x} \hldef{=} \hlsng{"Year"}\hldef{,} \hlkwc{y} \hldef{=} \hlsng{"Population"}\hldef{)} \hlopt{+}
@@ -951,7 +954,9 @@ Recent movement (5-10 years): governments (local or higher) create portals where
     \hlkwc{labels} \hldef{=} \hlkwd{label_number}\hldef{(}\hlkwc{scale} \hldef{=} \hlnum{1e-6}\hldef{,} \hlkwc{suffix} \hldef{=} \hlsng{"M"}\hldef{))} \hlopt{+}
   \hlkwd{theme_minimal}\hldef{()}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'pop\_data\_CTRY' not found}}\end{kframe}
 \end{knitrout}
 \end{frame}
 

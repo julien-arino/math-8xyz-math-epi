@@ -1,0 +1,621 @@
+\documentclass[aspectratio=169]{beamer}
+
+<<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
+# Load required libraries
+required_packages = c("deSolve",
+                      "dplyr", 
+                      "ggplot2", 
+                      "knitr", 
+                      "latex2exp",
+                      "lattice",
+                      "magick",
+                      "readr", 
+                      "tidyr",
+                      "viridis")
+
+for (p in required_packages) {
+  if (!require(p, character.only = TRUE)) {
+    install.packages(p, dependencies = TRUE)
+    require(p, character.only = TRUE)
+  }
+}
+# Knitr options
+opts_chunk$set(echo = TRUE, 
+               warning = FALSE, 
+               message = FALSE, 
+               dev = c("pdf", "png"),
+               fig.width = 6, 
+               fig.height = 4, 
+               fig.path = "FIGS/L12-",
+               fig.keep = "high",
+               fig.show = "hide")
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+options(knitr.table.format = "latex")
+# Date for front title page (if needed)
+yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
+@
+
+<<set-slide-background,echo=FALSE,results='asis'>>=
+# Are we plotting for a dark background?
+plot_blackBG = FALSE
+if (plot_blackBG) {
+  bg_color = "black"
+  fg_color = "white"
+  input_setup = "\\input{slides-setup-blackBG.tex}"
+} else {
+  bg_color = "white"
+  fg_color = "black"
+  input_setup = "\\input{slides-setup-whiteBG.tex}"
+}
+cat(input_setup)
+@
+
+\title{Incidence functions}
+\subtitle{MATH 8xyz -- Lecture 12}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Incidence Functions}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{Introduction to Incidence Functions}
+\bbullet Before continuing, let's discuss \defword{incidence functions}, which describe how contacts between individuals occur and how they result in disease transmission
+\vfill
+\bbullet See in particular McCallum, Barlow \& Hone, \href{https://doi.org/10.1016/S0169-5347(01)02144-9}{How should pathogen transmission be modelled?}, Trends in Ecology \& Evolution \textbf{16} (2001)
+\nocite{mccallum2001should}
+\end{frame}
+
+\begin{frame}{Incidence Function versus Force of Infection}
+\bbullet Two different forms of the function representing the rate at which individuals move from compartment $S$ to infected compartments:
+\vfill
+\bbullet $S'=-f(S,I,N)$ is an \defword{incidence function}
+\vfill
+\bbullet $S'=-\lambda(S,I,N)S$ is a \defword{force of infection}
+\vfill
+\bbullet The two are equivalent; the context usually determines which form is used. For example, PDE models structured by age of infection must integrate $I(t,a)$ over age and therefore often use the force of infection.
+\end{frame}
+
+\begin{frame}{Interactions - Infection}
+\bbullet The rate at which new cases appear is the \defword{incidence function}
+\begin{equation}
+\tag{1}
+f(S,I,N)
+\end{equation}
+\bbullet Depends on the number $S$ of susceptibles, $I$ of infectious individuals, and sometimes the total population $N$
+\vfill
+\bbullet An incidence function includes two components:
+\begin{itemize}
+  \item a count of the number of contacts occurring
+  \item a description of the probability that such a contact, when it occurs, leads to pathogen transmission
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Difficulty of the Choice}
+\bbullet Choosing a good function is difficult and is probably one of the most "unstable" parts of modelling the spread of infectious diseases
+\end{frame}
+
+\begin{frame}{The Two Most Common Incidence Functions}
+\bbullet The two most commonly used incidence functions are the \defword{mass action incidence}
+\begin{equation}
+\tag{2}
+f(S,I)=\beta SI
+\end{equation}
+and the \defword{standard incidence} (or \defword{proportional incidence})
+\begin{equation}
+\tag{3}
+f(S,I)=\beta\frac{SI}{S+I}
+\end{equation}
+\vfill
+\bbullet In both cases, $\beta$ is the \defword{disease transmission coefficient}, although its exact interpretation varies
+\end{frame}
+
+\begin{frame}{Units of $\beta$}
+\bbullet If $X(t)$ is the population of compartment $X$ at time $t$, then $X'$ has units number/time
+\vfill
+\bbullet In a differential equation, the terms on the left and right sides of the ``$=$'' sign must have the same units
+\vfill
+\bbullet The incidence function therefore has units number/time
+\vfill
+\bbullet (And if a force of infection is used, the units are 1/time)
+\end{frame}
+
+\begin{frame}{Units -- Mass Action Incidence}
+\bbullet Mass action incidence
+\[
+\beta SI \propto 
+\beta\times\text{number}\times\text{number}
+\]
+has units number/time if $\beta$ has units $1/(\text{number}\times\text{time})$
+\vfill
+\bbullet Standard incidence
+\[
+\beta SI/N \propto 
+\beta\times\text{number}\times\text{number}/\text{number} \propto \beta \times \text{number}
+\]
+has units number/time if $\beta$ has units $1/\text{time}$
+\end{frame}
+
+\begin{frame}{Mass Action Incidence}
+\begin{equation}
+\tag{2}\label{eq:incidence_mass_action}
+f(S,I)=\beta SI
+\end{equation}
+\bbullet The mixing of susceptibles and infectious individuals is homogeneous 
+\vfill
+\bbullet This is a strong assumption: the number of contacts is the product of the number of susceptibles and the number of infectious individuals, so each susceptible individual can potentially meet each infectious individual
+\vfill
+\bbullet (hence the name, by analogy with gas dynamics in chemistry/physics) 
+\vfill
+\bbullet When the population is large, this assumption becomes unrealistic
+\end{frame}
+
+\begin{frame}{Standard Incidence (Proportional)}
+\bbullet Another widely used form of the incidence function
+\begin{equation}
+\tag{3}\label{eq:incidence_proportional}
+f(S,I,N)=\beta\frac{SI}{N}
+\end{equation}
+\bbullet Each susceptible meets a fraction of the infectious individuals
+\vfill
+\bbullet Or vice-versa! See, e.g., Hethcote, \href{https://doi-org.uml.idm.oclc.org/10.1016/0025-5564(76)90132-2}{Qualitative analyses of communicable disease models}, \emph{Mathematical Biosciences} (1976)
+\vfill
+\bbullet Case of a larger population
+\end{frame}
+
+\begin{frame}{Constant Population $\implies$ Equivalence of Incidences}
+\bbullet When the total population is constant, many incidence functions are qualitatively equivalent 
+\vfill
+\bbullet Suppose that $N(t)\equiv N_0$, then
+\[
+\beta SI = \tilde\beta\frac{SI}{N}
+\iff \tilde\beta=N_0\beta
+\]
+with this $\tilde\beta$, \eqref{eq:incidence_mass_action} and \eqref{eq:incidence_proportional} are identical
+\vfill
+\bbullet Remember that the units differ, however
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{A Bestiary of Functions}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{General Incidence}
+\begin{equation}
+\tag{4}
+f(S,I,N)=\beta S^q I^p
+\end{equation}
+\bbullet These functions were introduced with the aim of fitting data: for fitting, this adds two parameters $p,q$. We will see, however, that much theoretical work uses this incidence
+\end{frame}
+
+\begin{frame}{Refuge Incidence}
+\bbullet Refuge effect; a proportion $0<q<1$ of the population is truly susceptible, for example due to spatial heterogeneities
+\begin{equation}
+\tag{5}
+f(S,I,N)=
+\begin{cases}
+\beta I\left(N-\dfrac{I}{q}\right),&\textrm{if }I<qN \\
+0,&\textrm{if }I\geq qN
+\end{cases}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Negative Binomial Incidence}
+\begin{equation}
+\tag{6}
+f(S,I,N)=kS\ln\left(1+\beta\frac{I}{k}\right)
+\end{equation}
+\bbullet For small values of $k$, this describes a highly concentrated infection process, while as $k\to\infty$, we tend towards a mass action incidence
+\end{frame}
+
+\begin{frame}{Asymptotic Contact}
+\begin{equation}
+\tag{7}
+f(S,I,N)
+=\frac{N}{1-\varepsilon+\varepsilon N}
+\frac{F(S,I)}{N}
+\end{equation}
+where $F$ is one of the functions already described
+\vfill
+\bbullet When $\varepsilon=0$, contacts are proportional to $N$, while when $\varepsilon=1$, contacts are independent of $N$
+\end{frame}
+
+\begin{frame}{Asymptomatic Transmission}
+\begin{equation}
+\tag{8}
+f(S,I,N)
+=\beta\frac{SI}{c+S+I}
+\end{equation}
+where $c$ is a constant. For example, 
+\[
+\frac{C(N)}{N} F(S,I)
+\]
+with $C(N)=N/(1-\varepsilon+\varepsilon N)$ the function describing the contact rate and $F(S,I)$ the function describing disease spread, which is assumed here to be a negative binomial incidence
+\end{frame}
+
+\begin{frame}{Changing Incidence}
+\begin{equation}
+\tag{9}
+F(S,I,N) = 
+\begin{cases}
+\beta SI & \textrm{if }N\leq \hat{N} \\
+\beta \dfrac{SI}{N} & \textrm{if }N> \hat{N}
+\end{cases}
+\end{equation}
+\vfill
+\bbullet Arino \& McCluskey, \href{https://doi.org/10.1080/17513751003793017}{Effect of a sharp change of the incidence function on the dynamics of a simple disease}, \emph{Journal of Biological Dynamics} (2010)
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Example of a Problem Related to Incidence Functions}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{Change Shape or Saturate?}
+\bbullet C. Kribs-Zaleta. \href{https://doi.org/10.1016/j.mbs.2004.11.001}{To switch or taper off: the dynamics of saturation}, \emph{Mathematical Biosciences} (2004)
+\end{frame}
+
+\begin{frame}{Two Different Incidence Functions}
+\bbullet We will consider the role of two different functions: a continuous and differentiable function
+\begin{equation}
+\beta_{sm}(N)=\beta_0\frac{N}{N+A}
+\tag{10}\label{eq:CK_1}
+\end{equation}
+and a continuous but with a \emph{switch} (abrupt transition?)
+\begin{equation}
+\beta_{sw}(N)=
+\begin{cases}
+\beta_0\dfrac{N}{A},& N<A \\
+\beta_0,& N\geq A
+\end{cases}
+\tag{11}\label{eq:CK_2}
+\end{equation}
+\bbullet These functions represent saturation in different ways
+\end{frame}
+
+\begin{frame}{The Model}
+\bbullet SIS model in non-constant population
+\begin{align}
+I' &= \beta(N)(N-I)\frac{I}{N}-(d+\gamma+\delta)I \\
+N' &= bN\left(1-\frac{N}{K}\right)-dN-\delta I
+\end{align}
+\end{frame}
+
+\begin{frame}{Non-dimensionalization of the Model}
+\bbullet Let $\bar{N}=(1-\frac{d}{b})K$, $i=I/N$ and $n=N/\bar{N}.$ Then
+\begin{align}
+i' &= (\beta(\bar{N} n)-\delta)i(1-i)-(b+\gamma)i+(b-d)in \tag{12a}\\
+n' &= (b-d)n(1-n)-\delta in\tag{12b}
+\end{align}
+\end{frame}
+
+\begin{frame}{The Basic Reproduction Number}
+\bbullet Whatever incidence function is used
+\[
+\mathcal{R}_0
+=\frac{\beta(\bar{N})}{d+\gamma+\delta}
+\]
+\end{frame}
+
+\begin{frame}{Analysis with $\beta = \beta_{sw}$}
+\bbullet With $\beta = \beta_{sw}$, there are 2 sub-models
+
+\bbullet \textbf{Case I} $\beta(N) = \beta_0N/A$; 3 equilibria $(i^{\star},n^{\star})$ in $[0,1]^2$: 
+\begin{itemize}
+\item the origin, always unstable
+\item the ESMP $(0, 1)$, GAS when $\mathcal{R}_0 < 1$
+\item a unique EE that exists and is LAS when $\mathcal{R}_0 > 1$
+\end{itemize}
+
+\bbullet \textbf{Case II} $\beta(N) = \beta_0$. We have 4 equilibria $(i^{\star},n^{\star})$: 
+\begin{itemize}
+\item the origin, always unstable
+\item the ESMP, GAS when $\mathcal{R}_0 < 1$
+\item a unique EE that exists and is LAS when $\mathcal{R}_0 > 1$
+\item an extinction PE that exists when $\beta\geq b+\gamma+\delta$ and is LAS iff, i.e., when $\mathcal{R}_0 > 1$ but the EE does not exist
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Detailed Analysis}
+\bbullet Let $a=A/\bar{N}$
+
+\bbullet If $a>1$, all equilibria are below the switching point and the model reduces to Case I (model without saturation)
+
+\bbullet If $a<1$, there is a single ESMP (as well as the unstable trivial equilibrium) and there is a unique EE which is the EE of Case I iff 
+\[
+a>1-\frac{1}{k}\left(1-\frac{d+\gamma+\delta}{\beta_0}\right)
+\]
+and the EE of Case II otherwise
+
+\bbullet The model with switch does not have the extinction PE of Case II
+\end{frame}
+
+\begin{frame}{$\mathcal{R}_0$ in the Model with Switch}
+\bbullet In the model with switch
+\[
+\mathcal{R}_0
+=\frac{\beta_0}{d+\gamma+\delta}
+\;
+\frac{1}{\max(a,1)}
+\]
+\end{frame}
+
+\begin{frame}{$\mathcal{R}_0$ in the Model with Differentiable Saturation}
+\bbullet In the model with differentiable saturation \eqref{eq:CK_1}
+\[
+\mathcal{R}_0
+=\frac{\beta_0}{d+\gamma+\delta}
+\;
+\frac{1}{a+1}
+\]
+
+\bbullet We have the trivial PE (unstable), the ESMP (GAS when $\mathcal{R}_0<1$) and a unique EE that exists and is LAS when $\mathcal{R}_0>1$
+\end{frame}
+
+\begin{frame}{Main Differences Between the Models}
+\bbullet The main difference between the models is quantitative: the point where $\mathcal{R}_0<1$ changes; this reflects that $\beta_{sm}<\beta_{sw}$
+
+\bbullet Both models predict the eradication of the disease for a large region of the parameter space and exclude the possibility of extinction that the classical model with standard incidence allows
+
+\bbullet Also, in both cases, the EE is such that 
+\[
+\lim_{\mathcal{R}_0\to\infty}i^{\star} = \min(k,1)
+\]
+i.e., for $k < 1$ (i.e., $r < d + \delta$), the prevalence at the EE never approaches 100\% because the reproductive resilience of the population is so low that the population becomes too small for the disease to spread to all, regardless of the value of $\mathcal{R}_0$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{A Bit More on Changes in Incidence}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{The Basic Model}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{The Basic Model}
+\nocite{arino2010effect}
+\begin{align}
+S' &= bN-dS-F(S,I)+\gamma I \tag{13a} \\
+I' &= F(S,I)-(d+\delta+\gamma) I \tag{13b}
+\end{align}
+
+\bbullet So the dynamics of the total population are
+\[
+N' = (b-d)N-\delta I
+\]
+and the system has EEs iff $d<b<d+\delta$
+\end{frame}
+
+\begin{frame}{System in Proportions}
+\bbullet We switch to the system in proportions $s=S/N$ and $i=I/N$. The total population is not constant and we therefore consider
+
+\begin{align}
+i' &= f(i,N)-(b+\delta+\gamma)i+\delta i^2 \tag{14a}\label{sys:switch_JACCMC_prop_di} \\
+N' &= (b-d-\delta i)N \label{sys:switch_JACCMC_prop_dN}\tag{14b}
+\end{align}
+with
+\[
+f(i,N) = \frac{F(S,I)}{N}
+\]
+\bbullet We define
+\[
+f(i,0)=\lim_{N\to 0}f(i,N)
+\]
+and we assume that this limit exists (we exclude, for example, that $F(\alpha S,\alpha I)$ is sub-linear in $\alpha$ near 0)
+\end{frame}
+
+\begin{frame}{Existence of Solutions}
+\begin{theorem}
+The solutions of \eqref{sys:switch_JACCMC_prop_di}--\eqref{sys:switch_JACCMC_prop_dN} in the positively invariant band
+\[
+\mathcal{D}=\left\{
+(i,N):\quad 0\leq i\leq 1,\;N\geq 0  
+\right\}
+\]
+exist for all $t>0$
+\end{theorem}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Density-Dependent Incidence}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{Density-Dependent Incidence}
+\bbullet The first case we consider is one with an incidence of the form we have already seen
+\begin{equation}
+\tag{9}
+F(S,I,N) = 
+\begin{cases}
+\beta SI & \textrm{if }N\leq \hat{N} \\
+\beta \dfrac{SI}{N} & \textrm{if }N> \hat{N}
+\end{cases}
+\end{equation}
+where we normalize so that $\hat{N}=1$
+
+\bbullet We denote by $\mathcal{D}_L$ the part of $\mathcal{D}$ where $N\leq 1$ and by $\mathcal{D}_H$ where $N\geq 1$
+\end{frame}
+
+\begin{frame}{Explicit Solution in $\mathcal{D}_H$}
+\begin{theorem}
+Suppose that at time $t=\tau\geq 0$, we have $(i_\tau,N_\tau):=(i(\tau),N(\tau))\in\mathcal{D}_H$. Then there exists a potentially infinite interval $\mathcal{I}$ with left endpoint the point $t=\tau$, such that for all $t\in\mathcal{I}$, we have $(i(t),N(t))\in\mathcal{D}_H$ with
+\begin{align}
+i(t) &= \frac{Ki_\tau}{\Psi(t-\tau)} \\
+N(t) &= N_\tau e^{(b-d)(t-\tau)}\exp\left(
+  -\delta Ki_\tau\int_\tau^t\frac{du}{\Psi(u-\tau)}
+\right)
+\end{align}
+where $K=\beta-(d+\gamma+\delta)$ and 
+\[
+\Psi(u)=i_\tau(\beta-\delta)(1-e^{-Ku})+Ke^{-Ku}
+\]
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Equilibria of the System}
+\begin{theorem}
+Let
+\[
+N_\Delta=\frac{\delta(d+\delta+\gamma)}{\beta(d+\delta-b)}
+\]
+For all parameter values, the ESMP is
+\[
+e_0:=(i_0,N_0)=(0,0)
+\]
+\begin{itemize}
+\item If $b<d$, there is no other PE and $e_0$ is GAS
+\item If $d<b$, $e_0$ is unstable
+\item If $d<b<d+\delta$, then the presence of EE $e_{\star}=(i_{\star},N_{\star})$, $i_{\star}=(b-d)/\delta$ depends on 
+  \begin{itemize}
+  \item If $N_\Delta<1$, $e_{\star}=(i_{\star},N_\Delta)$ LAS
+  \item If $N_\Delta=1$, $e_{\star}=(i_{\star},N)$ for all $N\geq 1$
+  \item If $N_\Delta>1$, $e_{\star}$ does not exist
+  \end{itemize}
+\item If $d+\delta\leq b$, there is no EE
+\end{itemize}
+\end{theorem}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Cases Where Infection Exceeds Treatment Capacities}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{Incidence with Exceeding Capacities}
+\bbullet Suppose
+\begin{equation}
+\tag{15}\label{eq:overcome_capacity}
+F(S,I,N) = 
+\begin{cases}
+\beta_1 \dfrac{SI}{N} & \textrm{if }I\leq \hat{I} \\
+\beta_1 \dfrac{SI}{N}+\beta_2 S(I-\hat{I}) & \textrm{if }I> \hat{I}
+\end{cases}
+\end{equation}
+or, in proportions, $f(i,N)$ is of the form
+\begin{equation}
+\tag{16}\label{eq:overcome_capacity_proportions}
+\begin{cases}
+\beta_1 (1-i)i & \textrm{if }iN\leq \hat{I} \\
+\beta_1 (1-i)i+\beta_2 (1-i)(iN-\hat{I}) & \textrm{if }iN> \hat{I}
+\end{cases}
+\end{equation}
+\end{frame}
+
+\begin{frame}{The Regions in the Plane}
+\bbullet Here, the change does not occur for a value of $N$ but along the hyperbola $N=\hat{I}/i$, for $i\in]0,1]$, and we adapt the regions $\mathcal{D}_L$ and $\mathcal{D}_H$
+\end{frame}
+
+\begin{frame}{Equilibria}
+\bbullet We potentially have 3 PEs
+\[
+e_0=(0,0)\quad \bar{e}=(i_{LS},0)\quad e_{\star}=(i_N,N_{HS}(i_N))
+\]
+with
+\begin{align}
+i_{LS}&=1-\frac{b+\gamma}{\beta_1-\delta}, \\
+i_N&=\frac{b-d}{\delta}
+\end{align}
+and
+\[
+N_{HS}(i) = \frac{\hat{I}}{i}+\frac{b+\gamma}{\beta_2(1-i)}
+-\frac{\beta_1-\delta}{\beta_2}
+\]
+\end{frame}
+
+\begin{frame}{Stability of the Equilibria}
+\begin{theorem}
+The system \eqref{sys:switch_JACCMC_prop_di}--\eqref{sys:switch_JACCMC_prop_dN} with incidence \eqref{eq:overcome_capacity_proportions} has, potentially, 3 PEs, whose stability is given by the following table, in which we use
+\[
+\mathcal{E}=\frac{\beta_1}{b+\delta+\gamma}
+\]
+and 
+\[
+\mathcal{S}_N=
+\frac{(b+\gamma)(b-d)}{d+\delta-b}
++\frac{\beta_2\hat{I}(d+\delta-b)}{d-b}
+\]
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Stability Table}
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+& $e_0$ & $\bar{e}$ & $e_{\star}$ \\
+\hline
+$b<d,\mathcal{E}<1$ & GAS & Does not exist & Does not exist \\
+\hline
+$b<d,\mathcal{E}>1$ & Unstable & GAS & Does not exist \\
+\hline
+$d<b<d+\delta$, $i_{LS}<i_N$, $\mathcal{S}_N>0$ & Unstable & Unstable & LAS \\
+\hline
+$d<b<d+\delta$, $i_{LS}<i_N$, $\mathcal{S}_N<0$ & Unstable & Unstable & Unstable \\
+\hline
+$d<b<d+\delta$, $i_{LS}>i_N$ & Unstable & GAS & Does not exist \\
+\hline
+$d+\delta<b$ & Unstable & Unstable & Does not exist \\
+\hline
+\end{tabular}
+\end{center}
+
+\bbullet The SAG is obtained using an extension of Dulac's Theorem taking into account the existence, in a $C^1$ field, of a curve on which the field is $C^0$
+\end{frame}
+
+\begin{frame}{Periodic Solutions}
+\bbullet This system admits periodic solutions
+
+\bbullet We consider the case
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+$d<b<d+\delta$, $i_{LS}<i_N$, $\mathcal{S}_N>0$ & Unstable & Unstable & LAS \\
+\hline
+$d<b<d+\delta$, $i_{LS}<i_N$, $\mathcal{S}_N<0$ & Unstable & Unstable & Unstable \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{theorem}
+For all $\varepsilon>0$ and all $\mathcal{S}_N^0>0$, there exists $\bar{\mathcal{S}}_N\in ]-\mathcal{S}_N^0,0[$ such that the system \eqref{sys:switch_JACCMC_prop_di}--\eqref{sys:switch_JACCMC_prop_dN} with incidence \eqref{eq:overcome_capacity_proportions} has a non-trivial periodic orbit in $\mathcal{B}_\varepsilon(e_{\star})$ (open ball centered at $e_{\star}$ and radius $\varepsilon$) for $\mathcal{S}_N=\bar{\mathcal{S}}_N$
+\end{theorem}
+\end{frame}
+
+<<compute-solutions,cache=TRUE,echo=FALSE>>=
+# This would be where you could add R code to generate figures
+# if needed for the presentation
+@
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]
+\frametitle{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{local-bibliography}
+\end{frame}
+
+
+\end{document}

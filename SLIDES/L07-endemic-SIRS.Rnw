@@ -26,7 +26,7 @@ opts_chunk$set(echo = TRUE,
                dev = c("pdf", "png"),
                fig.width = 6, 
                fig.height = 4, 
-               fig.path = "FIGS/course-01-",
+               fig.path = "FIGS/L07-",
                fig.keep = "high",
                fig.show = "hide")
 knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
@@ -1906,18 +1906,7 @@ rmd_chunks_to_r_temp <- function(file){
     knitr::purl(file, output = out_file, documentation = 1)
   }, args = list(file))
 }
-rmd_chunks_to_r_temp("course-01-introduction-math-epi.Rnw")
-@
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{About that \code{R} file}
-Source the file \code{course-01-introduction-math-epi.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
-\vfill
-Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
-\vfill
-<<eval=FALSE>>=
-pp = ggplot(...)
-print(pp)
+rmd_chunks_to_r_temp("L07-endemic-SIRS.Rnw")
 @
 \end{frame}
 

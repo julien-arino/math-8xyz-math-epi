@@ -1,0 +1,425 @@
+\documentclass[aspectratio=169]{beamer}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+
+
+\input{slides-setup-whiteBG.tex}
+
+\title{Vector-borne diseases}
+\subtitle{MATH 8xyz -- Lecture 10}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Endemic SIRS-type models with demography}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{What if there's another guest at the party?}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_4ls25f4ls25f4ls2.jpeg}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Two Ross-Macdonald-type models}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_4ls25f4ls25f4ls2.jpeg}
+\begin{frame}
+See, e.g., Simoy \& Aparicio, \href{https://doi.org/10.1016/j.actatropica.2020.105452}{Ross-Macdonald models: Which one should we use?}, \emph{Acta Tropica} (2020)
+\vfill
+Ross introduced the model in 1911. Later ``tweaked'' by Macdonald to include mosquito latency period
+\vfill
+Here, I show a version in the paper cited, with some notation changed
+\end{frame}
+
+\begin{frame}
+\centering
+\resizebox{\textwidth}{!}{
+  \def\horskip{*2}
+  \def\verskip{*2}
+  \begin{tikzpicture}[%transform canvas={scale=1.3},
+      auto,
+      cloud/.style={minimum width={width("N-1")+2pt},
+      draw, 
+      ellipse,
+      fill=gray!20}]
+    %% Hosts
+    \node [cloud, fill=green!50] at (0,0) (SH) {$S_H$};
+    \node [cloud, fill=red!50] at (1\horskip,0) (IH) {$I_H$};
+    \node [cloud, fill=blue!50] at (2\horskip,0) (RH) {$R_H$};
+    %% Vectors
+    \node [cloud, fill=green!50] at (0,-1\verskip) (SV) {$S_V$};
+    \node [cloud, fill=red!50] at (1\horskip,-1\verskip) (IV) {$I_V$};
+    %% Births
+    \node [left=0.75cm of SH] (birthH) {};
+    \node [left=0.75cm of SV] (birthV) {};
+    %% Deaths
+    \node [below=0.25\verskip of SH] (dSH) {};
+    \node [below=0.25\verskip of IH] (dIH) {};
+    \node [below=0.25\verskip of RH] (dRH) {};
+    \node [below=0.25\verskip of SV] (dSV) {};
+    \node [below=0.25\verskip of IV] (dIV) {};
+    %%
+    \path [line, very thick] (SH) to node [midway,above,sloped] (TextNode) {$\beta_HI_V\frac{S_H}{H}$} (IH);
+    \path [line, very thick] (IH) to node [midway,above,sloped] (TextNode) {$\gamma_H I_H$} (RH);
+    \path [line, very thick] (SV) to node [midway,below,sloped] (TextNode) {$\beta_VS_V\frac{I_H}{H}$} (IV);
+    \path [line, dotted, very thick] (IV) to node [midway,below,sloped] (TextNode) {} (SH);
+    \path [line, dotted, very thick] (IH) to node [midway,above,sloped] (TextNode) {} (SV);
+    %% Demography
+    \path [line, very thick] (birthH) to node [midway,above] (TextNode) {$b_H$} (SH);
+    \path [line, very thick] (birthV) to node [midway,above] (TextNode) {$b_V$} (SV);
+    \path [line, very thick] (SH) to node [near end,left] (TextNode) {$d_HS_H$} (dSH);
+    \path [line, very thick] (IH) to node [near end,right] (TextNode) {$d_HI_H$} (dIH);
+    \path [line, very thick] (RH) to node [near end,right] (TextNode) {$d_HR_H$} (dRH);
+    \path [line, very thick] (SV) to node [near end,left] (TextNode) {$d_VS_V$} (dSV);
+    \path [line, very thick] (IV) to node [near end,right] (TextNode) {$d_VI_V$} (dIV);
+  \end{tikzpicture}
+}
+\end{frame}
+
+\begin{frame}{Reproduction number}
+\begin{equation}\label{eq:vector_host_1}
+\R_0 =
+\frac{\beta_H\beta_V}{(\gamma_H+\gamma_V)d_V}\
+\frac{V^\star}{H^\star}
+\end{equation}
+where $H^\star$ and $V^\star$ are the total host and vector populations, respectively
+\end{frame}
+
+
+\begin{frame}
+\centering
+\resizebox{\textwidth}{!}{
+  \def\horskip{*2}
+  \def\verskip{*2}
+  \begin{tikzpicture}[%transform canvas={scale=1.3},
+      auto,
+      cloud/.style={minimum width={width("N-1")+2pt},
+      draw, 
+      ellipse,
+      fill=gray!20}]
+    %% Hosts
+    \node [cloud, fill=green!50] at (0,0) (SH) {$S_H$};
+    \node [cloud, fill=red!10] at (1\horskip,0) (LH) {$L_H$};
+    \node [cloud, fill=red!50] at (2\horskip,0) (IH) {$I_H$};
+    \node [cloud, fill=blue!50] at (3\horskip,0) (RH) {$R_H$};
+    %% Vectors
+    \node [cloud, fill=green!50] at (0,-1\verskip) (SV) {$S_V$};
+    \node [cloud, fill=red!10] at (1\horskip,-1\verskip) (LV) {$L_V$};
+    \node [cloud, fill=red!50] at (2\horskip,-1\verskip) (IV) {$I_V$};
+    %% Births
+    \node [left=0.75cm of SH] (birthH) {};
+    \node [left=0.75cm of SV] (birthV) {};
+    %% Deaths
+    \node [above=0.5\verskip of SH] (dSH) {};
+    \node [above=0.5\verskip of LH] (dLH) {};
+    \node [above=0.5\verskip of IH] (dIH) {};
+    \node [above=0.5\verskip of RH] (dRH) {};
+    \node [below=0.5\verskip of SV] (dSV) {};
+    \node [below=0.5\verskip of LV] (dLV) {};
+    \node [below=0.5\verskip of IV] (dIV) {};
+    %%
+    \path [line, very thick] (SH) to node [midway,above,sloped] (TextNode) {$\beta_HI_V\frac{S_H}{H}$} (LH);
+    \path [line, very thick] (LH) to node [midway,above,sloped] (TextNode) {$\varepsilon_H L_H$} (IH);
+    \path [line, very thick] (IH) to node [midway,above,sloped] (TextNode) {$\gamma_H I_H$} (RH);
+    \path [line, very thick] (SV) to node [midway,below,sloped] (TextNode) {$\beta_VS_V\frac{I_H}{H}$} (LV);
+    \path [line, very thick] (LV) to node [midway,below,sloped] (TextNode) {$\varepsilon_V L_V$} (IV);
+    \path [line, dotted, very thick] (IV) to node [midway,below,sloped] (TextNode) {} (SH);
+    \path [line, dotted, very thick] (IH) to node [midway,above,sloped] (TextNode) {} (SV);
+    %% Demography
+    \path [line, very thick] (birthH) to node [midway,above] (TextNode) {$b_H$} (SH);
+    \path [line, very thick] (birthV) to node [midway,above] (TextNode) {$b_V$} (SV);
+    \path [line, very thick] (SH) to node [near end,right] (TextNode) {$d_HS_H$} (dSH);
+    \path [line, very thick] (LH) to node [near end,right] (TextNode) {$d_HL_H$} (dLH);
+    \path [line, very thick] (IH) to node [near end,right] (TextNode) {$d_HI_H$} (dIH);
+    \path [line, very thick] (RH) to node [near end,right] (TextNode) {$d_HR_H$} (dRH);
+    \path [line, very thick] (SV) to node [near end,right] (TextNode) {$d_VS_V$} (dSV);
+    \path [line, very thick] (LV) to node [near end,right] (TextNode) {$d_VL_V$} (dLV);
+    \path [line, very thick] (IV) to node [near end,right] (TextNode) {$d_VI_V$} (dIV);
+  \end{tikzpicture}
+}
+\end{frame}
+
+\begin{frame}{Reproduction number}
+\begin{equation}\label{eq:vector_host_2}
+\R_0 =
+\frac{\beta_H\beta_V}{(\gamma_H+\gamma_V)d_V}\
+\frac{\varepsilon_V}{d_V+\varepsilon_V}\
+\frac{\varepsilon_H}{d_H+\varepsilon_H}\
+\frac{V^\star}{H^\star}
+\end{equation}
+where $H^\star$ and $V^\star$ are the total host and vector populations, respectively
+\vfill
+Here
+\[
+f_X = \frac{\varepsilon_X}{d_X+\varepsilon_X}
+\]
+are the fractions of latent individuals (of type $X=\{V,H\}$) who survive the latency period
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{A little complexification of Ross-Macdonald}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_mco1ecmco1ecmco1.jpeg}
+
+\begin{frame}{Recall this guy?}
+\centering
+\resizebox{\textwidth}{!}{
+  \def\horskip{*2}
+  \def\verskip{*2}
+  \begin{tikzpicture}[%transform canvas={scale=1.3},
+      auto,
+      cloud/.style={minimum width={width("N-1")+2pt},
+      draw, 
+      ellipse,
+      fill=gray!20}]
+    %% Hosts
+    \node [cloud, fill=green!50] at (0,0) (SH) {$S_H$};
+    \node [cloud, fill=red!50] at (1\horskip,0) (IH) {$I_H$};
+    \node [cloud, fill=blue!50] at (2\horskip,0) (RH) {$R_H$};
+    %% Vectors
+    \node [cloud, fill=green!50] at (0,-1\verskip) (SV) {$S_V$};
+    \node [cloud, fill=red!50] at (1\horskip,-1\verskip) (IV) {$I_V$};
+    %% Births
+    \node [left=0.75cm of SH] (birthH) {};
+    \node [left=0.75cm of SV] (birthV) {};
+    %% Deaths
+    \node [below=0.25\verskip of SH] (dSH) {};
+    \node [below=0.25\verskip of IH] (dIH) {};
+    \node [below=0.25\verskip of RH] (dRH) {};
+    \node [below=0.25\verskip of SV] (dSV) {};
+    \node [below=0.25\verskip of IV] (dIV) {};
+    %%
+    \path [line, very thick] (SH) to node [midway,above,sloped] (TextNode) {$\beta_HI_V\frac{S_H}{H}$} (IH);
+    \path [line, very thick] (IH) to node [midway,above,sloped] (TextNode) {$\gamma_H I_H$} (RH);
+    \path [line, very thick] (SV) to node [midway,below,sloped] (TextNode) {$\beta_VS_V\frac{I_H}{H}$} (IV);
+    \path [line, dotted, very thick] (IV) to node [midway,below,sloped] (TextNode) {} (SH);
+    \path [line, dotted, very thick] (IH) to node [midway,above,sloped] (TextNode) {} (SV);
+    %% Demography
+    \path [line, very thick] (birthH) to node [midway,above] (TextNode) {$b_H$} (SH);
+    \path [line, very thick] (birthV) to node [midway,above] (TextNode) {$b_V$} (SV);
+    \path [line, very thick] (SH) to node [near end,left] (TextNode) {$d_HS_H$} (dSH);
+    \path [line, very thick] (IH) to node [near end,right] (TextNode) {$d_HI_H$} (dIH);
+    \path [line, very thick] (RH) to node [near end,right] (TextNode) {$d_HR_H$} (dRH);
+    \path [line, very thick] (SV) to node [near end,left] (TextNode) {$d_VS_V$} (dSV);
+    \path [line, very thick] (IV) to node [near end,right] (TextNode) {$d_VI_V$} (dIV);
+  \end{tikzpicture}
+}
+\end{frame}
+
+
+\begin{frame}{Let us add a few arrows}
+\centering
+\resizebox{0.8\textwidth}{!}{
+  \def\horskip{*2}
+  \def\verskip{*2}
+  \begin{tikzpicture}[%transform canvas={scale=1.3},
+      auto,
+      cloud/.style={minimum width={width("N-1")+2pt},
+      draw, 
+      ellipse,
+      fill=gray!20}]
+    %% Hosts
+    \node [cloud, fill=green!50] at (0,0) (SH) {$S_H$};
+    \node [cloud, fill=red!50] at (1\horskip,0) (IH) {$I_H$};
+    \node [cloud, fill=blue!50] at (2\horskip,0) (RH) {$R_H$};
+    %% Vectors
+    \node [cloud, fill=green!50] at (0,-1\verskip) (SV) {$S_V$};
+    \node [cloud, fill=red!50] at (1\horskip,-1\verskip) (IV) {$I_V$};
+    %% Births
+    \node [left=0.75cm of SH] (birthH) {};
+    \node [left=0.75cm of SV] (birthV) {};
+    %% Deaths
+    \node [below=0.25\verskip of SH] (dSH) {};
+    \node [below=0.25\verskip of IH] (dIH) {};
+    \node [below=0.25\verskip of RH] (dRH) {};
+    \node [below=0.25\verskip of SV] (dSV) {};
+    \node [below=0.25\verskip of IV] (dIV) {};
+    %%
+    \path [line, very thick] (SH) to node [midway,above,sloped] (TextNode) {$\Phi_H$} (IH);
+    \path [line, very thick] (IH) to node [midway,above,sloped] (TextNode) {$\gamma_H I_H$} (RH);
+    \path [line, very thick] (SV) to node [midway,below,sloped] (TextNode) {$\Phi_V$} (IV);
+    \path [line, dotted, very thick] (IV) to node [midway,below,sloped] (TextNode) {} (SH);
+    \path [line, dotted, very thick] (IH) to node [midway,above,sloped] (TextNode) {} (SV);
+    \draw [>=latex,->, thick, rounded corners] (IH) -- (1\horskip,0.75) -- (0,0.75) node[midway,above,sloped] {$\rho_H I_H$} -- (SH);
+    \draw [>=latex,->, thick, rounded corners] (RH) -- (2\horskip,1.5) -- (-0.35,1.5) node[midway,above,sloped] {$\nu_H R_H$} -- (SH.north west);
+    %% Demography
+    \path [line, very thick] (birthH) to node [midway,above] (TextNode) {$b_H$} (SH);
+    \path [line, very thick] (birthV) to node [midway,above] (TextNode) {$b_V$} (SV);
+    \path [line, very thick] (SH) to node [near end,left] (TextNode) {$d_HS_H$} (dSH);
+    \path [line, very thick] (IH) to node [near end,right] (TextNode) {$d_HI_H$} (dIH);
+    \path [line, very thick] (RH) to node [near end,right] (TextNode) {$d_HR_H$} (dRH);
+    \path [line, very thick] (SV) to node [near end,left] (TextNode) {$d_VS_V$} (dSV);
+    \path [line, very thick] (IV) to node [near end,right] (TextNode) {$d_VI_V$} (dIV);
+  \end{tikzpicture}
+}
+\end{frame}
+
+\begin{frame}
+Arino, Ducrot \& Zongo, \href{https://julien-arino.github.io/assets/pdf/papers/2012_ArinoDucrotZongo-JMB64.pdf}{A metapopulation model for malaria with transmission-blocking partial immunity in hosts}, Journal of Mathematical Biology (2012) \nocite{ArinoDucrotZongo2012}
+\vfill
+Incidence functions take the form
+\[
+\Phi_H = b_H(H,V)\sigma_{VH}\frac{I_V}{V}
+\]
+and 
+\[
+\Phi_V = b_V(H,V)\left(\sigma_{HV}\frac{I_H}{H}+\hat\sigma_{HV}\frac{R_H}{H}\right)
+\]
+where $b_{H}$ and $b_V$ are numbers per unit time of mosquito bites a human has and the number of humans a mosquito bites, respectively
+\end{frame}
+
+\begin{frame}{Parameters of the incidence function}
+\begin{itemize}
+\item $\sigma_{HV}$ probability of transmission of the parasite (in gametocyte form) from
+an infectious human to a susceptible mosquito
+\item $\hat\sigma_{HV}$ probability of transmission of the parasite (in gametocyte form) from
+a semi-immune human to a susceptible mosquito
+\item $\sigma_{VH}$ probability of transmission of the parasite (in sporozoite form) from
+an infectious mosquito to a susceptible human
+\end{itemize}
+\vfill
+Additional parameter that can be factored in (all per unit time)
+\begin{itemize}
+\item $a_H$ maximum number of mosquito bites a human can receive
+\item $a_V$ number of times one mosquito would ``want to'' bite humans
+\item $a$ average number of bites given to humans by each mosquito
+\end{itemize}
+\end{frame}
+
+\begin{frame}{People to read for malaria models (IMOBO)}
+See also the work of 
+\vfill
+\begin{itemize}
+\item \href{https://scholar.google.com/citations?user=AwKMfZ8AAAAJ&hl=en}{Gideon Ngwa} at the University of Buea
+\vfill
+\item \href{https://scholar.google.ch/citations?user=BMiKO0UAAAAJ&hl=en}{Nakul Chitnis} at the Swiss Tropical and Public Health Institute
+\end{itemize}
+\vfill
+Many others...
+\end{frame}
+
+
+\begin{frame}{More complex models may be needed for malaria}
+Timing of processes is critical in malaria
+\vfill
+Plasmodium life cycle in the mosquito is commensurate with mosquito lifetime
+\vfill
+Need models that are able to account for that, because ODEs are not really good at this (see beginning of Stochastic systems lecture)
+\vfill
+Mathematics becomes more complicated
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Last remarks}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_hz99k3hz99k3hz99.jpeg}
+
+\begin{frame}{To simplify or not to simplify?}
+\bbullet In the KMK epidemic model \eqref{sys:KMK} and the SIRS endemic model \eqref{sys:SIRS}, since the total population is constant or asymptotically constant, it is possible to omit one of the state variables since $N^\star=S+I+R$
+\vfill
+\bbullet We often use $R=N^\star-S-I$
+\vfill
+\bbullet This can greatly simplify some computations
+\vfill
+\bbullet Whether to do it or not is a matter of preference
+\end{frame}
+
+\begin{frame}{To normalise or not to normalise?}
+\bbullet In the KMK epidemic model \eqref{sys:KMK} and the SIRS endemic model \eqref{sys:SIRS}, since the total population is constant or asymptotically constant, it is possible to normalise to $N=1$
+\vfill
+\bbullet This can greatly simplify some computations
+\vfill
+\bbullet However, I am not a big fan: it is important to always have the ``sizes'' of objects in mind
+\vfill
+\bbullet If you do normalise, at least for a paper destined to mathematical biology, always do a ``return to biology'', i.e., interpret your results in a biological light, which often implies to return to original values
+\end{frame}
+
+\begin{frame}{Where we are}
+\bbullet An \emph{epidemic} SIR model (the KMK SIR) in which the presence or absence of an epidemic wave is characterised by the value of $\R_0$
+\vfill
+\bbullet The KMK SIR has explicit solutions (in some sense). \textbf{This is an exception!}
+\vfill
+\bbullet An \emph{endemic} SIRS model in which the threshold $\R_0=1$ is such that, when $\R_0<1$, the disease goes extinct, whereas when $\R_0>1$, the disease becomes established in the population
+\vfill
+\bbullet Some simple variations on these models
+\vfill
+\bbullet A few models for vector-borne or water-borne diseases
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{plain}
+\bibliography{local-bibliography}
+\end{frame}
+
+\end{document}

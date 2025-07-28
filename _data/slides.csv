@@ -6,6 +6,8 @@ lecture_number,pdf_filename,title,subtitle,full_title,rnw_filename,basename
 05,L05-KMK-more.pdf,Extensions of the Kermack-McKendrick model,MATH 8xyz -- Lecture 05,Extensions of the Kermack-McKendrick model: MATH 8xyz -- Lecture 05,L05-KMK-more.Rnw,L05-KMK-more
 06,L06-sojourn-times.pdf,Sojourn time in compartments,MATH 8xyz -- Lecture 06,Sojourn time in compartments: MATH 8xyz -- Lecture 06,L06-sojourn-times.Rnw,L06-sojourn-times
 07,L07-endemic-SIRS.pdf,The endemic SIRS model,MATH 8xyz -- Lecture 07,The endemic SIRS model: MATH 8xyz -- Lecture 07,L07-endemic-SIRS.Rnw,L07-endemic-SIRS
-08,L08-PvdD-Watmough.pdf,Next generation matrix method for computing $_0$,MATH 8xyz -- Lecture 08,Next generation matrix method for computing $_0$: MATH 8xyz -- Lecture 08,L08-PvdD-Watmough.Rnw,L08-PvdD-Watmough
+08,L08-PvdD-Watmough.pdf,Next generation matrix method for computing R_0,MATH 8xyz -- Lecture 08,Next generation matrix method for computing $_0$: MATH 8xyz -- Lecture 08,L08-PvdD-Watmough.Rnw,L08-PvdD-Watmough
 09,L09-endemic-SLIRS.pdf,The endemic SLIRS model,MATH 8xyz -- Lecture 07,The endemic SLIRS model: MATH 8xyz -- Lecture 07,L09-endemic-SLIRS.Rnw,L09-endemic-SLIRS
-15,L15-incidence-functions.pdf,Incidence functions,MATH 8xyz -- Lecture 10,Incidence functions: MATH 8xyz -- Lecture 10,L15-incidence-functions.Rnw,L15-incidence-functions
+10,L10-vector-borne.pdf,Vector-borne diseases,MATH 8xyz -- Lecture 10,Vector-borne diseases: MATH 8xyz -- Lecture 10,L10-vector-borne.Rnw,L10-vector-borne
+11,L11-water-borne.pdf,Water- and environment-borne diseases,MATH 8xyz -- Lecture 11,Water- and environment-borne diseases: MATH 8xyz -- Lecture 11,L11-water-borne.Rnw,L11-water-borne
+12,L12-incidence-functions.pdf,Incidence functions,MATH 8xyz -- Lecture 12,Incidence functions: MATH 8xyz -- Lecture 12,L12-incidence-functions.Rnw,L12-incidence-functions
