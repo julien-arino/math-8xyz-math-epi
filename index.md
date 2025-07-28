@@ -13,16 +13,22 @@ Feel free to use the material in these slides or in the folders. If you find thi
 
 ### Slides
 
-
-{% assign slide_pdfs = site.static_files 
-  | where_exp: "file", "file.path contains '/SLIDES/'" 
-  | where_exp: "file", "file.extname == '.pdf'" 
-%}
-{% for slide_pdf in slide_pdfs %}
-  {% unless slide_pdf.path contains '/SLIDES/FIGS/' %}
+{% if site.data.slides %}
+  {% for slide in site.data.slides %}
+- [{{ slide.full_title }}](SLIDES/{{ slide.pdf_filename }})
+  {% endfor %}
+{% else %}
+  {% comment %} Fallback: auto-detect PDF files if CSV data is not available {% endcomment %}
+  {% assign slide_pdfs = site.static_files 
+    | where_exp: "file", "file.path contains '/SLIDES/'" 
+    | where_exp: "file", "file.extname == '.pdf'" 
+  %}
+  {% for slide_pdf in slide_pdfs %}
+    {% unless slide_pdf.path contains '/SLIDES/FIGS/' %}
 - [{{ slide_pdf.name | remove: '.pdf' }}]({{ slide_pdf.path | relative_url }})
-  {% endunless %}
-{% endfor %}
+    {% endunless %}
+  {% endfor %}
+{% endif %}
 
 ### Additional slides and videos
 

@@ -1,0 +1,1423 @@
+\documentclass[aspectratio=169]{beamer}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+
+
+\input{slides-setup-whiteBG.tex}
+
+\title{General information about the course \& (brief) Introduction to \code{R} and \code{julia}}
+\subtitle{MATH 8xyz -- Lecture 01}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4qvst54qvst54qvs.png}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_d0uu54d0uu54d0uu.png}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% Some information
+\section{General information about the course}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+\begin{frame}{Why this course?}
+\bbullet I may have sent you a link to this course because you just started an MSc or PhD with me. This course will serve as the base to a reading/topics course on mathematical epidemiology (\emph{math epi}) that we will do together
+\vfill
+(Hence the name: this will be an 8000 level course whose number will be decided when the course is calendared)
+\vfill
+\bbullet I teach math epi in Summer Schools and short courses, for which I prepare slides (and sometimes videos). However, this is a more complete version, so that students in these events can dig into the topics more
+\vfill
+\bbullet More generally, perhaps you want to learn about math epi
+\end{frame}
+
+\begin{frame}{Who is this course for?}
+\bbullet Students in mathematics, physics or engineering
+\vfill
+\bbullet I am assuming some working knowledge of ordinary differential equations (ODE) and a few related topics. For instance, I am not going into details and will assume that you know the link between local asymptotic stability of an equilibrium of an ODE and the location of the eigenvalues of the Jacobian of the ODE at that equilibrium
+\vfill
+\bbullet This could also be interesting to students in less mathematically heavy areas... but will need some ground work to understand some concepts. (I plan a course for non specialists, but it is not finalised yet)
+\end{frame}
+
+\begin{frame}{Getting in touch}
+Email me (email is on all lecture title pages)
+\vfill
+Use a tag like [MathEpi8xyz] in your subject line, I get a lot of emails
+\vfill
+If I don't reply, don't hesitate to try again... I am bad with emails
+\end{frame} 
+
+
+\begin{frame}{GitHub repository for the course}
+Most course material is available from this GitHub repository:
+\begin{center}
+	\href{https://julien-arino.github.io/math-8xyz-math-epi}{https://julien-arino.github.io/math-8xyz-math-epi}
+\end{center}
+\vfill
+This repo includes the slides, code and data samples
+\vfill
+This \boldred{does not} include pdf of the bibliographic references, although there are links to articles and books and, where relevant, bibliographic information at the end of slide sets. As much as possible, I link to Open Access sources
+\vfill
+One remark: I sometimes refer to Wikipedia. For the younger students here: this can be where you first look, not what you cite in proper work
+\end{frame} 
+
+\begin{frame}{Code}
+    I use \code{R} and (less often) \code{julia} --\code{Python} would be a good choice as well but I prefer \code{R} and \code{julia}
+    \vfill
+    Instructions on setting up \code{R} and \code{julia} for the course can be found in the GitHub repo
+    \vfill
+    Some code is in the repo
+    \vfill
+    For the epi side of things, a very useful open reference: \href{https://epirhandbook.com/en/index.html}{R for applied epidemiology and public health}
+\end{frame} 
+    
+    
+\begin{frame}{Slides}
+Slides are written in \LaTeX\ and Beamer and rendered using pdf\LaTeX\ (for the pdf slides) or \LaTeX\ and \code{knitr} and rendered \code{R} (typically in \code{RStudio})
+\vfill
+See the SLIDES folder on GitHub for instructions on how to compile
+\vfill
+As much as possible, I have indicated provenance (by linking the file on the original website); when not possible, the file is saved with the name of the source indicated, or the source \code{tex} or \code{md} files include the link commented
+\end{frame} 
+
+\begin{frame}{Videos}
+Videos are being recorded for the course
+\vfill
+They will be/are posted on YouTube
+\vfill
+You can access the playlist \href{https://youtube.com/playlist?list=PLfRaznSpWo2sHwiQ04IT5STYdwarcMtRA}{here}. Links to individual videos are also available on the \href{https://julien-arino.github.io/3MC-course-epidemiological-modelling/}{webpage}
+\end{frame} 
+
+
+\begin{frame}{Course objectives}
+Introduction to Mathematical Epidemiology
+\begin{itemize}
+    \item Problems
+    \item Methods
+\end{itemize}
+\vfill
+We will have these particular problems in mind:
+\begin{enumerate}
+    \item Modelling techniques
+    \item Mathematical analysis of models
+    \item Computational analysis of models
+    \item Use of data
+\end{enumerate}
+\vfill
+It is important to do the 4 interactively
+\end{frame} 
+
+\begin{frame}{I will try to give you two perspectives}
+\bbullet\textbf{As a modeller and mathematician} these are fun problems to look at. You need to know the theory in order to carry out relevant work
+\vfill
+\bbullet\textbf{As someone working in public health} these are important problems to look at.
+As a modeller, you will be called on to provide guidance to public health authorities. Know what you can and cannot do. Know how to communicate with said authorities
+\vfill
+(As a general rule, know your audience and adapt to it, don't expect it to adapt to you)
+\end{frame}
+
+
+\begin{frame}{Course project (if taking this course for credit)}
+	If you are at the University of Manitoba and are taking this course for credit:
+	\vfill
+	\begin{itemize}
+		\item The mark for the course will be decided based on a project you will have to return
+		\vfill
+		\item The project will be quite involved
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Content of the course -- Lecture-oriented}
+    The slides for the course are organised by lecture
+    \vfill
+    Each lecture is intended to be roughly 1 hour and 15 minutes (as a course taught Tuesday and Thursday at UM)
+    \vfill
+    There are 26 sets of slides, each corresponding to a lecture
+    \vfill
+    Some content will continue across several slide sets; this will be explicit from the slide set title
+    \vfill
+    Ultimately, there will also be 26 videos
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{General remarks}    
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_ufgejfufgejfufge.png}
+
+
+\begin{frame}{About modelling}
+	\begin{itemize}
+		\item Do not neglect this \emph{crucial} step
+		\vfill
+		\item Think outside the box
+		\vfill
+		\item Take the time
+		\vfill
+		\item Try to remain ``as simple as possible without being too simple''
+		\vfill
+		\item Do not hesitate to modify your model, even when you have already done work on it: if something doesn't ``smell right'', your model might need fixing
+	\end{itemize}
+\vfill
+\end{frame} 
+
+\begin{frame}{About mathematical analysis}
+	\begin{itemize}
+		\item Used to be the sole purpose of most papers
+		\vfill
+		\item Important to carry out to understand the basic properties of models
+		\vfill
+		\item Judge your audience: global asymptotic stability is cool, but is it really required if you want to present work to a public health person?
+		\vfill
+		\item Do as much as possible (for instance, knowing the value of $\mathcal{R}_0$ can be useful to set parameters), do not hesitate to move to an appendix 
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}{About numerics}
+	\begin{itemize}
+		\item Numerics should be used to \boldred{complement} the mathematical analysis
+		\vfill
+		\item If you have shown the global stability of some equilibrium point, \boldred{do not} show a simulation where solutions converge to this equilibrium
+		\vfill
+		\item In fact, it is rarely useful to show a solution (cases where it is okay: before going to zero the number of infectious does something really cool, you have a period doubling, etc.)
+		\vfill
+		\item Instead, use numerics to investigate scenarios or test the effect of varying parameters
+		\vfill
+		\item A good figure tells a story, it is worth spending time thinking about how to make good figures
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}{About data}
+	\begin{itemize}
+		\item Acquiring data has become much easier than even 20 years ago
+		\vfill
+		\item As a modeller, it is not necessary that everything be data-driven, but it is necessary to be "context-aware" (this means getting a sense of the quantities involved in the process you want to model)
+		\vfill
+		\item Fred Brauer (1932-2021): ``If your model and the data disagree, question the quality of your data''
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Reading recommendations}
+    \begin{itemize}
+    \item Waltman. \href{https://doi.org/10.1007/978-3-642-80820-3}{Deterministic threshold models in the theory of epidemics} (1974)
+    \nocite{waltman2013deterministic}
+		\vfill
+    \item Capasso. \href{https://doi.org/10.1007/978-3-540-70514-7}{Mathematical structures of epidemic systems} (1993)
+    \nocite{capasso1993mathematical}
+		\vfill
+    \item Daley \& Gani. Epidemic modelling: An introduction (1999)
+    \nocite{daley1999epidemic}
+		\vfill
+    \item Hethcote. \href{https://doi.org/10.1137/S0036144500371907}{The mathematics of infectious diseases}. SIAM Review (2000)
+    \nocite{Hethcote2000}
+		\vfill
+    \item Brauer, PvdD \& Wu. \href{https://doi.org/10.1007/978-3-540-78911-6}{Mathematical Epidemiology} (2008)
+    \nocite{brauer2008mathematical}
+		\vfill
+    \item Brauer \& C$^3$. \href{https://doi.org/10.1007/978-1-4614-1686-9}{Mathematical Models in Population Biology and Epidemiology} (2012)
+    \nocite{brauer2012mathematical}
+		\vfill
+    \item Brauer, C$^3$ \& Feng. \href{https://doi.org/10.1007/978-1-4939-9828-9}{Mathematical Models in Epidemiology} (2019)
+    \nocite{brauer2019mathematical}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Word of warning!}
+	The references on the previous slide are \boldred{my} favourite references
+	\vfill
+	This extends to the entire content of this course: the topics I treat and the way I treat them originate in \boldred{my} personal itinerary through math epi and as a consequence
+	\begin{itemize}
+		\item Some stuff might be understood (and therefore explained) differently by someone else
+		\item I focus on some topics that I think are cool and omit others that I like less
+		\item This doesn't mean these topics are less worthy of consideration
+	\end{itemize}
+	\vfill
+	$\implies$ Don't trust me blindly and ``shop around'': other colleagues have courses that are also really worth your time
+\end{frame}
+
+\begin{frame}{Some common abbreviations}
+- EP: equilibrium point
+\vfill
+- DFE: disease-free equilibrium
+\vfill
+- EEP: endemic equilibrium point
+\vfill
+- LAS: locally asymptotically stable / local asymptotic stability
+\vfill
+- GAS: globally asymptotically stable / global asymptotic stability
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Introduction to R}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_1d5vb51d5vb51d5v.png}
+
+
+\begin{frame}
+	Most of the programming in this course is done using the \code{R} language
+	\vfill
+	Code that you see in these slides is executable (and executed to create the slides)
+	\vfill
+	Each slide set with code (most of them) also generates a corresponding \code{R} file in the CODE directory of the repo. This file strips all the \LaTeX formatting and just keeps the \code{R} code
+\end{frame}
+
+\begin{frame}{R was originally for stats but is now more}
+\begin{itemize}
+\item Open source version of S \vfill
+\item Appeared in 1993 \vfill
+\item Now version 4.2 \vfill
+\item One major advantage in my view: uses a lot of C and Fortran code. E.g., \code{deSolve}:
+\begin{quote}
+    The functions provide an interface to the FORTRAN functions \code{lsoda}, \code{lsodar}, \code{lsode}, \code{lsodes} of the \code{ODEPACK} collection, to the FORTRAN functions \code{dvode}, \code{zvode} and \code{daspk} and a C-implementation of solvers of the Runge-Kutta family with fixed or variable time steps  
+\end{quote} \vfill
+\item Very active community on the web, easy to find solutions (same true of \code{Python}, I just prefer \code{R})
+\end{itemize}
+\end{frame} 
+
+\begin{frame}{Development environments}
+\begin{itemize}
+    \item Terminal version, not very friendly \vfill
+    \item Nicer terminal: \href{https://github.com/randy3k/radian}{radian} \vfill
+    \item Execute R scripts by using `Rscript name\_of\_script.R`. Useful to run code in `cron`, for instance \vfill
+    \item Use IDEs:
+    \begin{itemize}
+        \item \href{https://www.rstudio.com/products/rstudio/}{RStudio} has become the reference
+        \item \href{https://invent.kde.org/education/rkward}{RKWard} is useful if you are for instance using an ARM processor (Raspberry Pi, some Chromebooks..)
+    \end{itemize} \vfill
+    \item Integrate into jupyter notebooks
+\end{itemize}
+\end{frame} 
+
+\begin{frame}{Going further}
+\begin{itemize}
+\item \href{https://posit.co/products/open-source/rstudio-server/}{RStudio server}: run RStudio on a Linux server and connect via a web interface \vfill
+\item Shiny: easily create an interactive web site running R code \vfill
+\item \href{https://www.rstudio.com/products/shiny/shiny-server/}{Shiny server}: run Shiny apps on a Linux server \vfill
+\item Rmarkdown: markdown that incorporates R commands. Useful for generating reports in html or pdf, can make slides as well.. \vfill
+\item RSweave: LaTeX incorporating R commands. Useful for generating reports. Not used as much as Rmarkdown these days
+\end{itemize}
+\end{frame} 
+
+\begin{frame}{R is a scripted language}
+\begin{itemize}
+    \item Interactive
+    \vfill
+    \item Allows you to work in real time
+    \begin{itemize}
+        \item Be careful: what is in memory might involve steps not written down in a script
+        \item If you want to reproduce your steps, it is good to write all the steps down in a script and to test from time to time running using `Rscript`: this will ensure that all that is required to run is indeed loaded to memory when it needs to, i.e., that it is not already there..
+    \end{itemize}
+\end{itemize}
+\end{frame} 
+
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% \subsection{Crash course on programming in R}
+% % The subsection page
+% \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+
+\begin{frame}{R is similar to matlab..}
+.. with some differences, of course! Otherwise, where would the fun be? \code{;)}
+\end{frame} 
+
+\begin{frame}[fragile]{Assignment}
+Two ways:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{X} \hlkwb{<-} \hlnum{10}
+\hldef{X} \hlkwb{=} \hlnum{10}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+First version is preferred by \code{R} purists.. I don't really care (but be ready for an argument if you use $=$ in a discussion with an \code{R} purist)
+\end{frame} 
+
+
+\begin{frame}[fragile]{Lists}
+A very useful data structure, quite flexible and versatile. Empty list: \code{L <- list()}. Convenient for things like parameters. For instance
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{L} \hlkwb{<-} \hlkwd{list}\hldef{()}
+\hldef{L}\hlopt{$}\hldef{a} \hlkwb{<-} \hlnum{10}
+\hldef{L}\hlopt{$}\hldef{b} \hlkwb{<-} \hlnum{3}
+\hldef{L[[}\hlsng{"another_name"}\hldef{]]} \hlkwb{<-} \hlsng{"Plouf plouf"}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+Could also set some or all entries right away
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{L} \hlkwb{<-} \hlkwd{list}\hldef{(}\hlkwc{a} \hldef{=} \hlnum{10}\hldef{,} \hlkwc{b} \hldef{=} \hlnum{3}\hldef{,} \hlkwc{another_name} \hldef{=} \hlsng{"Plouf plouf"}\hldef{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]{Accessing list entries}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{L[}\hlnum{1}\hldef{]}
+\end{alltt}
+\begin{verbatim}
+## $a
+## [1] 10
+\end{verbatim}
+\begin{alltt}
+\hldef{L[[}\hlnum{2}\hldef{]]}
+\end{alltt}
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+\begin{alltt}
+\hldef{L}\hlopt{$}\hldef{a}
+\end{alltt}
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+\begin{alltt}
+\hldef{L[[}\hlsng{"b"}\hldef{]]}
+\end{alltt}
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame} 
+
+
+
+
+\begin{frame}[fragile]{Vectors}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{x} \hlkwb{=} \hlnum{1}\hlopt{:}\hlnum{10}
+\hldef{y} \hlkwb{<-} \hlkwd{c}\hldef{(x,} \hlnum{12}\hldef{)} \hlcom{# Append 12 to x}
+\hldef{y}
+\end{alltt}
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10 12
+\end{verbatim}
+\begin{alltt}
+\hldef{z} \hlkwb{=} \hlkwd{c}\hldef{(}\hlsng{"red"}\hldef{,} \hlsng{"blue"}\hldef{)}
+\hldef{z} \hlkwb{=} \hlkwd{c}\hldef{(z,} \hlnum{1}\hldef{)} \hlcom{# Append 1 to z}
+\hldef{z}
+\end{alltt}
+\begin{verbatim}
+## [1] "red"  "blue" "1"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+In \code{z}, since the first two entries are characters, the added entry is also a character. Contrary to lists, vectors have all entries of the same type
+\end{frame} 
+
+
+
+
+\begin{frame}[fragile]{Matrices}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{A} \hlkwb{<-} \hlkwd{mat.or.vec}\hldef{(}\hlkwc{nr} \hldef{=} \hlnum{2}\hldef{,} \hlkwc{nc} \hldef{=} \hlnum{3}\hldef{)}
+\hldef{B} \hlkwb{<-} \hlkwd{matrix}\hldef{(}\hlkwd{c}\hldef{(}\hlnum{1}\hldef{,}\hlnum{2}\hldef{,}\hlnum{3}\hldef{,}\hlnum{4}\hldef{),} \hlkwc{nr} \hldef{=} \hlnum{2}\hldef{,} \hlkwc{nc} \hldef{=} \hlnum{2}\hldef{)}
+\hldef{B}
+\end{alltt}
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+\end{verbatim}
+\begin{alltt}
+\hldef{C} \hlkwb{<-} \hlkwd{matrix}\hldef{(}\hlkwd{c}\hldef{(}\hlnum{1}\hldef{,}\hlnum{2}\hldef{,}\hlnum{3}\hldef{,}\hlnum{4}\hldef{),} \hlkwc{nr} \hldef{=} \hlnum{2}\hldef{,} \hlkwc{nc} \hldef{=} \hlnum{2}\hldef{,}
+            \hlkwc{byrow} \hldef{=} \hlnum{TRUE}\hldef{)}
+\hldef{C}
+\end{alltt}
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    2
+## [2,]    3    4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Naming the arguments (e.g., \code{nr = 2}) allows to use arguments in any order
+\end{frame} 
+
+\begin{frame}{Matrix operations -- Be careful!}
+Probably the biggest annoyance in \code{R} compared to other languages
+\vfill
+\begin{itemize}
+\item The notation \code{A*B} is the \emph{Hadamard product} $A\circ B$ (what is denoted \code{A.*B} in most other languages), not the standard matrix multiplication
+\vfill
+\item Standard matrix multiplication is written \code{A \%*\% B}
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{Vector operations}
+Vector addition is also frustrating. Say you write \code{x=1:10}, i.e., make the vector
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{x}
+\end{alltt}
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Then \code{x+1} should give an error but instead gives
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{x}\hlopt{+}\hlnum{1}
+\end{alltt}
+\begin{verbatim}
+##  [1]  2  3  4  5  6  7  8  9 10 11
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+i.e., adds a vector of all ones to the vector
+\vfill
+Beware of this in particular when addressing sets of indices in lists, vectors or matrices
+\end{frame} 
+
+\begin{frame}{For the matlab-ers here}
+\bbullet \code{R} does not have the keyword \code{end} to access the last entry in a matrix/vector/list..
+\vfill
+\bbullet Use \code{length} (lists or vectors), \code{nchar} (character chains), \code{dim} (matrices.. careful, of course returns 2 values), \code{nrow}, \code{ncol}...
+\end{frame} 
+
+
+\begin{frame}{Data frames}
+\bbullet Specific to \code{R}, although they are now present in many other languages
+\vfill
+\bbullet Like matrices under steroids
+\vfill
+\bbullet Like lists, can contain entries of different types, e.g., a column with numbers and a column with characters
+\end{frame}
+
+\begin{frame}[fragile]{Data frames}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{A} \hlkwb{=} \hlkwd{data.frame}\hldef{(}\hlkwc{column_1} \hldef{=} \hlkwd{runif}\hldef{(}\hlnum{9}\hldef{),}
+               \hlkwc{colour} \hldef{=} \hlkwd{ifelse}\hldef{(}\hlkwd{runif}\hldef{(}\hlnum{9}\hldef{)} \hlopt{<} \hlnum{0.5}\hldef{,}
+                               \hlsng{"red"}\hldef{,} \hlsng{"green"}\hldef{))}
+\hldef{A}
+\end{alltt}
+\begin{verbatim}
+##     column_1 colour
+## 1 0.55850562    red
+## 2 0.53071578    red
+## 3 0.09706514    red
+## 4 0.02101536  green
+## 5 0.78560503  green
+## 6 0.80120529  green
+## 7 0.85264261  green
+## 8 0.07714096    red
+## 9 0.99193775    red
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+  
+\begin{frame}[fragile]{The \code{summary} function}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hldef{(A)}
+\end{alltt}
+\begin{verbatim}
+##     column_1          colour         
+##  Min.   :0.02102   Length:9          
+##  1st Qu.:0.09707   Class :character  
+##  Median :0.55851   Mode  :character  
+##  Mean   :0.52398                     
+##  3rd Qu.:0.80121                     
+##  Max.   :0.99194
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\vfill
+Also works on other data types
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Naming positions/rows/columns/etc}
+Very useful: it is possible to name entries in a \code{list} but also positions in vectors, matrices, data frames
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{v} \hlkwb{=} \hlkwd{c}\hldef{(}\hlkwc{alpha} \hldef{=} \hlnum{2}\hldef{,} \hlkwc{beta} \hldef{=} \hlnum{3}\hldef{,} \hlkwc{gamma} \hldef{=} \hlnum{4}\hldef{,} \hlkwc{delta} \hldef{=} \hlnum{5}\hldef{)}
+\hldef{v}
+\end{alltt}
+\begin{verbatim}
+## alpha  beta gamma delta 
+##     2     3     4     5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+is a vector and 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{v[}\hlsng{"beta"}\hldef{]}
+\end{alltt}
+\begin{verbatim}
+## beta 
+##    3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]{Sometimes you need to get rid of names}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{3} \hlopt{*} \hldef{v[}\hlsng{"beta"}\hldef{]}
+\end{alltt}
+\begin{verbatim}
+## beta 
+##    9
+\end{verbatim}
+\begin{alltt}
+\hlnum{3} \hlopt{*} \hlkwd{as.numeric}\hldef{(v[}\hlsng{"beta"}\hldef{])}
+\end{alltt}
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]{Assign a name \emph{a posteriori}}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{v} \hlkwb{=} \hlkwd{c}\hldef{(}\hlnum{1}\hldef{,}\hlnum{2}\hldef{,}\hlnum{3}\hldef{)}
+\hlkwd{names}\hldef{(v)} \hlkwb{=} \hlkwd{c}\hldef{(}\hlsng{"alpha"}\hldef{,} \hlsng{"beta"}\hldef{,} \hlsng{"gamma"}\hldef{)}
+\hldef{v}
+\end{alltt}
+\begin{verbatim}
+## alpha  beta gamma 
+##     1     2     3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{A} \hlkwb{=} \hlkwd{matrix}\hldef{(}\hlkwd{c}\hldef{(}\hlnum{1}\hldef{,}\hlnum{2}\hldef{,}\hlnum{3}\hldef{,}\hlnum{4}\hldef{),} \hlkwc{nrow} \hldef{=} \hlnum{2}\hldef{,} \hlkwc{byrow} \hldef{=} \hlnum{TRUE}\hldef{)}
+\hlkwd{rownames}\hldef{(A)} \hlkwb{=} \hlkwd{c}\hldef{(}\hlsng{"alpha"}\hldef{,}\hlsng{"beta"}\hldef{)}
+\hlkwd{colnames}\hldef{(A)} \hlkwb{=} \hlkwd{c}\hldef{(}\hlsng{"thingama"}\hldef{,}\hlsng{"doodle"}\hldef{)}
+\hldef{A}
+\end{alltt}
+\begin{verbatim}
+##       thingama doodle
+## alpha        1      2
+## beta         3      4
+\end{verbatim}
+\begin{alltt}
+\hldef{A[}\hlnum{1}\hldef{,}\hlnum{2}\hldef{]}
+\end{alltt}
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+\begin{alltt}
+\hldef{A[}\hlsng{"alpha"}\hldef{,}\hlsng{"doodle"}\hldef{]}
+\end{alltt}
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}{Tibbles}
+\bbullet
+New data format part of the \code{tidyverse} (set of libraries facilitating data wrangling)
+\vfill
+\bbullet
+Quite similar to data frame, with variations
+\vfill
+\bbullet Will be the default output if you use \code{tidyverse} functions
+\end{frame}
+
+
+\begin{frame}[fragile]{Flow control}
+\begin{lstlisting}
+if (condition is true) {
+  list of stuff to do
+}
+\end{lstlisting}
+Even if \code{list of stuff to do} is a single instruction, best to use curly braces
+\begin{lstlisting}
+if (condition is true) {
+  list of stuff to do
+} else if (another condition) {
+  ...
+} else {
+  ...
+}
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{For loops}
+\code{for} applies to lists or vectors
+\begin{lstlisting}
+for (i in 1:10) {
+  something using integer i
+}
+for (j in c(1,3,4)) {
+  something using integer j
+}
+for (n in c("truc", "muche", "chose")) {
+  something using string n
+}
+for (m in list("truc", "muche", "chose", 1, 2)) {
+  something using string n or integer n, depending
+}
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{lapply}
+Very useful function (a few others in the same spirit: \code{sapply}, \code{vapply}, \code{mapply})
+\vfill
+Applies a function to each entry in a list (/vector/matrix for \code{sapply} and \code{vapply})
+\vfill
+There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implies$ worth learning
+\end{frame}
+
+\begin{frame}[fragile]{lapply -- Setup an example list}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{L} \hlkwb{=} \hlkwd{list}\hldef{()}
+\hlkwa{for} \hldef{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{3}\hldef{) \{}
+        \hldef{L[[i]]} \hlkwb{=} \hlkwd{runif}\hldef{(i)} \hlcom{# i=1 has 1 entry, i=2 has 2 entries, etc.}
+\hldef{\}}
+\hldef{L}
+\end{alltt}
+\begin{verbatim}
+## [[1]]
+## [1] 0.255759
+## 
+## [[2]]
+## [1] 0.0130047 0.1425137
+## 
+## [[3]]
+## [1] 0.1989083 0.5083873 0.2784359
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]{lapply}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
+\end{alltt}
+\begin{verbatim}
+## [[1]]
+## [1] 0.255759
+## 
+## [[2]]
+## [1] 0.0777592
+## 
+## [[3]]
+## [1] 0.3285772
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]{To make a vector from \code{lapply}}
+To make a vector
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.2557590 0.0777592 0.3285772
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+or
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.2557590 0.0777592 0.3285772
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame} 
+
+\begin{frame}[fragile]{``Advanced'' lapply}
+Can ``pick up'' nontrivial list entries
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{L} \hlkwb{=} \hlkwd{list}\hldef{()}
+\hlkwa{for} \hldef{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{10}\hldef{) \{}
+        \hldef{L[[i]]} \hlkwb{=} \hlkwd{list}\hldef{()}
+        \hldef{L[[i]]}\hlopt{$}\hldef{a} \hlkwb{=} \hlkwd{runif}\hldef{(i)}
+        \hldef{L[[i]]}\hlopt{$}\hldef{b} \hlkwb{=} \hlkwd{runif}\hldef{(}\hlnum{2}\hlopt{*}\hldef{i)}
+\hldef{\}}
+\hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{=} \hlkwa{function}\hldef{(}\hlkwc{x}\hldef{)} \hlkwd{length}\hldef{(x}\hlopt{$}\hldef{b))}
+\end{alltt}
+\begin{verbatim}
+##  [1]  2  4  6  8 10 12 14 16 18 20
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The argument to the function you define is a list entry ({\tt L[[1]]}, {\tt L[[2]]}, etc., here)
+\end{frame} 
+
+
+
+
+\begin{frame}[fragile]{Avoid parameter variation loops with \code{expand.grid}}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{variations} \hlkwb{=} \hlkwd{list}\hldef{(}
+    \hlkwc{p1} \hldef{=} \hlkwd{seq}\hldef{(}\hlnum{1}\hldef{,} \hlnum{10}\hldef{,} \hlkwc{length.out} \hldef{=} \hlnum{10}\hldef{),}
+    \hlkwc{p2} \hldef{=} \hlkwd{seq}\hldef{(}\hlnum{0}\hldef{,} \hlnum{1}\hldef{,} \hlkwc{length.out} \hldef{=} \hlnum{10}\hldef{),}
+    \hlkwc{p3} \hldef{=} \hlkwd{seq}\hldef{(}\hlopt{-}\hlnum{1}\hldef{,} \hlnum{1}\hldef{,} \hlkwc{length.out} \hldef{=} \hlnum{10}\hldef{)}
+\hldef{)}
+\hlcom{# Create the list}
+\hldef{tmp} \hlkwb{=} \hlkwd{expand.grid}\hldef{(variations)}
+\hldef{PARAMS} \hlkwb{=} \hlkwd{list}\hldef{()}
+\hlkwa{for} \hldef{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hldef{(tmp)[}\hlnum{1}\hldef{]) \{}
+    \hldef{PARAMS[[i]]} \hlkwb{=} \hlkwd{list}\hldef{()}
+    \hlkwa{for} \hldef{(k} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hldef{(variations)) \{}
+        \hldef{PARAMS[[i]][[}\hlkwd{names}\hldef{(variations)[k]]]} \hlkwb{=} \hldef{tmp[i, k]}
+    \hldef{\}}
+\hldef{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+You can split this list, use it on different machines, etc. And can use {\tt future\_lapply}
+\end{frame} 
+
+
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% \subsection{Dealing with data in \code{R}}
+% % The subsection page
+% \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+
+\begin{frame}{It is important to be ``data aware''}
+See, e.g., JA. \href{http://dx.doi.org/10.1016/j.idm.2019.12.008}{Mathematical epidemiology in a data-rich world}. \emph{Infectious Disease Modelling} \textbf{5}:161-188 (2020) and the \href{https://github.com/julien-arino/modelling-with-data}{GitHub repo} for that paper
+\vfill
+Using \code{R}, it is really easy to grab data from the web, e.g., from Open Data sources
+\vfill
+\begin{itemize}
+\item More and more locations have an open data policy
+\vfill
+\item As a modeller, you do not need to use data everywhere, but you should be \emph{acutely} aware of the context in which your model operates
+\vfill
+\item If you want your work to have an impact, for instance in public health, you cannot be completely disconnected from reality
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Data is everywhere}
+\textbf{Closed data}
+\begin{itemize}
+    \item Often generated by companies, governments or research labs
+    \item When available, come with multiple restrictions
+\end{itemize}
+\vfill
+\textbf{Open data}
+\begin{itemize}
+    \item Often generated by the same entities but ``liberated'' after a certain period
+    \item More and more frequent with governments/public entities 
+    \item Wide variety of licenses, so beware 
+    \item Wide variety of qualities, so beware
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Open Data initiatives}
+Recent movement (5-10 years): governments (local or higher) create portals where data are centralised and published
+\begin{itemize}
+    \item \href{https://data.winnipeg.ca/}{Winnipeg}
+    \item \href{https://open.alberta.ca/opendata}{Alberta}, \href{https://catalogue.data.gov.bc.ca/}{B.C.}, \href{https://data.ontario.ca/}{Ontario}
+    \item \href{https://open.canada.ca/en/open-data}{Canada}
+    \item \href{https://data.europa.eu/euodp/data/}{Europe}
+    \item \href{http://data.un.org/}{UN}
+    \item \href{https://data.worldbank.org/}{World Bank}
+    \item \href{https://www.who.int/gho/database/en/}{WHO}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example: population of Canada}
+(using libraries \code{wbstats}, \code{ggplot2} and \code{scales})
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{pop_data_CTRY} \hlkwb{<-} \hlkwd{wb_data}\hldef{(}\hlkwc{country} \hldef{=} \hlsng{"CAN"}\hldef{,} \hlkwc{indicator} \hldef{=} \hlsng{"SP.POP.TOTL"}\hldef{,}
+                         \hlkwc{mrv} \hldef{=} \hlnum{100}\hldef{,} \hlkwc{return_wide} \hldef{=} \hlnum{FALSE}\hldef{)}
+
+\hlkwd{ggplot}\hldef{(pop_data_CTRY,} \hlkwd{aes}\hldef{(}\hlkwc{x} \hldef{= date,} \hlkwc{y} \hldef{= value))} \hlopt{+}
+  \hlkwd{geom_line}\hldef{()} \hlopt{+}
+  \hlkwd{labs}\hldef{(}\hlkwc{title} \hldef{=} \hlsng{"Population of Canada"}\hldef{,} \hlkwc{x} \hldef{=} \hlsng{"Year"}\hldef{,} \hlkwc{y} \hldef{=} \hlsng{"Population"}\hldef{)} \hlopt{+}
+  \hlkwd{scale_y_continuous}\hldef{(}
+    \hlkwc{labels} \hldef{=} \hlkwd{label_number}\hldef{(}\hlkwc{scale} \hldef{=} \hlnum{1e-6}\hldef{,} \hlkwc{suffix} \hldef{=} \hlsng{"M"}\hldef{))} \hlopt{+}
+  \hlkwd{theme_minimal}\hldef{()}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\maxFrameImage{FIGS/L01-population-of-Canada-1.pdf}
+
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% \subsection{Solving ODE with \code{R}}
+% % The subsection page
+% \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+\begin{frame}{The \code{deSolve} library}
+As I have already pointed out, \href{https://cran.r-project.org/web/packages/deSolve/index.html}{\code{deSolve}}:
+\begin{quotation}
+    The functions provide an interface to the FORTRAN functions 'lsoda', 'lsodar', 'lsode', 'lsodes' of the 'ODEPACK' collection, to the FORTRAN functions 'dvode', 'zvode' and 'daspk' and a C-implementation of solvers of the 'Runge-Kutta' family with fixed or variable time steps
+\end{quotation}
+\vfill
+\begin{itemize}
+  \item You are benefiting from years of experience: \href{https://computing.llnl.gov/projects/odepack}{ODEPACK} is a set of Fortran (originally 77!) solvers developed at Lawrence Livermore National Laboratory (LLNL) starting in the late 70s
+  \vfill
+  \item Other good solvers are also included, those written in \code{C}
+  \vfill
+  \item Refer to the \href{https://cran.r-project.org/web/packages/deSolve/deSolve.pdf}{package help} for details
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Using deSolve for simple ODEs}
+    As with more numerical solvers, you need to write a function returning the value of the right hand side of your equation (the vector field) at a given point in phase space, then call this function from the solver
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hldef{(deSolve)}
+\hldef{rhs_logistic} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{t}\hldef{,} \hlkwc{x}\hldef{,} \hlkwc{p}\hldef{) \{}
+    \hlkwd{with}\hldef{(}\hlkwd{as.list}\hldef{(x), \{}
+    \hldef{dN} \hlkwb{<-} \hldef{p}\hlopt{$}\hldef{r} \hlopt{*} \hldef{N} \hlopt{*}\hldef{(}\hlnum{1}\hlopt{-}\hldef{N}\hlopt{/}\hldef{p}\hlopt{$}\hldef{K)}
+    \hlkwd{return}\hldef{(}\hlkwd{list}\hldef{(dN))}
+    \hldef{\})}
+\hldef{\}}
+\hldef{params} \hlkwb{=} \hlkwd{list}\hldef{(}\hlkwc{r} \hldef{=} \hlnum{0.1}\hldef{,} \hlkwc{K} \hldef{=} \hlnum{100}\hldef{)}
+\hldef{IC} \hlkwb{=} \hlkwd{c}\hldef{(}\hlkwc{N} \hldef{=} \hlnum{50}\hldef{)}
+\hldef{times} \hlkwb{=} \hlkwd{seq}\hldef{(}\hlnum{0}\hldef{,} \hlnum{100}\hldef{,} \hlnum{1}\hldef{)}
+\hldef{sol} \hlkwb{<-} \hlkwd{ode}\hldef{(IC, times, rhs_logistic, params)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+
+\begin{frame}[fragile]
+This also works: add \code{p} to arguments of \code{as.list} and thus use without \code{p\$} prefix
+    
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hldef{(deSolve)}
+\hldef{rhs_logistic} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{t}\hldef{,} \hlkwc{x}\hldef{,} \hlkwc{p}\hldef{) \{}
+    \hlkwd{with}\hldef{(}\hlkwd{as.list}\hldef{(}\hlkwd{c}\hldef{(x, p)), \{}
+    \hldef{dN} \hlkwb{<-} \hldef{r} \hlopt{*} \hldef{N} \hlopt{*}\hldef{(}\hlnum{1}\hlopt{-}\hldef{N}\hlopt{/}\hldef{K)}
+    \hlkwd{return}\hldef{(}\hlkwd{list}\hldef{(dN))}
+    \hldef{\})}
+\hldef{\}}
+\hldef{params} \hlkwb{=} \hlkwd{list}\hldef{(}\hlkwc{r} \hldef{=} \hlnum{0.1}\hldef{,} \hlkwc{K} \hldef{=} \hlnum{100}\hldef{)}
+\hldef{IC} \hlkwb{=} \hlkwd{c}\hldef{(}\hlkwc{N} \hldef{=} \hlnum{50}\hldef{)}
+\hldef{times} \hlkwb{=} \hlkwd{seq}\hldef{(}\hlnum{0}\hldef{,} \hlnum{100}\hldef{,} \hlnum{1}\hldef{)}
+\hldef{sol} \hlkwb{<-} \hlkwd{ode}\hldef{(IC, times, rhs_logistic, params)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+In this case, beware of not having a variable and a parameter with the same name..
+\end{frame}
+
+
+\begin{frame}[fragile]{Default method: \code{lsoda}}
+\code{lsoda} switches automatically between stiff and nonstiff methods
+\vfill
+You can also specify other methods: "lsode", "lsodes", "lsodar", "vode", "daspk", "euler", "rk4", "ode23", "ode45", "radau", "bdf", "bdf\_d", "adams", "impAdams" or "impAdams\_d" ,"iteration" (the latter for discrete-time systems)
+
+\begin{lstlisting}
+ode(y, times, func, parms, method = "ode45")    
+\end{lstlisting}
+You can even implement your own integration method
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Very brief introduction to julia}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_ubwp96ubwp96ubwp.png}
+
+\begin{frame}
+  \frametitle{What is Julia?}
+  \begin{itemize}
+    \item A \textbf{high-level}, \textbf{high-performance}, \textbf{dynamic} programming language
+    \vfill
+    \item Designed for scientific computing, machine learning, data science, and large-scale linear algebra
+    \vfill
+    \item First appeared in 2012, with version 1.0 released in 2018
+    \vfill
+    \item Aims to solve the \textbf{"two-language problem"}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The "Two-Language Problem"}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \textbf{Prototyping}
+      \begin{itemize}
+        \item Languages like Python, R, MATLAB
+        \item Easy to write, flexible
+        \item Often too slow for production/large-scale computations
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \textbf{Production}
+      \begin{itemize}
+        \item Languages like C++, Fortran
+        \item Very fast
+        \item Steeper learning curve, more verbose, slower development time
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{alertblock}{The Solution: Julia}
+    Julia provides the speed of C/C++ with a syntax as friendly as Python's. Write readable code that is also fast
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Key Features of Julia}
+  \begin{itemize}
+    \item \textbf{Fast:} Just-In-Time (JIT) compiled using LLVM, approaching speeds of statically-compiled languages like C
+    \vfill
+    \item \textbf{Dynamic:} Dynamically typed, interactive
+    \vfill
+    \item \textbf{Composable:} The core design principle is \textit{multiple dispatch}, allowing functions to be extended with new methods
+    \vfill
+    \item \textbf{Parallelism:} Designed from the ground up for parallel and distributed computing
+    \vfill
+    \item \textbf{Metaprogramming:} Code can generate other code, leading to powerful abstractions (macros)
+    \vfill
+    \item \textbf{Great Package Manager:} Easy to manage dependencies and create reproducible environments
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Basic Syntax: Variables and Types}
+  Variables are assigned with `=`. Types are inferred automatically
+  \begin{lstlisting}
+# Numbers
+x = 10         # Integer (Int64)
+y = 3.14       # Floating point (Float64)
+z = 1 + 2im    # Complex number
+
+# Strings and Characters
+greeting = "Hello, Julia!" # String
+initial = 'J'             # Char
+
+# Booleans
+is_fast = true            # Bool\end{lstlisting}
+  \vfill
+  You can also explicitly annotate types using `::`.
+  \begin{lstlisting}
+radius::Float64 = 5.0\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arrays: Vectors and Matrices}
+  Arrays are fundamental for numerical computing. Indexing is \textbf{1-based}
+  \begin{lstlisting}
+# A 1D array (Vector)
+A = [1, 2, 3, 4, 5]
+println(A[1])  # Prints 1
+println(A[end]) # Prints 5
+
+# A 2D array (Matrix)
+M = [1 2 3; 4 5 6]
+# 1 2 3
+# 4 5 6
+
+println(M[2, 3]) # Prints 6 (row 2, column 3)\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Control Flow: Loops and Conditionals}
+  Syntax requires an `end` keyword
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \textbf{For Loop}
+      \begin{lstlisting}
+for i in 1:5
+  println(i)
+end\end{lstlisting}
+      \textbf{While Loop}
+      \begin{lstlisting}
+n = 3
+while n > 0
+  println(n)
+  n -= 1
+end\end{lstlisting}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \textbf{If-Else}
+      \begin{lstlisting}
+x = 10
+if x > 0
+  println("Positive")
+elseif x < 0
+  println("Negative")
+else
+  println("Zero")
+end\end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Defining Functions}
+  Two common ways to define functions
+  
+  \textbf{Standard long-form definition:}
+  \begin{lstlisting}
+function cylinder_volume(r, h)
+    return pi * r^2 * h
+end\end{lstlisting}
+  
+  \vfill
+  \textbf{Compact one-line definition:}
+  \begin{lstlisting}
+cylinder_volume(r, h) = pi * r^2 * h\end{lstlisting}
+  
+  \vfill
+  Calling the function:
+\begin{lstlisting}
+volume = cylinder_volume(2, 10) # 125.66\end{lstlisting}
+The `return` keyword is optional for the last expression
+\end{frame}
+
+\begin{frame}
+  \frametitle{Multiple dispatch}
+  \begin{itemize}
+    \item In most languages (like Python/Java), methods belong to objects (single dispatch). \code{obj.method()} depends on the type of \code{obj}
+    \vfill
+    \item In Julia, functions are defined on combinations of argument types
+    \vfill
+    \item The specific function \textit{method} that is called depends on the \textbf{types of all arguments}
+    \vfill
+    \item This allows for writing generic code that is automatically specialized and fast. It's a natural way to express many mathematical and scientific problems
+  \end{itemize}
+  \vfill
+  \begin{exampleblock}{Core Idea}
+  Instead of \code{data.process()}, you write \code{process(data)}. You can then create a new \code{process} method for a new data type without touching the original code
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple dispatch: example}
+  Define a generic function \code{combine} and add methods for it
+  \begin{lstlisting}
+# Method for two numbers
+combine(x::Number, y::Number) = x + y
+
+# Method for two strings
+combine(x::String, y::String) = x * " " * y
+
+# Method for a number and a string
+combine(x::Number, y::String) = y^x # Repeat string x times\end{lstlisting}
+  \vfill
+  Julia chooses the correct method at runtime:
+  \begin{lstlisting}
+combine(2, 3)         # Returns 5
+combine("Hello", "World") # Returns "Hello World"
+combine(3, "Ha")      # Returns "HaHaHa"\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A growing scientific ecosystem}
+  Rich ecosystem of packages for various domains
+  \vfill
+  \begin{itemize}
+    \item \textbf{DataFrames.jl}: For working with tabular data (like data frames in \code{R})
+    \vfill
+    \item \textbf{Plots.jl}: A powerful and flexible plotting library
+    \vfill
+    \item \textbf{Flux.jl} \& \textbf{Lux.jl}: For machine learning and deep learning
+    \vfill
+    \item \textbf{JuMP.jl}: For mathematical optimization and modeling
+    \vfill
+    \item \textbf{DifferentialEquations.jl}: State-of-the-art suite for solving differential equations
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plotting example with Plots.jl}
+  Creating plots is straightforward
+  \begin{lstlisting}
+# First, add the package and load it
+# Pkg.add("Plots")
+using Plots
+
+# Generate data
+x = 0:0.1:2*pi
+y1 = sin.(x)
+y2 = cos.(x)
+
+# Create a plot
+plot(x, y1, label="sin(x)", lw=2)
+plot!(x, y2, label="cos(x)", linestyle=:dash)
+title!("Trigonometric Functions")
+xlabel!("x-axis")\end{lstlisting}
+The \code{.} in \code{sin.(x)} is Julia's syntax for broadcasting a function over an array
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Metaprogramming: macros}
+  \begin{itemize}
+    \item Julia's code is represented as a data structure (an Abstract Syntax Tree) that is accessible from the language itself
+    \item This allows you to write \textbf{macros} - functions that run at parse time and transform code
+    \item Macros are denoted with an \code{@} symbol
+  \end{itemize}
+  \vfill
+  A very common built-in macro is \code{@time}
+  \begin{lstlisting}
+@time begin
+    sleep(1)
+    A = rand(1000, 1000)
+    B = A * A'
+end\end{lstlisting}
+Executes the code block and prints the execution time, memory allocation and GC time
+\end{frame}
+
+\begin{frame}
+  \frametitle{Solving differential equations}
+  \begin{itemize}
+    \item Use the \textbf{DifferentialEquations.jl} suite
+    \vfill
+    \item Feature-rich ecosystem that is often faster than traditional Fortran/C++ solvers
+    \vfill
+    \item Supports a wide variety of problems:
+    \begin{itemize}
+        \item Ordinary Differential Equations (ODEs)
+        \item Stochastic Differential Equations (SDEs)
+        \item Delay Differential Equations (DDEs)
+        \item Differential-Algebraic Equations (DAEs)
+    \end{itemize}
+    \vfill
+    \item High-level syntax composable with the rest of the Julia ecosystem (e.g., automatic differentiation, machine learning)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{ODE example}
+  \begin{lstlisting}
+# 1. Load packages
+using DifferentialEquations, Plots
+
+# 2. Define the ODE function
+#    Note the argument order: u (state), p (params), t (time)
+function logistic_growth(u, p, t)
+    r, K = p.r, p.K
+    return r * u * (1 - u/K)
+end
+
+# 3. Set up the problem
+u0 = 50.0                       # Initial condition
+tspan = (0.0, 100.0)            # Time span
+p = (r=0.1, K=100.0)            # Parameters (as a NamedTuple)
+prob = ODEProblem(logistic_growth, u0, tspan, p)
+
+# 4. Solve and plot
+sol = solve(prob)
+plot(sol, label="N(t)", lw=2)\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Advanced Control: ODE Callbacks}
+\bbullet Callbacks allow to intervene during the ODE solution process to perform actions or modify the state. Useful for event handling, data logging, or enforcing constraints
+\vfill
+\bbullet For example, we can ensure a population model never becomes negative
+\vfill
+\begin{lstlisting}
+# A condition: trigger when state is negative
+condition(u, t, integrator) = u < 0.0
+
+# An affect function: what to do when triggered
+function affect!(integrator)
+  integrator.u = 0.0 # Reset state to zero
+end
+
+# Create the callback
+cb = DiscreteCallback(condition, affect!)
+
+# Solve the problem with the callback
+sol = solve(prob, callback = cb)
+plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Getting started}
+  \begin{itemize}
+    \item \textbf{Download Julia:} go to \href{https://julialang.org/downloads/}{\textcolor{blue}{https://julialang.org/downloads/}}
+    \vfill
+    \item \textbf{Official documentation:} \href{https://docs.julialang.org}{\textcolor{blue}{https://docs.julialang.org}}
+    \vfill
+    \item \textbf{IDE/Editor Support:}
+    I recommend using VS Code
+    \vfill
+    \item \textbf{Start the REPL:}
+    Open your terminal and type `julia` to start the interactive Read-Eval-Print Loop
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
+To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-and-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
+\vfill
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
+\hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
+  \hldef{callr}\hlopt{::}\hlkwd{r}\hldef{(}\hlkwa{function}\hldef{(}\hlkwc{file}\hldef{,} \hlkwc{temp}\hldef{)\{}
+    \hldef{out_file} \hlkwb{=} \hlkwd{sprintf}\hldef{(}\hlsng{"../CODE/%s"}\hldef{,} \hlkwd{gsub}\hldef{(}\hlsng{".Rnw"}\hldef{,} \hlsng{".R"}\hldef{, file))}
+    \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
+  \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
+\hldef{\}}
+\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L01-course-organisation-and-intro-R-julia.Rnw"}\hldef{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{About that \code{R} file}
+Source the file \code{L01-course-organisation-and-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
+\vfill
+Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
+\vfill
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{pp} \hlkwb{=} \hlkwd{ggplot}\hldef{(...)}
+\hlkwd{print}\hldef{(pp)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{local-bibliography}
+\end{frame}
+
+\end{document}
