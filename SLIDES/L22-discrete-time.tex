@@ -50,14 +50,21 @@
 
 \usepackage{alltt}
 
+% Set lecture number for later use
+
+
+% Part common to all the lectures
+\subtitle{MATH 8xyz -- Lecture 19}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+% Title of the lecture
+\title{Models using a deterministic discrete time formulation}
+
 
 
 \input{slides-setup-whiteBG.tex}
 
-\title{Stochastic aspects}
-\subtitle{Populate Summer School -- Course 03}
-\date{20 June 2025}
-\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -325,7 +332,7 @@ Since $T$ is continuous, it has a continuous \defword{probability density functi
 \end{itemize}
 \end{minipage}
 \begin{minipage}{0.59\textwidth}
-\includegraphics[width=\textwidth]{FIGS/course-03-distrib_a_b-1.pdf}
+\includegraphics[width=\textwidth]{FIGS/L19-distrib_a_b-1.pdf}
 \end{minipage}
 \end{frame}
 
@@ -339,7 +346,7 @@ F(s)=\IP(T\leq s)=\int_{-\infty}^sf(x)dx
 \]
 \end{minipage}
 \begin{minipage}{0.59\textwidth}
-\includegraphics[width=\textwidth]{FIGS/course-03-distrib_minf_b-1.pdf}
+\includegraphics[width=\textwidth]{FIGS/L19-distrib_minf_b-1.pdf}
 \end{minipage}
 \end{frame}
 
@@ -361,7 +368,7 @@ $\S(0)=1$ (since $T$ is a nonnegative random variable)
 
 
 
-\maxFrameImage{FIGS/course-03-pdf-cdf-surv-normal-1.pdf}
+\maxFrameImage{FIGS/L19-pdf-cdf-surv-normal-1.pdf}
 
 \begin{frame}
 The \defword{average sojourn time} $\tau$ in state $A$ is given by
@@ -403,7 +410,7 @@ h(t)=-\frac{d}{dt}\ln\S(t)
 
 
 
-\maxFrameImage{FIGS/course-03-pdf-cdf-surv-hazard-normal-1.pdf}
+\maxFrameImage{FIGS/L19-pdf-cdf-surv-hazard-normal-1.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Competing risks}
@@ -490,7 +497,7 @@ The exponential distribution has a constant hazard function $h(t)\equiv\theta$
 
 
 
-\maxFrameImage{FIGS/course-03-pdf-cdf-surv-hazard-expon-1.pdf}
+\maxFrameImage{FIGS/L19-pdf-cdf-surv-hazard-expon-1.pdf}
 
 \begin{frame}\frametitle{The Dirac delta distribution}
 If for some constant $\omega>0$,
@@ -544,7 +551,7 @@ is an incomplete Gamma function
 
 
 
-\maxFrameImage{FIGS/course-03-pdf-cdf-surv-hazard-gamma-1.pdf}
+\maxFrameImage{FIGS/L19-pdf-cdf-surv-hazard-gamma-1.pdf}
 
 
 %%%%%%%%%%%%%%%%%%%
@@ -593,7 +600,7 @@ with $N(0)=N_0$.
 \begin{frame}
 Survival function, $\S(t)=\IP(T>t)$, for an exponential distribution with mean 80 years
 \begin{center}
-\includegraphics[width=0.8\textwidth]{FIGS/course-03-prop_surviving_exp_80years-1.pdf}
+\includegraphics[width=0.8\textwidth]{FIGS/L19-prop_surviving_exp_80years-1.pdf}
 \end{center}
 \end{frame}
 
@@ -625,7 +632,7 @@ Here, $N'=0$ everywhere except at $t=\omega$, where it is undefined
 \begin{frame}
 Survival function, $\S(t)=\IP(T>t)$, for a Dirac distribution with mean 80 years
 \begin{center}
-\includegraphics[width=0.8\textwidth]{FIGS/course-03-prop_surviving_dirac_80years-1.pdf}
+\includegraphics[width=0.8\textwidth]{FIGS/L19-prop_surviving_dirac_80years-1.pdf}
 \end{center}
 \end{frame}
 
@@ -644,7 +651,7 @@ Survival function, $\S(t)=\IP(T>t)$, for a Dirac distribution with mean 80 years
 
 \begin{frame}{Survival for the exponential distribution}
 \begin{center}
-\includegraphics[width=0.75\textwidth]{FIGS/course-03-prop_surviving_exp_80years_details-1.pdf}
+\includegraphics[width=0.75\textwidth]{FIGS/L19-prop_surviving_exp_80years_details-1.pdf}
 \end{center}
 \end{frame}
 
@@ -817,7 +824,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
 \begin{frame}
 We find the best fit below, which is obtained using 2 compartments
 \begin{center}
-\includegraphics[width=0.75\textwidth]{FIGS/course-03-plot_results_optim_Erlang-1.pdf}
+\includegraphics[width=0.75\textwidth]{FIGS/L19-plot_results_optim_Erlang-1.pdf}
 \end{center}
 \end{frame}
 
@@ -1427,11 +1434,11 @@ while {$t\leq t_f$}\\
 
 
 
-\maxFrameImage{FIGS/course-03-CTMC_birth_death_b0_01_d0_01-1.pdf}
+\maxFrameImage{FIGS/L19-CTMC_birth_death_b0_01_d0_01-1.pdf}
 
 
 
-\maxFrameImage{FIGS/course-03-CTMC_birth_death_b0_01_d0_02-1.pdf}
+\maxFrameImage{FIGS/L19-CTMC_birth_death_b0_01_d0_02-1.pdf}
 
 \begin{frame}[fragile]{$b=0.03$ \& $d=0.01$...}
 We want to run the function with these parameter values but I know in advance this will not work well, so let's tweak the function a bit. We add a test:
@@ -1450,7 +1457,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 
 
 
-\maxFrameImage{FIGS/course-03-CTMC_birth_death_b0_03_d0_01-1.pdf}
+\maxFrameImage{FIGS/L19-CTMC_birth_death_b0_03_d0_01-1.pdf}
 
 
 
@@ -1458,12 +1465,12 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \begin{frame}[fragile]{Last one did not go well}
     \begin{itemize}
         \item Wanted 1000 time units (days?)
-        \item Interrupted at 298.9017509 because of the test
+        \item Interrupted at 324.7255089 because of the test
         \newline (Slide with $b<d$: sim stopped because the population went extinct, I did not stop it!)
         \item At stop time
         \begin{itemize}
-            \item $N =$ \ensuremath{3.4107\times 10^{4}}
-            \item $|N| =$ 67760 (and $|t|$ as well, of course!)
+            \item $N =$ \ensuremath{5.8278\times 10^{4}}
+            \item $|N| =$ 116085 (and $|t|$ as well, of course!)
             \item time was moving slowly
         \end{itemize}
     \end{itemize}
@@ -1475,8 +1482,8 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hlkwd{tail}\hldef{(}\hlkwd{diff}\hldef{(results}\hlopt{$}\hldef{t))}
 \end{alltt}
 \begin{verbatim}
-## [1] 3.194313e-04 1.495067e-03 8.422842e-04 3.989350e-06 1.811261e-03
-## [6] 7.600420e-09
+## [1] 1.885974e-04 6.686385e-04 1.453916e-04 5.989438e-04 4.190372e-04
+## [6] 1.739522e-09
 \end{verbatim}
 
 \end{knitrout}
@@ -1484,7 +1491,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \end{frame}
 
 
-\maxFrameImage{FIGS/course-03-plot_CTMC_birth_death_b0_03_d0_01_interevent-1.pdf}
+\maxFrameImage{FIGS/L19-plot_CTMC_birth_death_b0_03_d0_01_interevent-1.pdf}
 
 \subsection{Simulating CTMC (in practice)}
 % The section page
@@ -1534,7 +1541,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 
 \end{frame}
 
-\maxFrameImage{FIGS/course-03-sim-gillespie2-first-1.pdf}
+\maxFrameImage{FIGS/L19-sim-gillespie2-first-1.pdf}
 
 
 
@@ -1604,6 +1611,10 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 
 \hlcom{# By default, use all available cores}
 \hlkwd{plan}\hldef{(multisession)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: Cannot create 128 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.}}\begin{alltt}
 \hlcom{## To use fewer workers, leaving one empty for }
 \hlcom{# instance}
 \hlcom{# plan(multisession, availableCores()-1)}
@@ -1628,6 +1639,10 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hldef{SIMS} \hlkwb{=} \hlkwd{future_lapply}\hldef{(}
   \hlkwc{X} \hldef{=} \hlnum{1}\hlopt{:}\hldef{params}\hlopt{$}\hldef{nb_sims,}
   \hlkwc{FUN} \hldef{=}  \hlkwa{function}\hldef{(}\hlkwc{x}\hldef{)} \hlkwd{run_one_sim}\hldef{(CTMC, params))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: Cannot create 128 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.}}\begin{alltt}
 \hlcom{#  Liberate the workers!}
 \hlkwd{stopCluster}\hldef{(cl)}
 \end{alltt}
@@ -1637,6 +1652,10 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hlcom{# Find max y value for plot}
 \hldef{y_max} \hlkwb{=} \hlkwd{max}\hldef{(}\hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(SIMS,} \hlkwa{function}\hldef{(}\hlkwc{x}\hldef{)} \hlkwd{max}\hldef{(x}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{I))),}
             \hlkwc{na.rm} \hldef{=} \hlnum{TRUE}\hldef{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}\begin{alltt}
 \hlcom{# Now plot}
 \hlkwd{plot}\hldef{(SIMS[[}\hlnum{1}\hldef{]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{time,}
      \hldef{SIMS[[}\hlnum{1}\hldef{]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{I,}
@@ -1645,6 +1664,10 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
      \hlkwc{ylab} \hldef{=} \hlsng{"Number infectious"}\hldef{,}
      \hlkwc{ylim} \hldef{=} \hlkwd{c}\hldef{(}\hlnum{0}\hldef{, y_max),}
      \hlkwc{main} \hldef{=} \hlkwd{paste}\hldef{(}\hlsng{"CTMC with R0 ="}\hldef{, params}\hlopt{$}\hldef{R0))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}\begin{alltt}
 \hlkwa{for} \hldef{(i} \hlkwa{in} \hlnum{2}\hlopt{:}\hlkwd{length}\hldef{(SIMS)) \{}
   \hlkwd{lines}\hldef{(SIMS[[i]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{time,}
         \hldef{SIMS[[i]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{I,}
@@ -1652,6 +1675,8 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hldef{\}}
 \end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}
 \end{knitrout}
 
 \begin{frame}[fragile, allowframebreaks]{Common part -- The function we run}
@@ -1694,7 +1719,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 
 \end{frame}
 
-\maxFrameImage{FIGS/course-03-parallel-CTMC-plot-1.pdf}
+\maxFrameImage{FIGS/L19-parallel-CTMC-plot-1.pdf}
 
 \begin{frame}[fragile]{Benefit of parallelisation}
     Run the parallel code for 100 sims between `tictoc::tic()` and `tictoc::toc()`, giving `66.958 sec elapsed`, then the sequential version

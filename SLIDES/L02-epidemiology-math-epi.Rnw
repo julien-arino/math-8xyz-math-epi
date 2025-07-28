@@ -1,5 +1,18 @@
 \documentclass[aspectratio=169]{beamer}
 
+% Set lecture number for later use
+<<set-lecture-number,echo=FALSE>>=
+lecture_number = "02"
+@
+
+% Part common to all the lectures
+\subtitle{MATH 8xyz -- Lecture \Sexpr{lecture_number}}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+% Title of the lecture
+\title{Epidemiology and mathematical epidemiology}
+
 <<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
 # Load required libraries
 required_packages = c("deSolve",
@@ -23,7 +36,7 @@ message = FALSE,
 dev = c("pdf", "png"),
 fig.width = 6, 
 fig.height = 4, 
-fig.path = "FIGS/L01-",
+fig.path = sprintf("FIGS/L%s-", lecture_number),
 fig.keep = "high",
 fig.show = "hide")
 knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
@@ -46,14 +59,6 @@ if (plot_blackBG) {
 }
 cat(input_setup)
 @
-
-\title{Epidemiology \& A brief history of Mathematical epidemiology}
-\subtitle{MATH 8xyz -- Lecture 02}
-\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
-\date{Winter 20XX}
-
-
-\begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

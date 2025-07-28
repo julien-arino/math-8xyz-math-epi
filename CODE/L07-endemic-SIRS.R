@@ -1,3 +1,7 @@
+## ----set-lecture-number,echo=FALSE--------------------------------------------
+lecture_number = "07"
+
+
 ## ----set-options,echo=FALSE,warning=FALSE,message=FALSE-----------------------
 # Load required libraries
 required_packages = c("deSolve",
@@ -24,7 +28,7 @@ opts_chunk$set(echo = TRUE,
                dev = c("pdf", "png"),
                fig.width = 6, 
                fig.height = 4, 
-               fig.path = "FIGS/L07-",
+               fig.path = sprintf("FIGS/L%s-", lecture_number),
                fig.keep = "high",
                fig.show = "hide")
 knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
