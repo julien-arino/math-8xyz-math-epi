@@ -113,6 +113,28 @@ def find_rnw_files(slides_dir):
     return rnw_files
 
 
+def extract_lecture_number_from_rnw(file_path):
+    """
+    Extract the lecture number from the set-lecture-number code chunk at the beginning of an Rnw file.
+    
+    Args:
+        file_path (str): Path to the Rnw file
+        
+    Returns:
+        str: Lecture number as a zero-padded string (e.g., '01'), or None if not found
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+            for _ in range(20):  # Only scan the first 20 lines for efficiency
+                line = file.readline()
+                match = re.match(r'lecture_number\s*=\s*"(\d+)"', line)
+                if match:
+                    return f"{int(match.group(1)):02d}"
+    except Exception as e:
+        print(f"Error reading {file_path} for lecture number: {e}")
+    return None
+
+
 def create_slides_csv(output_file="slides_info.csv"):
     """
     Create a CSV file with slide information.
@@ -148,12 +170,15 @@ def create_slides_csv(output_file="slides_info.csv"):
         # Extract title and subtitle
         title, subtitle = extract_title_from_rnw(rnw_file)
         
-        # Extract lecture number from filename (e.g., L01, L02, L03)
-        lecture_num_match = re.search(r'L(\d+)', rnw_file.stem)
-        if lecture_num_match:
-            lecture_number = f"{int(lecture_num_match.group(1)):02d}"
-        else:
-            lecture_number = "00"  # Default if no lecture number found
+        # Extract lecture number from code chunk at the top of the file
+        lecture_number = extract_lecture_number_from_rnw(rnw_file)
+        if not lecture_number:
+            # fallback to filename if not found
+            lecture_num_match = re.search(r'L(\d+)', rnw_file.stem)
+            if lecture_num_match:
+                lecture_number = f"{int(lecture_num_match.group(1)):02d}"
+            else:
+                lecture_number = "00"  # Default if no lecture number found
         
         # Create combined title
         if title and subtitle:
