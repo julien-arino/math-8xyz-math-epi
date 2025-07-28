@@ -6,8 +6,22 @@ lecture_number,pdf_filename,title,subtitle,full_title,rnw_filename,basename
 05,L05-KMK-more.pdf,Extensions of the Kermack-McKendrick model,MATH 8xyz -- Lecture 05,Extensions of the Kermack-McKendrick model: MATH 8xyz -- Lecture 05,L05-KMK-more.Rnw,L05-KMK-more
 06,L06-sojourn-times.pdf,Sojourn time in compartments,MATH 8xyz -- Lecture 06,Sojourn time in compartments: MATH 8xyz -- Lecture 06,L06-sojourn-times.Rnw,L06-sojourn-times
 07,L07-endemic-SIRS.pdf,The endemic SIRS model,MATH 8xyz -- Lecture 07,The endemic SIRS model: MATH 8xyz -- Lecture 07,L07-endemic-SIRS.Rnw,L07-endemic-SIRS
-08,L08-PvdD-Watmough.pdf,Next generation matrix method for computing R_0,MATH 8xyz -- Lecture 08,Next generation matrix method for computing $_0$: MATH 8xyz -- Lecture 08,L08-PvdD-Watmough.Rnw,L08-PvdD-Watmough
+08,L08-PvdD-Watmough.pdf,Next generation matrix method for computing $_0$,MATH 8xyz -- Lecture 08,Next generation matrix method for computing $_0$: MATH 8xyz -- Lecture 08,L08-PvdD-Watmough.Rnw,L08-PvdD-Watmough
 09,L09-endemic-SLIRS.pdf,The endemic SLIRS model,MATH 8xyz -- Lecture 07,The endemic SLIRS model: MATH 8xyz -- Lecture 07,L09-endemic-SLIRS.Rnw,L09-endemic-SLIRS
 10,L10-vector-borne.pdf,Vector-borne diseases,MATH 8xyz -- Lecture 10,Vector-borne diseases: MATH 8xyz -- Lecture 10,L10-vector-borne.Rnw,L10-vector-borne
 11,L11-water-borne.pdf,Water- and environment-borne diseases,MATH 8xyz -- Lecture 11,Water- and environment-borne diseases: MATH 8xyz -- Lecture 11,L11-water-borne.Rnw,L11-water-borne
 12,L12-incidence-functions.pdf,Incidence functions,MATH 8xyz -- Lecture 12,Incidence functions: MATH 8xyz -- Lecture 12,L12-incidence-functions.Rnw,L12-incidence-functions
+13,L13-backward-bifurcations.pdf,Backward bifurcations,MATH 8xyz -- Lecture 13,Backward bifurcations: MATH 8xyz -- Lecture 13,L13-backward-bifurcations.Rnw,L13-backward-bifurcations
+14,L14-global-asymptotic-stability.pdf,Global asymptotic stability,MATH 8xyz -- Lecture 14,Global asymptotic stability: MATH 8xyz -- Lecture 14,L14-global-asymptotic-stability.Rnw,L14-global-asymptotic-stability
+15,L15-periodic-solutions.pdf,Models with periodic solutions,MATH 8xyz -- Lecture 15,Models with periodic solutions: MATH 8xyz -- Lecture 15,L15-periodic-solutions.Rnw,L15-periodic-solutions
+16,L16-group-models.pdf,Metapopulation models and a few advanced models,Populate Summer School -- Course 02,Metapopulation models and a few advanced models: Populate Summer School -- Course 02,L16-group-models.Rnw,L16-group-models
+17,L17-metapopulation-models-1.pdf,Metapopulation models and a few advanced models,Populate Summer School -- Course 02,Metapopulation models and a few advanced models: Populate Summer School -- Course 02,L17-metapopulation-models-1.Rnw,L17-metapopulation-models-1
+18,L18-metapopulation-models-2.pdf,Metapopulation models and a few advanced models,Populate Summer School -- Course 02,Metapopulation models and a few advanced models: Populate Summer School -- Course 02,L18-metapopulation-models-2.Rnw,L18-metapopulation-models-2
+19,L19-spatial-PDEs.pdf,Metapopulation models and a few advanced models,Populate Summer School -- Course 02,Metapopulation models and a few advanced models: Populate Summer School -- Course 02,L19-spatial-PDEs.Rnw,L19-spatial-PDEs
+20,L20-age-of-PDEs.pdf,Metapopulation models and a few advanced models,Populate Summer School -- Course 02,Metapopulation models and a few advanced models: Populate Summer School -- Course 02,L20-age-of-PDEs.Rnw,L20-age-of-PDEs
+21,L21-advanced-time-of-sojourn.pdf,Metapopulation models and a few advanced models,Populate Summer School -- Course 02,Metapopulation models and a few advanced models: Populate Summer School -- Course 02,L21-advanced-time-of-sojourn.Rnw,L21-advanced-time-of-sojourn
+22,L22-discrete-time.pdf,Stochastic aspects,Populate Summer School -- Course 03,Stochastic aspects: Populate Summer School -- Course 03,L22-discrete-time.Rnw,L22-discrete-time
+23,L23-CTMC-models.pdf,Stochastic aspects,Populate Summer School -- Course 03,Stochastic aspects: Populate Summer School -- Course 03,L23-CTMC-models.Rnw,L23-CTMC-models
+24,L24-SDE-models.pdf,Stochastic aspects,Populate Summer School -- Course 03,Stochastic aspects: Populate Summer School -- Course 03,L24-SDE-models.Rnw,L24-SDE-models
+25,L25-network-models.pdf,Stochastic aspects,Populate Summer School -- Course 03,Stochastic aspects: Populate Summer School -- Course 03,L25-network-models.Rnw,L25-network-models
+26,L26-ABM-models.pdf,Stochastic aspects,Populate Summer School -- Course 03,Stochastic aspects: Populate Summer School -- Course 03,L26-ABM-models.Rnw,L26-ABM-models
