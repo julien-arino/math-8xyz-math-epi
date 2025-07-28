@@ -2,7 +2,7 @@
 
 This GitHub repo contains material (slides and code) for a graduate course on Mathematical epidemiology.
 
-I am adding slides progressively: those that are present are "ready for consumption".
+I am adding slides progressively; those that are present are, for the most part, "ready for consumption".
 I will be recording videos to match the slides but have not started yet.
 
 ### This GitHub repo

@@ -1,0 +1,751 @@
+\documentclass[aspectratio=169]{beamer}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+
+
+\input{slides-setup-whiteBG.tex}
+
+\title{Compartmental models}
+\subtitle{MATH 8xyz -- Lecture 03}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4qvst54qvst54qvs.png}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_d0uu54d0uu54d0uu.png}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Introduction to compartmental models}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+
+\begin{frame}{Compartmental models}
+\bbullet Have become synonymous with epidemiological modèles
+\vfill
+\bbullet Many epidemiological models are compartmental models, but the development of compartmental models in the 1970-1980s was not at all specific to epidemiology
+\vfill
+\bbullet See in particular the works of John Jacquez, Carl Simon, GG Walter
+\vfill
+\bbullet Unjustly fell into disuse: there are some very nice results in the area    
+\end{frame}
+
+\begin{frame}{Compartment (\href{https://doi-org.uml.idm.oclc.org/10.1016/B978-0-12-434180-7.50021-8}{Jacquez 1979})}
+
+\begin{quote}
+  A \defword{compartment} is an amount of some material which acts kinetically like a distinct, homogeneous, well-mixed amount of material. A \defword{compartmental system} consists of one or more compartments which interact by exchanging the material. There may be inputs into one or more compartments from outside the system and there may be excretions from the compartments of the system.   
+\end{quote}
+\end{frame}
+
+\begin{frame}{}
+  \begin{minipage}{0.4\textwidth}
+    \tikzstyle{cloud} = [rectangle, 
+    draw=black!50, 
+    fill=black!80, 
+    thick, 
+    minimum width=0.6cm,
+    minimum height = 1cm]
+    \tikzstyle{line} = [draw, 
+    -latex', 
+    color=yellow]
+    \begin{tikzpicture}[scale=1.5, transform shape]
+      \node [cloud] (S) {$q_i$};
+      \coordinate[above=of S] (h1);
+      \coordinate[right=of S] (h2);
+      \coordinate[left=of S] (h3);
+      \coordinate[below=of S] (h4);
+      %% Flows
+      \path [line, very thick] (h1) to node [midway, right] (TextNode) {$i_i(t)$} (S);
+      \path [line, very thick] (S) to node [midway, above] (TextNode) {$f_{ji}$} (h2);
+      \path [line, very thick] (h3) to node [midway, above] (TextNode) {$f_{ij}$} (S);
+      \path [line, very thick] (S) to node [midway, right] (TextNode) {$f_{0i}$} (h4);
+    \end{tikzpicture}  
+  \end{minipage}
+  \begin{minipage}{0.55\textwidth}
+    \begin{itemize}
+      \item $q_i$ size of the compartment, i.e., quantity of kinetically homogeneous material present in $i$; $q_i\geq 0$
+      \item $f_{ij}$ and $f_{ji}$ transfer coefficients/functions
+      \item $f_{0i}$ excretion coefficient/function
+      \item $i_i(t)$ entries from outside the system
+    \end{itemize}
+  \end{minipage}
+\end{frame}
+
+
+\begin{frame}{What is a model?}
+    \begin{block}{The essence of modeling}
+        A model is a simplified representation of a real-world system. It is an abstraction designed to capture the essential features and dynamics of the system being studied
+    \end{block}
+    \vspace{1cm}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Purpose:}
+            \begin{itemize}
+                \item Understand complex systems
+                \item Predict future behavior
+                \item Test hypotheses
+                \item Guide experimental design
+                \item Inform policy decisions
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Characteristics:}
+            \begin{itemize}
+                \item Always a simplification
+                \item Based on assumptions
+                \item Domain-specific
+                \item Can be mathematical, conceptual, or physical
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{What is a compartmental model?}
+    \begin{definition}[Compartmental model]
+        A compartmental model is a mathematical model that divides a system into a finite number of distinct, homogeneous, and well-mixed subpopulations, called \textbf{compartments}. The model describes the flow of individuals or material between these compartments over time
+    \end{definition}
+    \vfill
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=3cm,
+            compartment/.style={rectangle, draw, fill=blue!20, rounded corners, minimum height=1.5cm, minimum width=2.5cm, text width=2.5cm, align=center},
+            arrow/.style={-latex, thick}
+        ]
+            \node[compartment] (C1) {Compartment 1 ($x_1$)};
+            \node[compartment, right of=C1] (C2) {Compartment 2 ($x_2$)};
+            \node[compartment, right of=C2] (C3) {Compartment 3 ($x_3$)};
+
+            \draw[arrow] (C1) -- node[above] {$k_{21}$} (C2);
+            \draw[arrow] (C2) -- node[above] {$k_{32}$} (C3);
+            \draw[arrow] (C2) to[bend right] node[below] {$k_{12}$} (C1);
+            \draw[arrow] (C3) to[bend right] node[below] {$k_{23}$} (C2);
+            \draw[arrow] (C1) to[bend right=60] node[above] {Input} (C1.north);
+            \draw[arrow] (C3) to[bend left=60] node[above] {Output} (C3.north);
+        \end{tikzpicture}
+    \end{center}
+    \vfill
+    \small{\textbf{Key assumption:} The population within each compartment is instantaneously and perfectly mixed}
+\end{frame}
+
+\begin{frame}{Early history of compartmental ideas}
+    \begin{itemize}
+        \item \textbf{Early 20th century:} Origins in chemical kinetics and epidemiology
+        \begin{itemize}
+            \item \textbf{Ross (1911):} Modeled malaria transmission
+            \item \textbf{Kermack \& McKendrick (1927):} Developed the foundational SIR model for epidemics
+        \end{itemize}
+        \item \textbf{Mid-20th century:} Formalization and application in pharmacokinetics and physiology
+        \item \textbf{John A. Jacquez (1922-2002):} A pioneer in the mathematical theory of compartmental systems
+        \begin{itemize}
+            \item Authored the seminal text \textit{"Compartmental Analysis in Biology and Medicine"}
+            \item Formalized concepts of model specification, structural identifiability, and linear system properties
+        \end{itemize}
+        \item \textbf{Carl P. Simon:} Worked extensively on the qualitative analysis of nonlinear dynamical systems, including epidemiological models
+        \begin{itemize}
+            \item Contributed significantly to understanding the stability of equilibria and the threshold phenomena in disease dynamics
+        \end{itemize}
+        \item \textbf{G. G. Walter:} Investigated the structural properties of compartmental models, particularly identifiability
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Applications across disciplines}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Epidemiology}
+            \begin{itemize}
+                \item Modeling infectious disease spread (SIR, SEIR)
+                \item Vaccine strategy evaluation
+                \item Predicting pandemic trajectories (e.g., COVID-19)
+            \end{itemize}
+            \vspace{1cm}
+            \textbf{Pharmacology}
+            \begin{itemize}
+                \item Pharmacokinetics (PK) and Pharmacodynamics (PD)
+                \item Drug absorption, distribution, metabolism, and excretion (ADME)
+                \item Dosing regimen design
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Ecology}
+            \begin{itemize}
+                \item Nutrient cycling in ecosystems
+                \item Population dynamics
+                \item Toxin flow in food webs
+            \end{itemize}
+            \vspace{1cm}
+            \textbf{Other fields}
+            \begin{itemize}
+                \item Chemical engineering (reactor models)
+                \item Economics (flow of capital)
+                \item Tracer kinetics in physiology
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Fundamentals of compartmental modeling}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+\begin{frame}{The Building Blocks}
+    \begin{itemize}
+        \item \textbf{Compartments ($C_i$):} Subpopulations or amounts of material.
+        \begin{itemize}
+            \item Example: Susceptible (S), Infected (I), Recovered (R) individuals.
+        \end{itemize}
+        \item \textbf{State Variables ($x_i(t)$):} The amount or concentration of material in compartment $i$ at time $t$. The state of the system is the vector $\vect{x}(t) = [x_1(t), x_2(t), \dots, x_n(t)]^T$.
+        \item \textbf{Flows (Fluxes):} The rate of transfer of material between compartments or between a compartment and the outside world (environment).
+        \begin{itemize}
+            \item Let $f_{ij}$ be the rate of flow from compartment $j$ to compartment $i$.
+            \item $f_{0j}$ is the rate of flow from compartment $j$ to the environment (excretion/output).
+            \item $f_{i0}$ is the rate of flow from the environment to compartment $i$ (input).
+        \end{itemize}
+        \item \textbf{Rate Constants ($k_{ij}$):} Parameters that determine the rate of flow. In linear models, $f_{ij} = k_{ij} x_j$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Mathematical formulation: the ODE system}
+    The dynamics of a compartmental system are described by a system of first-order ordinary differential equations (ODEs).
+
+    \begin{block}{The fundamental equation of balance}
+        For each compartment $i$, the rate of change of its state variable $x_i$ is given by:
+        $$ \frac{dx_i}{dt} = (\text{Sum of all flows into } C_i) - (\text{Sum of all flows out of } C_i) $$
+    \end{block}
+
+    Mathematically, for an $n$-compartment system:
+    $$ \frac{dx_i}{dt} = f_{i0}(t) + \sum_{j=1, j\neq i}^{n} f_{ij}(\vect{x}) - \sum_{j=0, j\neq i}^{n} f_{ji}(\vect{x}) $$
+    where:
+    \begin{itemize}
+        \item $f_{i0}(t)$ is the input to compartment $i$.
+        \item $f_{ij}(\vect{x})$ is the flow from $j$ to $i$.
+        \item $f_{ji}(\vect{x})$ is the flow from $i$ to $j$.
+        \item $f_{0i}(\vect{x})$ is the excretion from compartment $i$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Example: a simple two-compartment model}
+    Consider a system where a drug is injected into the blood (Compartment 1) and then moves to the tissues (Compartment 2) and is also eliminated from the blood.
+
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=4cm,
+            compartment/.style={rectangle, draw, fill=green!20, rounded corners, minimum height=1.5cm, minimum width=3cm, text width=3cm, align=center},
+            arrow/.style={-latex, thick}
+        ]
+            \node (env_in) [label=above:Input $I(t)$] {};
+            \node[compartment, below=1cm of env_in] (C1) {Blood ($x_1$)};
+            \node[compartment, right of=C1] (C2) {Tissues ($x_2$)};
+            \node (env_out) [below=1cm of C1, label=below:Elimination] {};
+
+            \draw[arrow] (env_in) -- (C1);
+            \draw[arrow] (C1) to[bend left] node[above] {$k_{21}$} (C2);
+            \draw[arrow] (C2) to[bend left] node[below] {$k_{12}$} (C1);
+            \draw[arrow] (C1) -- node[left] {$k_{01}$} (env_out);
+        \end{tikzpicture}
+    \end{center}
+
+    Assuming linear, first-order kinetics ($f_{ij} = k_{ij}x_j$):
+    \begin{align*}
+        \frac{dx_1}{dt} &= I(t) + k_{12}x_2 - k_{21}x_1 - k_{01}x_1 \\
+        \frac{dx_2}{dt} &= k_{21}x_1 - k_{12}x_2
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Linear vs. nonlinear models}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Linear Compartmental Models}
+            \begin{itemize}
+                \item All flow rates $f_{ij}$ are linear functions of the state variables: $f_{ij} = k_{ij}x_j$.
+                \item The system of ODEs is linear:
+                $$ \frac{d\vect{x}}{dt} = A\vect{x} + \vect{b}(t) $$
+                \item $A$ is the compartmental matrix.
+                \item Analytically tractable.
+                \item Common in tracer kinetics and pharmacokinetics.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Nonlinear Compartmental Models}
+            \begin{itemize}
+                \item At least one flow rate $f_{ij}$ is a nonlinear function of the state variables.
+                \item Example: $f_{ij} = \frac{V_{max} x_j}{K_m + x_j}$ (Michaelis-Menten kinetics) or $f_{ij} = \beta x_i x_j$ (mass action, as in epidemiology).
+                \item The system of ODEs is nonlinear.
+                \item Often require numerical methods and qualitative analysis.
+                \item Essential for modeling population dynamics, epidemiology, and enzyme kinetics.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \vfill
+    \begin{alertblock}{Key distinction}
+        The nature of the model (linear vs. nonlinear) dictates the mathematical tools available for its analysis
+    \end{alertblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Core mathematical properties}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+\begin{frame}{The state space and positivity}
+    \begin{definition}[State Space]
+        The state space is the set of all possible values that the state vector $\vect{x}(t)$ can take.
+    \end{definition}
+    \vfill
+    For compartmental models, the state variables represent physical quantities (e.g., concentrations, populations), which cannot be negative
+    \vfill
+    Therefore, the physically meaningful state space is the non-negative orthant:
+    $$ \Omega = \IRplus^n = \{ \vect{x} \in \IR^n : x_i \ge 0 \text{ for all } i=1, \dots, n \} $$
+    \vfill
+    \begin{block}{Positivity of Solutions}
+        A crucial property of a well-posed compartmental model is that if the system starts with non-negative initial conditions, $\vect{x}(0) \in \Omega$, then the solution $\vect{x}(t)$ must remain in $\Omega$ for all $t > 0$. This is also known as the \textbf{forward invariance} of $\IRplus^n$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Condition for Positivity of Solutions}
+    \begin{theorem}[Positivity Condition, often attributed to Jacquez]
+        Consider the system $\frac{d\vect{x}}{dt} = \vect{f}(\vect{x})$ with $\vect{x}(0) \ge 0$. The non-negative orthant $\IRplus^n$ is forward invariant if and only if for each $i=1, \dots, n$:
+        $$ f_i(\vect{x}) \ge 0 \quad \text{whenever} \quad \vect{x} \in \IRplus^n \text{ and } x_i=0. $$
+    \end{theorem}
+    \vfill
+    \textbf{Interpretation:}
+    \begin{itemize}
+        \item If a compartment is empty ($x_i=0$), the net flow into it must be non-negative
+        \item In other words, you cannot have a net flow \textit{out} of an empty compartment
+        \item For linear models $\frac{d\vect{x}}{dt} = A\vect{x}$, this condition is equivalent to requiring that all off-diagonal elements of the compartmental matrix $A$ are non-negative ($a_{ij} \ge 0$ for $i \neq j$)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Compartmental Matrix (Linear Case)}
+    For a linear system $\frac{d\vect{x}}{dt} = A\vect{x}$, the matrix $A$ has special properties.
+    $$ \frac{dx_i}{dt} = \sum_{j=1, j \neq i}^{n} k_{ij}x_j - \left(k_{0i} + \sum_{j=1, j \neq i}^{n} k_{ji}\right)x_i $$
+    The elements of $A = [a_{ij}]$ are:
+    \begin{itemize}
+        \item \textbf{Off-diagonal elements:} $a_{ij} = k_{ij} \ge 0$ for $i \neq j$. (This ensures positivity).
+        \item \textbf{Diagonal elements:} $a_{ii} = -k_{0i} - \sum_{j=1, j \neq i}^{n} k_{ji} \le 0$. The diagonal element $a_{ii}$ represents the total fractional outflow from compartment $i$.
+    \end{itemize}
+    \vfill
+    \begin{definition}[Metzler Matrix]
+        A matrix with non-negative off-diagonal elements is called a Metzler matrix. All linear compartmental matrices are Metzler matrices.
+    \end{definition}
+    This structure has profound implications for the stability and behavior of the system.
+\end{frame}
+
+\begin{frame}{Conservation of Mass}
+    \begin{definition}[Closed System]
+        A compartmental system is \textbf{closed} if there are no flows to or from the environment. That is, $f_{i0} = 0$ and $f_{0j} = 0$ for all $i, j$.
+    \end{definition}
+    \vfill
+    \begin{theorem}[Conservation of Mass]
+        In a closed system, the total amount of material is conserved.
+        $$ \frac{d}{dt} \sum_{i=1}^n x_i = \sum_{i=1}^n \frac{dx_i}{dt} = 0 $$
+        Therefore, $\sum_{i=1}^n x_i(t) = N$ (a constant) for all $t$.
+    \end{theorem}
+    \vfill
+    \textbf{Proof Sketch:}
+    $\sum_i \dot{x}_i = \sum_i \sum_{j \neq i} (f_{ij} - f_{ji})$. Since every flow $f_{ij}$ from $j$ to $i$ is also a flow out of $j$, the terms cancel in pairs.
+    \vfill
+    \textbf{Implication:} For closed systems like many basic epidemiological models (e.g., SIR), the total population $N = S(t) + I(t) + R(t)$ is constant. This reduces the dimensionality of the system.
+\end{frame}
+
+\begin{frame}{Epidemiological Example: The SIR Model}
+    A classic example of a closed, nonlinear compartmental model.
+    \begin{itemize}
+        \item \textbf{S:} Susceptible individuals
+        \item \textbf{I:} Infectious individuals
+        \item \textbf{R:} Recovered (and immune) individuals
+    \end{itemize}
+
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=3.5cm,
+            compartment/.style={rectangle, draw, fill=yellow!20, rounded corners, minimum size=2cm, text width=2cm, align=center},
+            arrow/.style={-latex, thick}
+        ]
+            \node[compartment] (S) {Susceptible (S)};
+            \node[compartment, right of=S] (I) {Infectious (I)};
+            \node[compartment, right of=I] (R) {Recovered (R)};
+
+            \draw[arrow] (S) -- node[above] {$\beta SI/N$} (I);
+            \draw[arrow] (I) -- node[above] {$\gamma I$} (R);
+        \end{tikzpicture}
+    \end{center}
+
+    \textbf{The ODE System:}
+    \begin{align*}
+        \frac{dS}{dt} &= -\frac{\beta S I}{N} \quad &\text{(Nonlinear term: mass action)} \\
+        \frac{dI}{dt} &= \frac{\beta S I}{N} - \gamma I \\
+        \frac{dR}{dt} &= \gamma I
+    \end{align*}
+    Here, $S(t)+I(t)+R(t) = N$ is constant. The state space is the simplex $\Delta = \{(S,I,R) \in \IRplus^3 : S+I+R=N\}$.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Analysis of linear compartmental models}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+\begin{frame}{The Matrix Form and Solution}
+    A linear, time-invariant compartmental system can be written as:
+    $$ \frac{d\vect{x}}{dt} = A\vect{x}(t), \quad \vect{x}(0) = \vect{x}_0 $$
+    where $A$ is the $n \times n$ compartmental matrix.
+
+    \begin{block}{The General Solution}
+        The solution to this system is given by the matrix exponential:
+        $$ \vect{x}(t) = e^{At} \vect{x}_0 $$
+        where $e^{At} = \sum_{k=0}^{\infty} \frac{(At)^k}{k!}$.
+    \end{block}
+
+    The properties of the solution $\vect{x}(t)$ are determined by the eigenvalues and eigenvectors of the matrix $A$.
+\end{frame}
+
+\begin{frame}{Eigenvalues and Stability (Contribution of Jacquez)}
+    \begin{theorem}[Gershgorin Circle Theorem Application]
+        Let $A$ be a compartmental matrix. The eigenvalues $\lambda$ of $A$ lie in the union of the Gershgorin discs in the complex plane:
+        $$ D_i = \left\{ z \in \mathbb{C} : |z - a_{ii}| \le \sum_{j \neq i} |a_{ij}| = \sum_{j \neq i} a_{ij} \right\} $$
+    \end{theorem}
+    Since $a_{ii} = -k_{0i} - \sum_{j \neq i} k_{ji}$ and $a_{ij} = k_{ij}$ for $j \neq i$:
+    $$ a_{ii} = -k_{0i} - \sum_{j \neq i} a_{ji} $$
+    The sum of the off-diagonals in a column is $\sum_{j \neq i} a_{ji}$. The diagonal is $a_{ii}$. The column sum is $\sum_{j=1}^n a_{ji} = -k_{0i} \le 0$.
+
+    \begin{theorem}[Properties of Eigenvalues of A, from Jacquez]
+        Let $A$ be a compartmental matrix. Then:
+        \begin{enumerate}
+            \item The real parts of all eigenvalues of $A$ are non-positive ($\text{Re}(\lambda) \le 0$).
+            \item If the system has an "exit" (i.e., there is a path from every compartment to the environment, making the graph of the system strongly connected to the environment), then all eigenvalues have strictly negative real parts ($\text{Re}(\lambda) < 0$). In this case, the origin is a globally asymptotically stable equilibrium.
+            \item If the system is closed, then $\lambda=0$ is an eigenvalue, and all other eigenvalues have negative real parts. The eigenvector for $\lambda=0$ corresponds to a steady state distribution.
+        \end{enumerate}
+    \end{theorem}
+\end{frame}
+
+\begin{frame}{Physical Interpretation of Eigenvalues}
+    The solution $\vect{x}(t)$ can be expressed as a sum of modes corresponding to the eigenvalues:
+    $$ \vect{x}(t) = \sum_{i=1}^n c_i \vect{v}_i e^{\lambda_i t} $$
+    (assuming distinct eigenvalues for simplicity).
+    \begin{itemize}
+        \item Each $\lambda_i$ determines a time constant of the system, $\tau_i = -1/\text{Re}(\lambda_i)$.
+        \item The eigenvalues represent the intrinsic rates at which the system returns to equilibrium after a perturbation.
+        \item Faster modes (large negative $\text{Re}(\lambda_i)$) decay quickly.
+        \item Slower modes (small negative $\text{Re}(\lambda_i)$) dominate the long-term behavior.
+        \item Imaginary parts of eigenvalues correspond to oscillatory behavior. For compartmental models, oscillations are damped.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Structural Properties: Reachability and Observability}
+    These concepts from control theory were applied to compartmental analysis, notably by Jacquez. They concern what can be known and controlled about the system.
+
+    \begin{definition}[Reachability]
+        A state is \textbf{reachable} if it can be reached from the origin in finite time using some input function $\vect{b}(t)$. A system is completely reachable if all states are reachable.
+    \end{definition}
+    \textbf{Question:} Can we drive the system to any desired state (e.g., drug concentration) with an external input?
+
+    \begin{definition}[Observability]
+        A system is \textbf{observable} if, for any initial state $\vect{x}(0)$, it is possible to determine this state from the history of the output $\vect{y}(t) = C\vect{x}(t)$. The matrix $C$ defines which compartments are measured.
+    \end{definition}
+    \textbf{Question:} Can we deduce the state of all compartments by only measuring a few?
+\end{frame}
+
+\begin{frame}{Structural Identifiability (Contribution of Walter and Jacquez)}
+    A more fundamental problem in modeling.
+    \begin{definition}[Structural Identifiability]
+        A model is \textbf{structurally identifiable} if its unknown parameters can be uniquely determined from perfect (noise-free) input-output data, given the model structure.
+    \end{definition}
+
+    \textbf{The Problem:}
+    \begin{itemize}
+        \item We propose a model structure (e.g., the 2-compartment diagram).
+        \item We can only inject a tracer (input) and measure its concentration in one compartment (output).
+        \item Can we uniquely find the values of all rate constants ($k_{ij}$) from this experiment?
+    \end{itemize}
+    \vfill
+    \begin{alertblock}{Why it matters}
+        If a model is not structurally identifiable, different sets of parameter values can produce the exact same output. This means the model's internal structure is ambiguous and parameters are biologically meaningless.
+    \end{alertblock}
+    \vfill
+    \small{G.G. Walter provided several graph-theoretic conditions and theorems for determining identifiability from the model's diagram.}
+\end{frame}
+
+\begin{frame}{Example: A Non-Identifiable Model}
+    Consider this "catenary" system where we input into C1 and observe C1.
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=3cm,
+            compartment/.style={rectangle, draw, fill=blue!20, rounded corners, minimum size=1.5cm, text width=2cm, align=center},
+            arrow/.style={-latex, thick}
+        ]
+            \node[compartment] (C1) {C1};
+            \node[compartment, right of=C1] (C2) {C2};
+            \node[compartment, right of=C2] (C3) {C3};
+
+            \draw[arrow] (C1) to[bend left] node[above] {$k_{21}$} (C2);
+            \draw[arrow] (C2) to[bend right] node[below] {$k_{12}$} (C1);
+            \draw[arrow] (C2) to[bend left] node[above] {$k_{32}$} (C3);
+            \draw[arrow] (C3) to[bend right] node[below] {$k_{23}$} (C2);
+            \draw[arrow] (C1) -- +(0,-1.5) node[below] {$k_{01}$};
+        \end{tikzpicture}
+    \end{center}
+    The output from C1 is a sum of exponentials. It turns out that you cannot distinguish this model from the one below by only observing C1:
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=3cm,
+            compartment/.style={rectangle, draw, fill=red!20, rounded corners, minimum size=1.5cm, text width=2cm, align=center},
+            arrow/.style={-latex, thick}
+        ]
+            \node[compartment] (C1) {C1};
+            \node[compartment, right of=C1] (C2) {C2};
+            \node[compartment, above right of=C1] (C3) {C3};
+
+            \draw[arrow] (C1) to[bend left] (C2);
+            \draw[arrow] (C2) to[bend left] (C1);
+            \draw[arrow] (C1) to[bend left] (C3);
+            \draw[arrow] (C3) to[bend left] (C1);
+            \draw[arrow] (C1) -- +(0,-1.5);
+        \end{tikzpicture}
+    \end{center}
+    The parameters are not uniquely identifiable. Walter's work provided systematic ways to check for this before conducting experiments.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Analysis of nonlinear models: epidemiology}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+\begin{frame}{The Need for Nonlinearity}
+    Linear models assume rates are proportional to the source compartment only. This fails when interactions between populations are key.
+    \vfill
+    \textbf{Epidemiology:} The rate of new infections depends on the product of the number of susceptible people and the number of infectious people.
+    $$ \text{Rate of new infections} \propto S \times I $$
+    This is a \textbf{bilinear} term, making the system nonlinear.
+    \vfill
+    \textbf{Consequences of Nonlinearity:}
+    \begin{itemize}
+        \item No general analytical solution.
+        \item Existence of multiple equilibria.
+        \item Complex behaviors like thresholds, bifurcations, and limit cycles.
+        \item Analysis relies on qualitative theory of dynamical systems.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Equilibria and Stability}
+    \begin{definition}[Equilibrium]
+        An equilibrium (or steady state, fixed point) of the system $\frac{d\vect{x}}{dt} = \vect{f}(\vect{x})$ is a point $\vect{x}^*$ such that $\vect{f}(\vect{x}^*) = \vect{0}$. At equilibrium, the system does not change.
+    \end{definition}
+    \vfill
+    For the SIR model ($\dot{S}=-\beta SI/N, \dot{I}=\beta SI/N - \gamma I, \dot{R}=\gamma I$):
+    \begin{itemize}
+        \item \textbf{Disease-Free Equilibrium (DFE):}
+        This corresponds to the absence of disease. We set $I=0$.
+        $$ I^* = 0 \implies \dot{S}=0, \dot{I}=0, \dot{R}=0 $$
+        The DFE is any point $(S, 0, R)$ where $S+R=N$. We typically denote it as $E_0 = (N, 0, 0)$.
+        \item \textbf{Endemic Equilibrium (EE):}
+        This corresponds to the persistence of the disease in the population. We set $\dot{I}=0$ with $I \neq 0$.
+        $$ \frac{\beta S^* I^*}{N} - \gamma I^* = 0 \implies \frac{\beta S^*}{N} = \gamma \implies S^* = \frac{\gamma N}{\beta} $$
+        This equilibrium only exists if $S^* < N$, which has major implications.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Local stability analysis: the Jacobian}
+    To determine if an equilibrium $\vect{x}^*$ is stable, we linearize the system around it.
+    The behavior of the nonlinear system near $\vect{x}^*$ is approximated by the linear system:
+    $$ \frac{d\vect{z}}{dt} = J(\vect{x}^*) \vect{z}, \quad \text{where } \vect{z} = \vect{x} - \vect{x}^* $$
+    $J(\vect{x}^*)$ is the \textbf{Jacobian matrix} of $\vect{f}$ evaluated at $\vect{x}^*$:
+    $$ J_{ij} = \frac{\partial f_i}{\partial x_j} \bigg|_{\vect{x}=\vect{x}^*} $$
+    \begin{theorem}[Hartman-Grobman, simplified]
+        The stability of the equilibrium $\vect{x}^*$ is determined by the eigenvalues of $J(\vect{x}^*)$:
+        \begin{itemize}
+            \item If all eigenvalues have \textbf{negative} real parts, $\vect{x}^*$ is locally asymptotically stable
+            \item If at least one eigenvalue has a \textbf{positive} real part, $\vect{x}^*$ is unstable
+            \item If some eigenvalues have zero real part, the test is inconclusive
+        \end{itemize}
+    \end{theorem}
+\end{frame}
+
+\begin{frame}{Global Stability and Lyapunov Functions}
+    Local stability only tells us about behavior near an equilibrium. Global stability ensures the system converges to the equilibrium from (almost) any initial condition.
+    \begin{definition}[Lyapunov Function]
+        A Lyapunov function $L(\vect{x})$ for an equilibrium $\vect{x}^*$ is a scalar function that is positive definite ($L(\vect{x})>0$ for $\vect{x}\neq\vect{x}^*$, $L(\vect{x}^*)=0$) and its time derivative along trajectories is negative semi-definite ($\frac{dL}{dt} \le 0$).
+    \end{definition}
+    \textbf{Analogy:} A Lyapunov function is like the "energy" of the system. If the energy is always decreasing, the system must eventually settle at its minimum energy state (the equilibrium).
+    \vfill
+    Finding a Lyapunov function is an art, but for many epidemiological models, they can be constructed to prove global stability of either the DFE (when $R_0 < 1$) or the EE (when $R_0 > 1$). This provides much stronger guarantees about the system's behavior.
+    \vfill
+    \small{Work by Simon and others has been instrumental in using these techniques for epidemiological models.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Advanced and modern topics}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+\begin{frame}{Time-Varying and Periodic Models}
+    What if parameters are not constant?
+    \begin{itemize}
+        \item \textbf{Seasonal Forcing:} Disease transmission rates often vary with seasons (e.g., flu in winter). This makes $\beta$ a function of time, $\beta(t)$.
+        $$ \frac{dS}{dt} = -\frac{\beta(t) S I}{N} $$
+        \item \textbf{Interventions:} Public health measures (lockdowns, mask mandates) can be modeled as changes in parameters over time.
+    \end{itemize}
+    \vfill
+    \textbf{Analysis:}
+    \begin{itemize}
+        \item The concept of a single $R_0$ may no longer be sufficient. One might consider an average $R_0$ or use Floquet theory for periodic systems.
+        \item Time-varying systems can exhibit much more complex dynamics, including chaotic behavior, even in simple models.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Stochastic Compartmental Models}
+    ODEs are deterministic: given the same initial conditions, the outcome is always the same. Real life is stochastic.
+    \vfill
+    \textbf{Sources of Randomness:}
+    \begin{itemize}
+        \item \textbf{Demographic Stochasticity:} Randomness from individual events (births, deaths, transmissions) being discrete. Important in small populations.
+        \item \textbf{Environmental Stochasticity:} Random fluctuations in model parameters (e.g., $\beta(t)$ varies randomly around a mean).
+    \end{itemize}
+    \vfill
+    \textbf{Modeling Approaches:}
+    \begin{itemize}
+        \item \textbf{Continuous-Time Markov Chains (CTMC):} The number of individuals in each compartment is an integer, and transitions are probabilistic events. This is the most detailed approach.
+        \item \textbf{Stochastic Differential Equations (SDEs):} Add a noise term to the ODEs. A good approximation for large populations.
+    \end{itemize}
+    \vfill
+    Stochastic models can predict the probability of disease extinction, the size of outbreaks, and provide confidence intervals for predictions.
+\end{frame}
+
+\begin{frame}{Network and Agent-Based Models}
+    The "well-mixed" assumption is often unrealistic. People interact within a social network structure.
+    \begin{itemize}
+        \item \textbf{Network Models:} Individuals are nodes, and contacts are edges. The disease spreads along the network.
+        \begin{itemize}
+            \item Can capture the role of "superspreaders" (hubs in the network).
+            \item The degree distribution of the network heavily influences $R_0$ and epidemic dynamics.
+        \end{itemize}
+        \item \textbf{Agent-Based Models (ABM):} The most detailed approach. Each individual ("agent") is simulated with their own attributes and behaviors.
+        \begin{itemize}
+            \item Computationally intensive.
+            \item Can incorporate complex human behavior, geography, and detailed social structures.
+            \item Blurs the line with traditional compartmental models but can be seen as a micro-simulation from which compartmental dynamics emerge.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Data Assimilation and Parameter Estimation}
+    A model is only as good as its parameters.
+    \begin{itemize}
+        \item \textbf{The Inverse Problem:} Given real-world data (e.g., daily case counts), what are the most likely parameter values ($\beta, \gamma, \dots$)?
+        \item This is a statistical estimation problem.
+    \end{itemize}
+    \vfill
+    \textbf{Common Methods:}
+    \begin{itemize}
+        \item \textbf{Least Squares Fitting:} Minimize the difference between model output and data. Prone to getting stuck in local minima.
+        \item \textbf{Bayesian Inference (MCMC):} A powerful, modern approach. Treats parameters as random variables and finds their posterior probability distribution given the data.
+        \begin{itemize}
+            \item Provides not just a point estimate but a measure of uncertainty (credible intervals) for each parameter.
+            \item Can incorporate prior knowledge about parameters.
+        \end{itemize}
+    \end{itemize}
+    This is where the theoretical work on structural identifiability by Jacquez and Walter becomes critically important in practice.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
+
+\begin{frame}{Summary of Key Concepts}
+    \begin{itemize}
+        \item \textbf{Compartmental models} provide a powerful framework for understanding dynamic systems by simplifying them into interacting subpopulations.
+        \item The mathematical foundation is a system of \textbf{ODEs}, which can be linear or nonlinear.
+        \item \textbf{Linear models}, central to the work of Jacquez, are analyzed via the compartmental matrix, its eigenvalues, and concepts of identifiability and observability.
+        \item \textbf{Nonlinear models}, essential for epidemiology, are analyzed using the tools of dynamical systems, as highlighted by Simon's work.
+        \item The \textbf{Basic Reproduction Number ($R_0$)} is the fundamental threshold quantity that determines whether a disease will spread or die out.
+        \item The field is evolving to include more realism through \textbf{stochasticity, networks, and time-varying parameters}.
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{local-bibliography}
+\end{frame}
+
+
+\end{document}

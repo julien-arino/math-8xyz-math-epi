@@ -1,3 +1,4 @@
 pdf_filename,title,subtitle,full_title,rnw_filename,basename
 L01-course-organisation-intro-R-julia.pdf,General information about the course & (brief) Introduction to `R` and `julia`,MATH 8xyz -- Lecture 01,General information about the course & (brief) Introduction to `R` and `julia`: MATH 8xyz -- Lecture 01,L01-course-organisation-intro-R-julia.Rnw,L01-course-organisation-intro-R-julia
 L02-epidemiology-math-epi.pdf,Epidemiology & A brief history of Mathematical epidemiology,MATH 8xyz -- Lecture 02,Epidemiology & A brief history of Mathematical epidemiology: MATH 8xyz -- Lecture 02,L02-epidemiology-math-epi.Rnw,L02-epidemiology-math-epi
+L03-compartmental-models.pdf,Compartmental models,MATH 8xyz -- Lecture 03,Compartmental models: MATH 8xyz -- Lecture 03,L03-compartmental-models.Rnw,L03-compartmental-models

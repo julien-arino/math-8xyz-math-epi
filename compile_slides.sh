@@ -71,11 +71,11 @@ compile_rnw() {
     
     # Step 2: Compile LaTeX to PDF (run twice for references)
     print_status "Compiling LaTeX to PDF..."
-    pdflatex -interaction=nonstopmode "$basename.tex" &> /dev/null
+    pdflatex -interaction=batchmode "$basename.tex" &> /dev/null
     
     if [ -f "$basename.aux" ]; then
         # Run pdflatex again for cross-references, bibliography, etc.
-        pdflatex -interaction=nonstopmode "$basename.tex" &> /dev/null
+        pdflatex -interaction=batchmode "$basename.tex" &> /dev/null
     fi
     
     # Check if PDF was created successfully
