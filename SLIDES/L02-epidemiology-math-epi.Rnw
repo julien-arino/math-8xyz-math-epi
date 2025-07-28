@@ -60,6 +60,9 @@ if (plot_blackBG) {
 cat(input_setup)
 @
 
+
+
+\begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% TITLE AND OUTLINE

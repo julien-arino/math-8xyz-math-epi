@@ -1,0 +1,582 @@
+\documentclass[aspectratio=169]{beamer}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+% Set lecture number for later use
+
+
+% Part common to all the lectures
+\subtitle{MATH 8xyz -- Lecture 20}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+% Title of the lecture
+\title{Models using age of .. something}
+
+
+
+\input{slides-setup-whiteBG.tex}
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+\section{Age of infection}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}\frametitle{Age of infection}
+We have seen that infinite dimensionality could result from a detailed description (or an unspecified one) of the sojourn time in compartments
+\vfill
+Originally, age of infection was introduced to account for differences in infectivity depending on the time since an individual became infected
+\vfill
+For instance, it is known that infectiousness of HIV positive patients vary as a function of time since infection
+\end{frame}
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+\subsection{Age of vaccination}
+% The section page
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+
+\begin{frame}\frametitle{Age of vaccination}
+We used age of vaccination to find the initial condition of \eqref{sys:SIVS_general}
+\vfill
+Here we take a closer look at this type of model
+\end{frame}
+
+
+
+\maxFrameImage{FIGS/BowmanArinoMoghadas-2011-cover.png}
+
+\begin{frame}{How to model time between vaccine doses}
+\begin{subequations}
+\begin{align}
+S\pprime &= -fS-V_1(t,0) \\
+A\pprime &= \left(
+(1-p)S+(1-p_1)\delta_1\tilde V_1+(1-p_2)\delta_2 V_2
+\right)f-\mu_AA \\
+I\pprime &= (pS+p_1\delta_1\tilde V_1+p_2\delta_2 V_2)f-\mu I \\
+V_2\pprime &= V_1(t,a^\star)-\delta_2fV_2(t)
+\end{align}
+\begin{equation}\label{eq:V1_age_time}
+\left(
+\frac{\partial}{\partial t}+\frac{\partial}{\partial a}
+\right) V_1(t,a) = -\delta_1fV_1(t,a),\quad 0\leq a\leq a^\star
+\end{equation}
+and boundary condition
+\begin{equation}
+V_1(t,0) = \begin{cases}
+\gamma S_0\left(\frac{S(t)}{S(t)+A(t)}\right) & \text{if } T\leq t\leq T_e \text{ and }S>0 \\
+0 & \text{otherwise}
+\end{cases}
+\end{equation}
+\end{subequations}
+where $f=\beta(\delta_AA+I)$ and $\tilde V_1(t)=\int_0^{a^\star}V_1(t,a)da$
+\end{frame}
+
+\begin{frame}{Simplifying a bit}
+Integrate \eqref{eq:V1_age_time} using characteristics along lines $a=s$ and $t=T+s$, with $s$ as a new variable
+\begin{equation}\label{eq:V1_age_time_integrated}
+V_1(t,a)=V_1(t-a,0)\exp\left(\int_{t-a}^t -\delta_1f(\xi)\ d\xi\right)
+\end{equation}
+Define
+\[
+\zeta(t)=\int_0^t\delta_1f(\xi)d\xi
+\]
+and substitute into \eqref{eq:V1_age_time_integrated}, giving
+\[
+V_1(t,a)=V_1(t-a,0)\exp\left(\zeta(t-a)\zeta(t)\right)
+\]
+So the distributed delay is now discrete
+\end{frame}
+
+\begin{frame}{Simplifying a bit more}
+Let
+\[
+\nu(t)=\int_0^t V_1(s,0)e^{\zeta(s)}ds
+\]
+Then the total number of individuals having been vaccinated with a single dose is
+\[
+\tilde V_1(t)=e^{-\zeta(t)}
+\left(
+\nu(t)-\nu(t-a^\star)
+\right)
+\]
+\begin{subequations}
+\begin{align}
+S\pprime &= -fS-V_1(t,0) \\
+A\pprime &= \left(
+(1-p)S+(1-p_1)\delta_1\tilde V_1+(1-p_2)\delta_2 V_2
+\right)f-\mu_AA \\
+I\pprime &= (pS+p_1\delta_1\tilde V_1+p_2\delta_2 V_2)f-\mu I \\
+V_2\pprime &= V_1(t-a^\star,0)e^{\zeta(t-a^\star)}-\delta_2fV_2(t) \\
+\zeta\pprime &= \delta_1f \\
+\nu\pprime &= V_1(t,0)e^{\zeta(t)}
+\end{align}
+\end{subequations}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+\section{Structuration in age}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_sw1w5bsw1w5bsw1w.jpeg}
+
+% \begin{frame} 
+% \begin{tikzpicture}[remember picture, overlay]
+%     \node[anchor=center, 
+%     inner sep=0pt,
+%     opacity=0.95] (image) at (current page.center) 
+%     {\includegraphics[height=\paperheight, keepaspectratio]{FIGS/Pierre-Magal.jpg}};
+%    \node[anchor=north, 
+%    align=center, 
+%    text=black, 
+%    font=\Large] at (image.north) 
+%    {Pierre Magal\\(1967-10-24 -- 2024-02-20)}; 
+% \end{tikzpicture}
+% \end{frame}
+% 
+
+
+
+\begin{frame}\frametitle{Age structure}
+Taking into account age can be important in some cases
+\vfill
+\begin{itemize}
+\item Demographic characteristics vary with age
+\item Interactions are in general more frequent between people of a similar age. They are also more frequent in younger individuals
+\item Some diseases attack preferentially younger individuals
+\item The immunity of individuals changes with age, so for instance, older people may be more susceptible to some diseases than younger people
+\end{itemize}
+\vfill
+This is based on courses given by Jia Li during a Banff summer school in 2004 \nocite{li2008continuous}
+\end{frame}
+
+\maxFrameImage{FIGS/BrauerPvdDWu-book.png}
+\nocite{brauer2008mathematical}
+
+\begin{frame}{Note on age}
+\defword{Chronological age}, as a structuring variable, is ``easier'' than other structuring variables
+\vfill
+Indeed, if $a$ is (chronological) age, then
+\[
+\frac{d}{dt}a = 1
+\]
+\end{frame}
+
+
+\begin{frame}\frametitle{Formulation of an SIR model}
+Let $a$ be the age. Assume that natural death and recovery occur at the rates $\mu$ and $\gamma$, respectively, both dependent on $a$
+\vfill
+When an individual is sick, they are subject to disease-induced death at the rate $\delta(a)$
+\vfill
+Governing equations are
+\footnotesize
+\begin{subequations}\label{sys:SIR_age_structure}
+\begin{align}
+(\partial_t+\partial_a)S(t,a) &=
+\Lambda(a)-(\mu(a)+\lambda(t,a))S(t,a)
+\label{sys:SIR_age_structure_S} \\
+(\partial_t+\partial_a)I(t,a) &=
+-(\mu(a)+\gamma(a)+\delta(a))I(t,a)+\lambda(t,a)S(t,a)
+\label{sys:SIR_age_structure_I} \\
+(\partial_t+\partial_a)R(t,a) &=
+\gamma(a)I(t,a)
+\label{sys:SIR_age_structure_R}
+\end{align}
+\end{subequations}
+\end{frame}
+
+\begin{frame}
+Boundary conditions are
+\addtocounter{equation}{-1}\
+\begin{subequations}
+\setcounter{equation}{3}
+\begin{align}
+S(t,a_0)&=B \label{sys:SIR_age_structure_BCS} \\
+I(t,a_0)&=0 \label{sys:SIR_age_structure_BCI} \\
+R(t,a_0)&=0 \label{sys:SIR_age_structure_BCR}
+\end{align}
+while initial conditions take the form
+\begin{align}
+S(0,a)&=\Phi(a) \label{sys:SIR_age_structure_ICS} \\
+I(0,a)&=\Psi(a) \label{sys:SIR_age_structure_ICI} \\
+R(0,a)&=0 \label{sys:SIR_age_structure_ICR}
+\end{align}
+\end{subequations}
+\end{frame}
+
+\begin{frame}{Force of infection}
+Transmission $\lambda(t,a)$ of the disease takes the form
+\[
+\lambda(t,a)=r(a)\int_{a_0}^\infty \beta(a,s)\rho(a,s)
+\frac{I(t,s)}{N(t,s)}ds
+\]
+where 
+\begin{itemize}
+\item $r(a)$ is the number of contacts by individuals of age $a$ per unit time
+\item $\beta(a,s)$ is the probability of disease transmission to a susceptible of age $a$ by an infectious of age $s$
+\item $\rho(a,s)$ is the meeting rate between people of age $a$ and people of age $s$
+\item $N(t,a)=S(t,a)+I(t,a)+R(t,a)$ is the distribution of total population
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+To simplify, assume that $\beta(a,s)$ is separable
+\[
+\beta(a,s)=f(a)g(s)
+\]
+where $f(a)$ is the susceptibility of individuals aged $a$ and $g(s)$ is the force of infection of individuals aged $s$
+\vfill
+Then
+\begin{equation}\label{eq:beta_age_dep}
+\lambda(t,a)=r(a)f(a)\int_{a_0}^\infty g(s)\rho(a,s)
+\frac{I(t,s)}{N(t,s)}ds
+\end{equation}
+\end{frame}
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+\begin{frame}\frametitle{Analysis of the SIR model}
+We seek the DFE by setting $I=0$
+\vfill
+We find $(S,I,R)=(S^0(a),0,0)$ with
+\[
+S^0(a)=Be^{-M(a)} +e^{-M(a)}\int_{a_0}^a e^{M(x)}\Lambda(x)dx
+\]
+where
+\[
+M(a)=\int_{a_0}^a \mu(s)ds
+\]
+\end{frame}
+
+
+\begin{frame}
+Consider the perturbed solution $u(t,a)=S(t,a)-S^0(a)$. Assume that the meeting rate $\rho$ is also separable,
+\[
+\rho(a,s)=p_1(a)p_2(s)
+\]
+Then
+\[
+\tilde\lambda(t,a):=r(a)f(a)p_1(a)\int_{a_0}^\infty
+\frac{g(s)p_2(s)}{S^0(s)}I(t,s) ds \simeq \lambda(t,a)
+\]
+and we obtain the linearisation
+\begin{align*}
+(\partial_t+\partial_a)u&=-\mu(a)u-\tilde\lambda(t,a)S^0(a) \\
+(\partial_t+\partial_a)I&=-(\mu(a)+\gamma(a)+\delta(a))I
++\tilde\lambda(t,a)S^0(a) \\
+(\partial_t+\partial_a)R&=\gamma(a)I
+\end{align*}
+\end{frame}
+
+
+\begin{frame}
+Let
+\[
+u(t,a)=\tilde u(a)e^{c(t-a)}\quad\quad I(t,a)=\tilde I(a)e^{c(t-a)}
+\]
+and denote
+\[
+b(a)=S^0(a)r(a)f(a)p_1(a)\quad\quad W=\int_{a_0}^\infty
+\frac{g(s)p_2(s)}{S^0(s)}e^{-cs}\tilde I(s)ds
+\]
+\end{frame}
+
+
+\begin{frame}
+Then
+\begin{align*}
+\frac{d\tilde u(a)}{da} &= -\mu(a)\tilde u(a)-b(a)e^{ca}W \\
+\frac{d\tilde I(a)}{da} &= -(\mu(a)+\gamma(a))\tilde I(a)+b(a)e^{ca}W
+\end{align*}
+\[
+\tilde I(a)=We^{-M(a)-\Gamma(a)}\int_{a_0}^\infty
+e^{M(s)+\Gamma(s)}b(s)e^{cs}ds
+\]
+where $\Gamma(a)=\int_{a_0}^a\gamma(s)ds$
+\vfill
+Therefore
+\[
+W=W\int_{a_0}^\infty \frac{g(s)p_2(s)}{S^0(s)}e^{-M(s)-\Gamma(s)}
+\int_{a_0}^s e^{M(v)+\Gamma(v)}b(v)e^{-c(s-v)}dvds
+\]
+\end{frame}
+
+\begin{frame}
+Let then
+\[
+H(c):=\int_{a_0}^\infty \frac{g(s)p_2(s)}{S^0(s)}e^{-M(s)-\Gamma(s)}
+\int_{a_0}^s e^{M(v)+\Gamma(v)}b(v)e^{-c(s-v)}dvds
+\]
+\vfill
+We seek roots of the characteristic equation $H(c)=1$
+\vfill
+We have
+{\footnotesize
+\[
+\frac{dH(c)}{dc}=-\int_{a_0}^\infty
+\frac{g(s)p_2(s)}{S^0(s)}e^{-M(s)-\Gamma(s)}
+\int_{a_0}^s (s-v)e^{M(v)+\Gamma(v)}b(v)e^{-c(s-v)}dvds<0
+\]}
+implying that $H(c)$ is a decreasing function
+\end{frame}
+
+
+\begin{frame}
+\bbullet 
+Let $c^\star$ be a real solution to $H(c)=1$. If $H(0)>1$, then $c>0$, whereas if $H(0)<1$, $c<0$
+\vfill
+\bbullet
+Suppose that $c^\star=\alpha+i\beta$ is a complex root of $H(c)=1$. Then
+{\footnotesize
+\[
+\Re H(c)=
+\int_{a_0}^\infty \frac{g(s)p_2(s)}{S^0(s)}e^{-M(s)-\Gamma(s)}
+\int_{a_0}^s e^{M(v)+\Gamma(v)}b(v)e^{-\alpha(s-v)}\cos\beta(s-v)dvds
+\]}
+As a consequence, $H(0)<1$ $\implies$ $\alpha<0$
+\vfill
+So $H(0)=1$ is a threshold and we take $\R_0=H(0)$
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+\begin{frame}{Analysis using semigroups: SIA model}
+To illustrate the use of the semigroup method in this context, we consider an SIA model describing the evolution of HIV/AIDS
+\vfill
+The model is almost equivalent to \eqref{sys:SIR_age_structure}, with a few differences
+\vfill
+The $I$ compartment contains inviduals bearing HIV, but not yet in the AIDS stage
+\vfill
+The rate $\gamma(a)$ represents the progression towards the AIDS stage
+\vfill
+The AIDS stage is represented by compartment $A$, where individuals are subject 
+to a specific mortality rate
+\end{frame}
+
+\begin{frame}
+\begin{subequations}\label{sys:SIA_age_structure}
+\begin{align}
+(\partial_t+\partial_a)S(t,a) &=
+\Lambda(a)-(d(a)+\lambda(t,a))S(t,a)
+\label{sys:SIA_age_structure_S} \\
+(\partial_t+\partial_a)I(t,a) &=
+-(d(a)+\gamma(a))I(t,a)+\lambda(t,a)S(t,a)
+\label{sys:SIA_age_structure_I} \\
+(\partial_t+\partial_a)A(t,a) &=
+\gamma(a)A(t,a)-(d(a)+\delta(a))A(t,a)
+\label{sys:SIA_age_structure_R}
+\end{align}
+\vfill
+Assume
+\begin{equation}\label{sys:SIA_age_structure_force_infection}
+\lambda(t,a)=h(a)\int_{a_0}^\infty \rho(a,a')
+\frac{I(t,a')}{T(t,a')}da'
+\end{equation}
+\end{subequations}
+where $T(t,a')=S(t,a')+I(t,a')$
+\end{frame}
+
+\begin{frame}
+An individual in AIDS stage no longer has contacts. Therefore the dynamics of $S$ and $I$ do not depend on the dynamics of $A$, and we consider the system consisting of the first two variables
+\vfill
+Let $\omega$ be the maximum age. The system in proportions takes the form
+\[
+x:=\frac ST\quad\quad y:=\frac IT
+\]
+\vfill
+As we are only considering $S$ and $I$, we have $x+y=1$ and the system reads
+\begin{subequations}\label{sys:SIA_age_struct}
+\begin{align}
+(\partial_t+\partial_a)y(t,a)&=(1-y)(-\gamma(a)y+\lambda(t,a)) \\
+\lambda(t,a)&=h(a)\int_0^\omega p(a,a')y(t,a')da'
+\end{align}
+\end{subequations}
+\end{frame}
+
+
+
+\begin{frame}
+Let $X=\{f\in L^1(0,\omega)\}$. Define
+\[
+(Af)(a):=-\frac{d}{da}f(a),\quad f\in D(A)
+\]
+with $D(a)=\{f\in X,\; f\text{ is absolutely continuous, }f(0)=0\}$,
+and
+\[
+F(f)(a)\equiv (1-f(a))\left(
+-\gamma(a)f(a)+h(a)\int_0^\omega p(a,a')f(a')da'\right)
+\]
+an operator from $X\to X$
+\vfill
+Let $\Omega=\{f\in X,\; 0\leq f\leq 1\textrm{ a.e.}\}$. Then
+\eqref{sys:SIA_age_struct} takes the form
+\begin{align*}
+\frac{dy}{dt}&= Ay+F(y) \\
+y(0)&= y_0\in\Omega
+\end{align*}
+\end{frame}
+
+
+
+\begin{frame}
+Let
+\[
+(\mathcal{B}f)(a)=-\frac{df(a)}{da}-\gamma(a)f(a)
+\quad\quad
+(\mathcal{P}f)(a)=h(a)\int_0^\omega p(a,a')f(a')da'
+\]
+\vfill
+We have
+\[
+(\partial_t+\partial_a)y=-\gamma(a)y+h(a)\int_0^\omega
+\rho(a,a')y(t,a')da' \Leftrightarrow
+\frac{dy}{dt}=(\mathcal{B}+\mathcal{P})y
+\]
+\vfill
+$\mathcal{B}+\mathcal{P}$ generates a $C_0$-semigroup $T(t)$,
+$t\geq 0$, which is eventually uniformly continuous
+%Les bornes
+%de croissance de $T$ sont donn\'e par les bornes spectrales de
+%$\mathcal{B}+\mathcal{P}$.
+\end{frame}
+
+
+\begin{frame}
+The  resolvant of $\mathcal{B}+\mathcal{P}$ is
+\[
+R(\lambda;\mathcal{B}+\mathcal{P})=(S_\lambda-I)^{-1}G
+\]
+with
+\[
+(Gf)(a)=\int_0^a
+e^{-\lambda(a-\sigma)}\frac{\Gamma(a)}{\Gamma(\sigma)}
+f(\sigma)d\sigma
+\]
+\[
+(S_\lambda f)(a)=\int_0^\omega\int_0^a
+e^{-\lambda(a-\sigma)}\frac{\Gamma(a)}{\Gamma(\sigma)}
+\rho(\sigma,\xi)d\sigma f(\xi)d\xi
+\]
+where we denoted
+\[
+\Gamma(a)=\exp\left(-\int_0^a \gamma(a')da'\right)
+\]
+\end{frame}
+
+
+\begin{frame}\frametitle{$\R_0$}
+$\R_0$ is the spectral radius of the operator
+\[
+(Sf)(a)=\int_0^\omega\int_0^a \frac{\Gamma(a)}{\Gamma(\sigma)}
+h(\sigma)p(\sigma,\xi)d\sigma f(\xi)d\xi
+\]
+\end{frame}
+
+
+\begin{frame}\frametitle{Pair formation}
+$\rho(t,a,a')$ proportion of partners of an individual aged $a$ who are aged $a'$
+\vfill
+$r(t,a)$ mean number of partners of an individual aged $a$
+\vfill
+$T(t,a)$ total number of individuals aged $a$
+\vfill
+The following conditions must hold
+\begin{itemize}
+\item $0\leq\rho\leq 1$
+\item $\int_0^\infty \rho(t,a,a')da'=1$
+\item $\rho(t,a,a')r(t,a)T(t,a)=\rho(t,a',a)r(t,a')T(t,a')$
+\item $r(t,a)T(t,a)r(t,a')T(t,a')=0\Rightarrow \rho(t,a,a')=0$
+\end{itemize}
+\end{frame}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
+\hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
+  \hldef{callr}\hlopt{::}\hlkwd{r}\hldef{(}\hlkwa{function}\hldef{(}\hlkwc{file}\hldef{,} \hlkwc{temp}\hldef{)\{}
+    \hldef{out_file} \hlkwb{=} \hlkwd{sprintf}\hldef{(}\hlsng{"../CODE/%s"}\hldef{,} \hlkwd{gsub}\hldef{(}\hlsng{".Rnw"}\hldef{,} \hlsng{".R"}\hldef{, file))}
+    \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
+  \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
+\hldef{\}}
+\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"course-02-metapopulations-and-advanced-models.Rnw"}\hldef{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}\end{kframe}
+\end{knitrout}
+
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{local-bibliography}
+\end{frame}
+
+
+\end{document}
