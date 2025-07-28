@@ -1,0 +1,376 @@
+\documentclass[aspectratio=169]{beamer}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+
+
+\input{slides-setup-whiteBG.tex}
+
+\title{The endemic SLIRS model}
+\subtitle{MATH 8xyz -- Lecture 07}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+
+
+%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%
+\subsection{SLIRS model with constant population}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\frame{\frametitle{Incubation periods}
+\begin{itemize}
+\item SIS and SIR: progression from S to I is instantaneous
+\vfill
+\item Several incubation periods:
+\end{itemize}
+\begin{center}
+\begin{tabular}{l|l}
+Disease & Incubation period \\
+\hline
+Yersinia Pestis & 2-6 days \\
+Ebola haemorrhagic fever (HF) & 2-21 days \\
+Marburg HF & 5-10 days \\
+Lassa fever & 1-3 weeks \\
+Tse-tse & weeks--months \\
+HIV/AIDS & months--years
+\end{tabular}
+\end{center}
+}
+
+\frame{\frametitle{Hypotheses}
+\begin{itemize}
+\item There is demography
+\item New individuals are born at a constant rate $b$
+\item
+There is no vertical transmssion: all ``newborns'' are susceptible
+\item The disease is non lethal, it causes no additional mortality
+\item New infections occur at the rate $f(S,I,N)$
+\item There is a period of incubation for the disease
+\item There is a period of time after recovery during which the disease confers immunity to reinfection (immune period)
+\end{itemize} 
+}
+
+\frame{\frametitle{SLIRS}
+\begin{minipage}{0.2\textwidth}
+  \def\skip{*-1.5}
+  \begin{tikzpicture}[scale=1, transform shape]
+    %% Regular nodes
+    \node [circle, fill=green!50, text=black] at (0,0) (S) {$S$};
+    \node [circle, fill=red!50, text=black] at (0,1\skip) (L) {$L$};
+    \node [circle, fill=red!90, text=black] at (0,2\skip) (I) {$I$};
+    \node [circle, fill=blue!50, text=black] at (0,3\skip) (R) {$R$};
+    %% Fake nodes for arrows
+    \node [above=0.75cm of S] (birth) {};
+    \node [left=0.5cm of S] (dS) {};
+    \node [left=0.5cm of L] (dL) {};
+    \node [left=0.5cm of I] (dI) {};
+    \node [left=0.5cm of R] (dR) {};
+    %% Flows (demography)
+    \path [line, very thick] (birth) to node [midway, left] (TextNode) {$b$} (S);
+    \path [line, very thick] (S) to node [midway, above] (TextNode) {$dS$} (dS);
+    \path [line, very thick] (L) to node [midway, below] (TextNode) {$dL$} (dL);
+    \path [line, very thick] (I) to node [midway, below] (TextNode) {$dI$} (dI);
+    \path [line, very thick] (R) to node [midway, below] (TextNode) {$dR$} (dR);
+    %% Flows (demography)
+    \path [line, very thick] (S) to node [midway, left] (TextNode) {$f(S,I,N)$} (L);
+    \path [line, very thick] (L) to node [midway, left] (TextNode) {$\varepsilon L$} (I);
+    \path [line, very thick] (I) to node [midway, left] (TextNode) {$\gamma I$} (R);
+    \draw [>=latex,->, thick, rounded corners] (R) -- (0.75,3\skip) -- (0.75,0) node[midway,above,sloped] {$\nu R$} -- (S);
+  \end{tikzpicture}    
+\end{minipage}
+\quad
+\begin{minipage}{0.7\textwidth}
+The model is as follows:
+\begin{subequations}\label{sys:SLIRS}
+\begin{align}
+S\pprime &= b+\nu R-dS-f(S,I,N) \label{sys:SLIRS_dS} \\
+L\pprime &= f(S,I,N) -(d+\varepsilon)L \label{sys:SLIRS_dL} \\
+I\pprime &= \varepsilon L -(d+\gamma)I \label{sys:SLIRS_dI} \\
+R\pprime &= \gamma I-(d+\nu)R \label{sys:SLIRS_dR} 
+\end{align}
+\end{subequations}
+\vfill
+Meaning of the parameters:
+\begin{itemize}
+\item $1/\varepsilon$ average duration of the incubation period
+\item $1/\gamma$ average duration of infectious period
+\item $1/\nu$ average duration of immune period
+\end{itemize}
+\end{minipage}
+}
+
+
+
+
+\frame{\frametitle{Example of the SLIRS model \eqref{sys:SLIRS}}
+Variation of the infected variables in \eqref{sys:SLIRS} are described by
+\begin{align*}
+L\pprime &= f(S,I,N)-(\varepsilon+d) L \\
+I\pprime &= \varepsilon L -(d+\gamma) I
+\end{align*}
+Write
+\begin{equation}
+\I\pprime = 
+\left(
+\begin{matrix}
+L \\
+I
+\end{matrix}
+\right)'
+=\left(
+\begin{matrix}
+f(S,I,N) \\
+0
+\end{matrix}
+\right)
+-
+\left(
+\begin{matrix}
+(\varepsilon+d) L \\
+(d+\gamma) I-\varepsilon L
+\end{matrix}
+\right)=:\mathcal{F}-\mathcal{V}
+\end{equation}
+}
+
+
+\frame{
+Denote
+\[
+f_L^{\,\star}:=
+\left.\frac{\partial}{\partial L}f
+\right|_{(S,I,R)=\bE_0}
+\quad\quad 
+f_I^{\,\star}:=
+\left.\frac{\partial}{\partial I}f
+\right|_{(S,I,R)=\bE_0}
+\]
+the values of the partials of the incidence function at the DFE $\bE_0$
+\vfill
+Compute the Jacobian matrices of vectors $\F$ and $\V$ at the DFE $\bE_0$
+\begin{equation}
+F=\left(
+\begin{matrix}
+f_L^{\,\star} & f_I^{\,\star} \\
+0 & 0
+\end{matrix}
+\right)
+\quad\text{and}\quad
+V=\left(
+\begin{matrix}
+\varepsilon+d & 0 \\
+-\varepsilon & d+\gamma
+\end{matrix}
+\right)
+\end{equation}
+}
+
+\frame{
+Thus
+\[
+V^{-1}=\frac{1}{(d+\varepsilon)(d+\gamma)}
+\left(
+\begin{matrix}
+d+\gamma & 0 \\
+\varepsilon & d+\varepsilon
+\end{matrix}
+\right)
+\]
+\vfill
+Also, in the case $N$ is constant, $\partial f/\partial L=0$ and thus
+\[
+FV^{-1}=\frac{f_I^{\,\star}}
+{(d+\varepsilon)(d+\gamma)}
+\left(
+\begin{matrix}
+\varepsilon 
+& d+\varepsilon  \\
+0 & 0
+\end{matrix}
+\right)
+\]
+\vfill
+As a consequence,
+\[
+\R_0=\varepsilon
+\frac{f_I^{\,\star}}
+{(d+\varepsilon)(d+\gamma)}
+\]
+}
+
+
+\frame{
+\begin{theorem}\label{th:R0_SEIRS}
+Let
+\begin{equation}\label{eq:R0_SEIRS}
+\R_0=
+\frac{\varepsilon f_I^{\,\star}}
+{(d+\varepsilon)(d+\gamma)}
+\end{equation}
+Then
+\begin{itemize}
+\item if $\R_0<1$, the DFE is LAS
+\item if $\R_0>1$, the DFE is unstable
+\end{itemize}
+\end{theorem}
+\vfill
+It is important here to stress that the result we obtain concerns the \textbf{local} asymptotic stability. We see later that even when $\R_0<1$, there can be several locally asymptotically stable equilibria
+}
+
+
+\frame{\frametitle{Application}
+The DFE is
+\[
+(\bar S,\bar L,\bar I,\bar R)=(N,0,0,0)
+\]
+\begin{itemize}
+\item Mass action incidence (frequency-dependent contacts):
+ \[
+f_I^{\,\star}=\beta\bar S \Rightarrow\R_0 =
+\frac{\epsilon\beta N}{(\epsilon+d)(\gamma+d)} 
+\]
+\item Standard incidence (proportion-dependent contacts):
+\[
+f_I^{\,\star}=\frac{\beta\bar S}{N}
+\Rightarrow\R_0 = \frac{\epsilon\beta}{(\epsilon+d)(\gamma+d)}
+\]
+\end{itemize}
+}
+
+
+\frame{\frametitle{Links between SLIRS-type models}
+{ %\footnotesize
+\begin{align*}
+S\pprime&=b+\nu R-dS-f(S,I,N) \\
+L\pprime&=f(S,I,N)-(d+\varepsilon) L \\
+I\pprime&=\varepsilon L-(d+\gamma)I \\
+R\pprime&=\gamma I-(d+\nu)R
+\end{align*}}
+\begin{center}
+\begin{tabular}{c|l}
+\hline
+SLIR & SLIRS where $\nu=0$ \\
+SLIS & Limit of SLIRS when $\nu\to\infty$ \\
+SLI & SLIR where $\gamma=0$ \\
+SIRS & Limit of SLIRS when $\varepsilon\to\infty$ \\
+SIR & SIRS where $\nu=0$ \\
+SIS & Limit of SIRS when $\nu\to\infty$ \\
+& Limit SLIS when $\varepsilon\to\infty$ \\
+SI & SIS where $\nu=0$ 
+\end{tabular}
+\end{center}
+}
+
+\frame{\frametitle{Values of $\R_0$}
+$(\bar S,\bar I,\bar N)$ values of $S,I$ and $N$ at DFE. Denote $\bar f_I=\partial f/\partial I(\bar S,\bar I,\bar N)$.
+\begin{center}
+\begin{tabular}{c|c}
+\hline
+SLIRS & 
+$\frac{\varepsilon\bar f_I}{(d+\varepsilon)(d+\gamma)}$ \\
+SLIR & 
+$\frac{\varepsilon\bar f_I}{(d+\varepsilon)(d+\gamma)}$ \\
+SLIS & 
+$\frac{\varepsilon\bar f_I}{(d+\varepsilon)(d+\gamma)}$ \\
+SLI & 
+$\frac{\varepsilon\bar f_I}{(d+\varepsilon)(d+\gamma)}$ \\
+& \\
+SIRS & 
+$\frac{\varepsilon\bar f_I}{d+\gamma}$ \\
+SIR & $\frac{\bar f_I}{d+\gamma}$ \\
+SIS & $\frac{\bar f_I}{d+\gamma}$ \\
+SI & $ \frac{\bar f_I}{d+\gamma}$ 
+\end{tabular}
+\end{center}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
+To finish, we use the command \code{purl} to generate an \code{R} file (\code{course-01-introduction-math-epi.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
+\vfill
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
+\hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
+  \hldef{callr}\hlopt{::}\hlkwd{r}\hldef{(}\hlkwa{function}\hldef{(}\hlkwc{file}\hldef{,} \hlkwc{temp}\hldef{)\{}
+    \hldef{out_file} \hlkwb{=} \hlkwd{sprintf}\hldef{(}\hlsng{"../CODE/%s"}\hldef{,} \hlkwd{gsub}\hldef{(}\hlsng{".Rnw"}\hldef{,} \hlsng{".R"}\hldef{, file))}
+    \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
+  \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
+\hldef{\}}
+\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"course-01-introduction-math-epi.Rnw"}\hldef{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}\end{kframe}
+\end{knitrout}
+\end{frame}
+
+
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{plain}
+\bibliography{local-bibliography}
+\end{frame}
+
+\end{document}

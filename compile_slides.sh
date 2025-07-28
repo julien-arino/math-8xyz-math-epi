@@ -111,7 +111,15 @@ main() {
     
     # Check dependencies first
     check_dependencies
-    
+
+    # Clean up generated figures before compiling
+    print_status "Removing old generated figures in FIGS..."
+    rm -f FIGS/L??-*.pdf FIGS/L??-*.png
+
+    # Clean up generated tex and pdf files
+    print_status "Removing old generated tex and pdf files in SLIDES..."
+    rm -f SLIDES/L??-*.tex SLIDES/L??-*.pdf
+
     # Change to SLIDES directory
     if [ ! -d "SLIDES" ]; then
         print_error "SLIDES directory not found. Run this script from the repository root."

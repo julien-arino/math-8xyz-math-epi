@@ -208,7 +208,7 @@ text(a, -0.02, "a", pos = 1, cex = 1.2, col = "red", font = 2)
 text(b, -0.02, "b", pos = 1, cex = 1.2, col = "red", font = 2)
 @
 
-\begin{frame}\frametitle{Probability density function}
+\begin{frame}\frametitle{Probability density function (p.d.f.)}
 Since $T$ is continuous, it has a continuous \defword{probability density function} $f$
 \begin{minipage}{0.4\textwidth}
 \begin{itemize}
@@ -704,7 +704,7 @@ Survival function, $\S(t)=\IP(T>t)$, for a Dirac distribution with mean 80 years
 
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%
-\subsection{The ``issue''} 
+\subsection{The issue with exponential distributions} 
 % The section page
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
 
@@ -823,8 +823,73 @@ More iffy if one is interested in short-term dynamics
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
 
 
+\begin{frame}
+    \frametitle{Side note -- What is a convolution?}
+    \begin{itemize}
+        \item The \emph{convolution product} is used to find the probability distribution of the \emph{sum of two independent random variables}
+        \vfill
+        \item If $X$ and $Y$ are two continuous random variables, and $Z = X + Y$, use the convolution to find the p.d.f. $f_Z(z)$ of $Z$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The setting}
+    \begin{itemize}
+        \item Consider two independent continuous random variables $X$ and $Y$ with p.d.f. $f_X(x)$ and $f_Y(y)$, respectively
+        \vfill
+        \item Want to find the p.d.f. of their sum $Z = X + Y$
+        \vfill
+        \item Simply adding the p.d.f. or multiplying them does not yield the correct distribution for the sum $Z$
+        \vfill
+        \item Convolution accounts for all possible combinations of $X$ and $Y$ that sum to a specific value $z$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Deriving the convolution formula}
+    Start with the c.d.f. of $Z$:
+    \begin{itemize}
+        \item $F_Z(z) = \IP(Z \le z) = \IP(X + Y \le z)$
+        \item Since $X$ and $Y$ are independent, their joint p.d.f. is $f_{X,Y}(x,y) = f_X(x)f_Y(y)$
+        \item $\IP(X + Y \le z)$ found by integrating the joint p.d.f. over the region where $x+y \le z$
+        $$ F_Z(z) = \iint_{x+y \le z} f_X(x)f_Y(y) \,dx\,dy $$
+        \item Change the order of integration. For a fixed $x$, $y$ must be less than or equal to $z-x$
+        $$ F_Z(z) = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{z-x} f_Y(y) \,dy \right) f_X(x) \,dx $$
+        \item Inner integral is c.d.f. of $Y$ evaluated at $z-x$, i.e., $F_Y(z-x)$
+        $$ F_Z(z) = \int_{-\infty}^{\infty} F_Y(z-x) f_X(x) \,dx $$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Deriving the convolution formula (2)}
+    To obtain the PDF $f_Z(z)$, we differentiate the CDF $F_Z(z)$ with respect to $z$
+    \vfill
+    \begin{itemize}
+        \item $f_Z(z) = \frac{d}{dz} F_Z(z) = \frac{d}{dz} \int_{-\infty}^{\infty} F_Y(z-x) f_X(x) \,dx $
+        \vfill
+        \item Using Leibniz integral rule (differentiating under the integral sign)
+        $$ f_Z(z) = \int_{-\infty}^{\infty} \frac{\partial}{\partial z} F_Y(z-x) f_X(x) \,dx $$
+        \vfill
+        \item Since $\frac{d}{du} F_Y(u) = f_Y(u)$, and here $u = z-x$, we have $\frac{\partial}{\partial z} F_Y(z-x) = f_Y(z-x)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The convolution pProduct formula}
+    $$ f_Z(z) = \int_{-\infty}^{\infty} f_X(x) f_Y(z-x) \,dx $$
+    \vfill
+    \begin{itemize}
+        \item This is the \defword{convolution product} of $f_X$ and $f_Y$, often denoted as $(f_X * f_Y)(z)$
+        \vfill
+        \item Alternatively, by symmetry
+        $$ f_Z(z) = \int_{-\infty}^{\infty} f_Y(y) f_X(z-y) \,dy $$
+        \vfill
+        \item \textbf{Key condition --} Valid only if $X$ and $Y$ are \emph{independent} r.v.
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{Exponential distributions are ``bad'' but also cool}
-$X_1$ and $X_2$ 2 i.i.d. (independent and identically distributed) r.v. with parametres $\theta_1$ and $\theta_2$. Then the probability density function of the r.v. $Z=X_1+X_2$ is given by the convolution
+$X_1$ and $X_2$ 2 i.i.d. (independent and identically distributed) exponential r.v. with parametres $\theta_1$ and $\theta_2$. Then the probability density function of the r.v. $Z=X_1+X_2$ is given by the convolution
 \begin{align}
  f_Z(z) &= \int_{-\infty}^\infty f_{X_1}(x_1) f_{X_2}(z - x_1)\,dx_1 \nonumber\\
    &= \int_0^z \theta_1 e^{-\theta_1 x_1} \theta_2 e^{-\theta_2(z - x_1)} \, dx_1 \nonumber\\
@@ -996,10 +1061,111 @@ We find the best fit below, which is obtained using \Sexpr{optim_fits[idx_best,]
 
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%
-\subsection{Example -- SLIAR-type model with Erlang} 
-% The section page
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+\subsection{Example -- A COVID-19 model}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
+\maxFrameImage{FIGS/ArinoPortet-2020.png}
+\nocite{ArinoPortet2020}
+
+\begin{frame}
+Extends the SLIAR model to take into account non-exponentially distributed stage durations (see lecture 05)
+\end{frame}
+
+\begin{frame}{The original model (well, almost the first one)}
+\centering
+\def\horzskip{*2}
+\def\vertskip{*2}
+\begin{tikzpicture}[auto, %node distance = 2cm, auto,
+	cloud/.style={minimum width={width("N-1")+2pt},
+		draw, ellipse,fill=red!20}]
+	\node [cloud] (S) at (0,0) {$S$};
+	\node [cloud] (L1) at (1\horzskip,0) {$L_1$};
+	\node [cloud] (L2) at (2\horzskip,0) {$L_2$};
+	\node [cloud,fill=blue!20] (I1) at (3\horzskip,-1\vertskip) {$I_1$};
+	\node [cloud] (A1) at (3\horzskip,1\vertskip) {$A_1$};
+	\node [cloud,fill=blue!20] (I2) at (4\horzskip,-1\vertskip) {$I_2$};
+	\node [cloud] (A2) at (4\horzskip,1\vertskip) {$A_2$};
+	\node [cloud,fill=blue!20] (RI) at (5\horzskip,0) {$R_I$};
+	\node [cloud] (RA) at (5\horzskip,1\vertskip) {$R_A$};
+	\node [cloud,, fill=blue!20] (D) at (5\horzskip,-2\vertskip) {$D$};
+	%% Infections
+	\path [line, very thick] (S) to node [midway,above] (TextNode) {$\Phi S$} (L1);
+	\path [line, very thick] (L1) to node [midway,above] (TextNode) {$\varepsilon L_1$} (L2);
+	\path [line, very thick] (L2) to node [midway,below,sloped] (TextNode) {$(1-\pi)\varepsilon L_2$} (I1);
+	\path [line, very thick] (L2) to node [midway,below,sloped] (TextNode) {$\pi\varepsilon L_2$} (A1);
+	\path [line, very thick] (I1) to node [midway, above] (TextNode) {$\gamma I_1$} (I2);
+	\path [line, very thick] (A1) to node [midway, above] (TextNode) {$\gamma A_1$} (A2);
+	\path [line, very thick] (I2) to node [midway,above,sloped] (TextNode) {$(1-\delta)\gamma I_2$} (RI);
+	\path [line, very thick] (A2) to node [midway, above] (TextNode) {$\gamma A_2$} (RA);
+	\path [line, very thick] (I2) to node [midway,below,sloped] (TextNode) {$\delta\gamma I_2$} (D);
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}{Reinterpreting terms}
+Here $D$ stands for \emph{detected}, $U$ is \emph{undetected}
+\vfill
+\centering
+\includegraphics[width=\textwidth]{FIGS/figure_SLDURM_base_model_with_different_epsilon_and_infectious_compartments}
+\end{frame}
+
+\begin{frame}{Working out when the first COVID-19 case occurred}
+\bbullet Details of emergence and precise timeline before amplification started unknown
+\vfill
+\bbullet Amplification in Wuhan
+\begin{itemize}
+\item Cluster of pneumonia cases mostly related to the Huanan Seafood Market
+\item 27 December 2019: first report to local government
+\item 31 December 2019: publication
+\item 8 January 2020: identification of SARS-CoV-2 as causative agent
+\item $\sim$ 23 January 2020: lockdown Wuhan and Hubei province + face mask mandates
+\end{itemize}
+\vfill
+\bbullet By 2020-01-29, virus in all provinces of mainland CHN
+\end{frame}
+
+
+\begin{frame}{Evidence of earlier spread}
+\bbullet Report to Wuhan authorities on 27 December 2019
+\vfill
+\bbullet First export detections in Thailand and Japan on 13 and 16 January 2020 (with actual importations on 8 and 6 January)
+\vfill
+$\implies$ amplification must have been occuring for a while longer
+\vfill
+\bbullet France: sample taken from 42-year-old male (last foreign travel to Algeria in August 2019) who presented to ICU on 27 December 2019
+\vfill
+\bbullet Retrospective studies in United Kingdom and Italy also showed undetected COVID-19 cases in prepandemic period
+\end{frame}
+
+\begin{frame}{Untangling the first case issue}
+\bbullet Robert, Rossman \& Jaric. Dating first cases of COVID-19. \emph{PLoS Pathogens} (2021)
+
+Find likely timing of first case of COVID-19 in China as November 17 (95\% CI October 4)
+\vfill
+\bbullet Pekar, Worobey, Moshiri, Scheffler \& Wertheim. Timing the SARS-CoV-2 index case in Hubei province. \emph{Science} (2021)
+
+Period between mid-October and mid-November 2019 is plausible interval when the first case of SARS-CoV-2 emerged in Hubei province
+\vfill
+Important when trying to understand global spread, so let me illustrate with the model I used, taking into account model evolution since
+\end{frame}
+
+\begin{frame}{Back-calculating the start of spread (example of China)}
+Cumulative confirmed case counts in China as reported to WHO was $c=547$ cases on $t_c=\textrm{2020-01-22}$
+\vfill
+Let $u$ be a point in parameter space. Solve ODE numerically over $[0,t]$, with $S(0)$ the population of China, $L_1(0)=1$ and other state variables 0. This gives a solution $x(t,t_0=0,u)$
+\vfill
+Extracting $L_2(t,t_0=0,u)$ from this solution, obtain cumulative number of new detections as
+\[
+C(t) = \int_{t_0=0}^{t} p\varepsilon_2 L_2(s,t_0,u)\ ds
+\]
+\vfill
+Let $t^\star$ be s.t. $C(t^\star)=547$; then $t_i=\textrm{2020-01-22}-t^\star$
+\end{frame}
+
+\begin{frame}
+\centering
+\includegraphics[width=\textwidth]{FIGS/start_time_vs_R0_and_p.png}
+\end{frame}
 
 
 
