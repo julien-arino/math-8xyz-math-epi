@@ -1140,7 +1140,7 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
-To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-and-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
+To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
 \vfill
 <<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
@@ -1150,12 +1150,12 @@ rmd_chunks_to_r_temp <- function(file){
     knitr::purl(file, output = out_file, documentation = 1)
   }, args = list(file))
 }
-rmd_chunks_to_r_temp("L01-course-organisation-and-intro-R-julia.Rnw")
+rmd_chunks_to_r_temp("L01-course-organisation-intro-R-julia.Rnw")
 @
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{About that \code{R} file}
-Source the file \code{L01-course-organisation-and-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
+Source the file \code{L01-course-organisation-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
 \vfill
 Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
 \vfill

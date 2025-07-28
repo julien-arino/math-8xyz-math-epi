@@ -1,0 +1,760 @@
+\documentclass[aspectratio=169]{beamer}
+
+<<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
+# Load required libraries
+required_packages = c("deSolve",
+                      "dplyr", 
+                      "ggplot2", 
+                      "knitr", 
+                      "latex2exp",
+                      "lattice",
+                      "magick",
+                      "readr", 
+                      "tidyr",
+                      "viridis")
+
+for (p in required_packages) {
+  if (!require(p, character.only = TRUE)) {
+    install.packages(p, dependencies = TRUE)
+    require(p, character.only = TRUE)
+  }
+}
+# Knitr options
+opts_chunk$set(echo = TRUE, 
+               warning = FALSE, 
+               message = FALSE, 
+               dev = c("pdf", "png"),
+               fig.width = 6, 
+               fig.height = 4, 
+               fig.path = "FIGS/L05-",
+               fig.keep = "high",
+               fig.show = "hide")
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+options(knitr.table.format = "latex")
+# Date for front title page (if needed)
+yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
+@
+
+<<set-slide-background,echo=FALSE,results='asis'>>=
+# Are we plotting for a dark background?
+plot_blackBG = FALSE
+if (plot_blackBG) {
+  bg_color = "black"
+  fg_color = "white"
+  input_setup = "\\input{slides-setup-blackBG.tex}"
+} else {
+  bg_color = "white"
+  fg_color = "black"
+  input_setup = "\\input{slides-setup-whiteBG.tex}"
+}
+cat(input_setup)
+@
+
+\title{Extensions of the Kermack-McKendrick model}
+\subtitle{MATH 8xyz -- Lecture 05}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The SLIAR model}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/Arino-etal-SLIAR.png}
+\nocite{ArinoBrauerPvdDWatmoughWu2006}
+
+\begin{frame}
+SIR is a little too simple for many diseases:
+\vfill
+\begin{itemize}
+\item No incubation period
+\vfill
+\item A lot of infectious diseases (in particular respiratory) have mild and less mild forms depending on the patient
+\end{itemize}
+\vfill
+$\implies$ model with SIR but also L(atent) and (A)symptomatic individuals, in which I are now symptomatic individuals
+\end{frame}
+
+\begin{frame}
+\centering
+\resizebox{\textwidth}{!}{
+  \begin{tikzpicture}[%transform canvas={scale=1.3},
+      auto,
+      cloud/.style={minimum width={width("N-1")+2pt},
+      draw, 
+      ellipse,
+      fill=gray!20}]
+    \node [cloud, fill=green!90] (S) {$S$};
+    \node [cloud, right=2cm of S, fill=red!30] (L) {$L$};
+    \node [cloud, above right=of L, fill=red!90] (I) {$I$};
+    \node [cloud, below right=of L, fill=red!60] (A) {$A$};
+    \node [cloud, below right=of I, fill=blue!90] (R) {$R$};
+    \node [cloud, right=1.5cm of I, draw=none, fill=none] (h1) {};
+    %% Infections
+    \path [line, very thick] (S) to node [midway, above] (TextNode) {$\beta S(I+\delta A)$} (L);
+    \path [line, very thick] (L) to node [midway, above, sloped] (TextNode) {$p\kappa L$} (I);
+    \path [line, very thick] (L) to node [midway, above, sloped] (TextNode) {$(1-p)\kappa L$} (A);
+    \path [line, very thick] (I) to node [midway, above, sloped] (TextNode) {$f\alpha I$} (R);
+    \path [line, very thick] (A) to node [midway, above, sloped] (TextNode) {$\eta A$} (R);
+    \path [line, very thick] (I) to node [midway, above, sloped] (TextNode) {$(1-f)\alpha I$} (h1);
+  \end{tikzpicture}
+}
+\end{frame}
+
+\begin{frame}{Basic reproduction number \& Final size}
+We find the basic reproduction number
+\begin{equation}
+\mathcal{R}_0=\beta
+\left(
+\frac{p}{\alpha}+\frac{\delta(1-p)}{\eta}
+\right)S_0
+=\frac{\beta\rho}{\alpha}S_0
+\end{equation}
+where 
+\[
+\rho = \alpha
+\left(
+\frac{p}{\alpha}+\frac{\delta(1-p)}{\eta}
+\right)
+\]
+\vfill
+The final size relation takes the form
+\begin{equation}
+S_0(\ln S_0-\ln S_\infty) =
+\mathcal{R}_0(S_0-S_\infty)+\frac{\mathcal{R}_0I_0}{\rho}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Adding treatment}
+\centering
+\resizebox{0.8\textheight}{!}{
+\def\horzskip{*2.75cm}
+\def\vertskip{*1.5cm}
+  \begin{tikzpicture}[%transform canvas={scale=1.3},
+      auto,
+      cloud/.style={minimum width={width("L\_T")+2pt},
+      draw, 
+      ellipse,
+      fill=gray!20}]
+    \node [cloud, fill=green!90] at (0,2\vertskip) (S) {$S$};
+    \node [cloud, fill=red!30] at (1\horzskip,2\vertskip) (L) {$L$};
+    \node [cloud, fill=red!90] at (2\horzskip,1\vertskip) (I) {$I$};
+    \node [cloud, fill=red!60] at (2\horzskip,3\vertskip) (A) {$A$};
+    \node [cloud, fill=blue!90] at (3\horzskip,0) (R) {$R$};
+    \node [cloud, fill=green!90] at (0,-2\vertskip) (ST) {$S_T$};
+    \node [cloud, fill=red!30] at (1\horzskip,-2\vertskip) (LT) {$L_T$};
+    \node [cloud, fill=red!90] at (2\horzskip,-1\vertskip) (IT) {$I_T$};
+    \node [cloud, fill=red!60] at (2\horzskip,-3\vertskip) (AT) {$A_T$};
+    %% Flows untreated
+    \path [line, very thick] (S) to node [midway, above] (TextNode) {$S\beta Q$} (L);
+    \path [line, very thick] (L) to node [midway, above, sloped] (TextNode) {$p\kappa L$} (I);
+    \path [line, very thick] (L) to node [midway, above, sloped] (TextNode) {$(1-p)\kappa L$} (A);
+    \path [line, very thick] (I) to node [midway, above, sloped] (TextNode) {$f\alpha I$} (R);
+    \path [line, very thick] (A) to node [midway, above, sloped] (TextNode) {$\eta A$} (R);
+    %% Flows treated
+    \path [line, very thick] (ST) to node [midway, above] (TextNode) {$\sigma_SS_T\beta Q$} (LT);
+    \path [line, very thick] (LT) to node [midway, above, sloped] (TextNode) {$p\tau\kappa_T L_T$} (IT);
+    \path [line, very thick] (LT) to node [midway, below, sloped] (TextNode) {$(1-p\tau)\kappa_T L_T$} (AT);
+    \path [line, very thick] (IT) to node [midway, above, sloped] (TextNode) {$f_T\alpha_T I_T$} (R);
+    \path [line, very thick] (AT) to node [midway, below, sloped] (TextNode) {$\eta_T A_T$} (R);
+    %% Flow treatment
+    \path [line, very thick, bend left=10] (LT) to node [midway, above, sloped] (TextNode) {$\theta_LL_T$} (L);
+    \path [line, very thick, bend left=10] (L) to node [midway, above, sloped] (TextNode) {$\varphi_LL$} (LT);
+    \path [line, very thick, bend left=10] (IT) to node [midway, above, sloped] (TextNode) {$\theta_II_T$} (I);
+    \path [line, very thick, bend left=10] (I) to node [midway, above, sloped] (TextNode) {$\varphi_II$} (IT);
+  \end{tikzpicture}
+}
+\end{frame}
+
+\maxFrameImage{FIGS/Arino_etal-SLIAR-treatment-doses.png}
+\maxFrameImage{FIGS/Arino_etal-SLIAR-treatment-cases.png}
+\maxFrameImage{FIGS/Arino_etal-SLIAR-conclusions.png}
+\maxFrameImage{FIGS/dedication-Fred-Brauer-169}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Computing the final size more efficiently}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/Arino-etal-final-size.png}
+\nocite{ArinoBrauerDriesscheWatmoughWu2007}
+
+\begin{frame}{A method for computing $\mathcal{R}_0$ in epidemic models}
+\bbullet This method is not universal! It works in a relatively large class of models, but not everywhere
+\vfill
+\bbullet If it doesn't work, the next generation matrix method does work, \textbf{but} should be considered only for obtaining the reproduction number, not to deduce LAS
+\vfill
+\bbullet Here, I change the notation in the paper, for convenience
+\end{frame}
+
+\begin{frame}{Standard form of the system}
+Suppose system can be written in the form
+\begin{subequations}\label{sys:SIR_general}
+\begin{align}
+\bS\pprime &= \mathbf{b}(\bS,\bI,\bR)-\bD\bS\beta(\bS,\bI,\bR)\bh\bI \label{sys:SIR_general_dS} \\
+\bI\pprime &= \bPi\bD\bS\beta(\bS,\bI,\bR)\bh\bI-\mathbf{V}\bI \label{sys:SIR_general_dI} \\
+\bR\pprime &= \mathbf{f}(\bS,\bI,\bR)+\mathbf{W}\bI \label{sys:SIR_general_dR}
+\end{align}
+\end{subequations}
+\vfill
+where $\bS\in\IR^m$, $\bI\in\IR^n$ and $\bR\in\IR^k$ are susceptible, infected and removed compartments, respectively
+\vfill
+IC are $\geq 0$ with at least one of the components of $\bI(0)$ positive
+\end{frame}  
+
+
+\begin{frame}
+\begin{equation}\tag{\ref{sys:SIR_general_dS}}
+\bS\pprime = \mathbf{b}(\bS,\bI,\bR)-\bD\bS\beta(\bS,\bI,\bR)\bh\bI
+\end{equation}
+\begin{itemize}
+\item $\mathbf{b}:\IR_+^m\times\IR_+^n\times\IR_+^k\to\IR^m$ continuous function encoding recruitment and death of uninfected individuals
+\item $\bD\in\IR^{m\times m}$ diagonal with diagonal entries $\sigma_i>0$ the relative susceptibilities of susceptible compartments, with convention that $\sigma_1=1$
+\item Scalar valued function $\beta:\IR_+^m\times\IR_+^n\times\IR_+^k\to\IR_+$ represents infectivity, with, e.g., $\beta(\bS,\bI,\bR)=\beta$ for mass action
+\item $\bh\in\IR^{n}$ row vector of relative horizontal transmissions
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}
+\begin{equation}\tag{\ref{sys:SIR_general_dI}}
+\bI\pprime = \bPi\bD\bS\beta(\bS,\bI,\bR)\bh\bI-\mathbf{V}\bI
+\end{equation}
+\begin{itemize}
+\item $\bPi\in\IR^{n\times m}$ has $(i,j)$ entry the fraction of individuals in $j^{\textrm{th}}$ susceptible compartment that enter $i^{\textrm{th}}$ infected compartment upon infection
+\item $\bD\in\IR^{m\times m}$ diagonal with diagonal entries $\sigma_i>0$ the relative susceptibilities of susceptible compartments, with convention that $\sigma_1=1$
+\item Scalar valued function $\beta:\IR_+^m\times\IR_+^n\times\IR_+^k\to\IR_+$ represents infectivity, with, e.g., $\beta(\bS,\bI,\bR)=\beta$ for mass action
+\item $\bh\in\IR^{n}$ row vector of relative horizontal transmissions
+\item $\mathbf{V}\in\IR^{n\times n}$ describes transitions between infected states and removals from these states due to recovery or death
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}
+\begin{equation}\tag{\ref{sys:SIR_general_dR}}
+\bR\pprime = \mathbf{f}(\bS,\bI,\bR)+\mathbf{W}\bI
+\end{equation}
+\begin{itemize}
+\item $\mathbf{f}:\IR_+^m\times\IR_+^n\times\IR_+^k\to \IR^k$ continuous function encoding flows into and out of removed compartments because of immunisation or similar processes
+\item $\mathbf{W}\in\IR^{k\times n}$ has $(i,j)$ entry the rate at which individuals in the $j^{\textrm{th}}$ infected compartment move into the $i^{\textrm{th}}$ removed compartment
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+Suppose $\bE_0$ is a locally stable disease-free equilibrium (DFE) of the system without disease, i.e., an EP of
+\begin{align*}
+\bS\pprime &= \mathbf{b}(\bS,\b0,\bR) \\
+\bR\pprime &= \mathbf{f}(\bS,\b0,\bR) \\
+\end{align*}
+
+\begin{theorem}
+Let
+\begin{equation}\label{eq:R0_final_size_method}
+\mathcal{R}_0 = 
+\beta(\bS_0,\b0,\bR_0)
+\bh\mathbf{V}^{-1}
+\bPi\bD\bS_0
+\end{equation}
+\begin{itemize}
+\item If $\mathcal{R}_0<1$, the DFE $\bE_0$ is a locally asymptotically stable EP of \eqref{sys:SIR_general}
+\item If $\mathcal{R}_0>1$, the DFE $\bE_0$ of \eqref{sys:SIR_general} is unstable
+\end{itemize}
+\end{theorem}
+\vfill
+If no demography (epidemic model), then just $\R_0$, of course
+\end{frame}  
+
+\begin{frame}{Final size relations}
+Assume no demography, then system should be writeable as
+\begin{subequations}
+\begin{align}
+\bS\pprime &= -\bD\bS\beta(\bS,\bI,\bR)\bh\bI  \label{sys:SIR_epi_dS} \\
+\bI\pprime &= \bPi\bD\bS\beta(\bS,\bI,\bR)\bh\bI-\mathbf{V}\bI 
+\label{sys:SIR_epi_dI} \\
+\bR\pprime &= \mathbf{W}\bI
+\label{sys:SIR_epi_dR} 
+\end{align}
+\end{subequations}
+\vfill
+For $w(t)\in\IR_+^n$ continuous, define
+$$
+w_\infty = \lim_{t\to\infty}w(t)\quad\text{and}\quad
+\hat{w}=\int_0^\infty w(t)\ dt
+$$
+\end{frame}  
+
+\begin{frame}
+Define the row vector 
+\[
+\IR^m\ni\bGamma
+=(\Gamma_1,\ldots,\Gamma_m)=\beta(\bS_0,\b0,\bR_0)\bh\mathbf{V}^{-1}\bPi\bD
+\]
+then 
+\[
+\mathcal{R}_0=\bGamma\bS(0)
+\]
+\end{frame}  
+
+\begin{frame}
+Suppose incidence is mass action, i.e., $\beta(\bS,\bI,\bR)=\beta$ and $m>1$
+\vfill
+Then for $i=1,\ldots,m$, express $\bS_i(\infty)$ as a function of $\bS_1(\infty)$ using
+$$
+\bS_i(\infty)  = 
+\bS_i(0) \left(
+\frac{\bS_1(\infty)}{\bS_1(0)}
+\right)^{\sigma_i/\sigma_1}
+$$
+then substitute into 
+\begin{align*}
+\frac{1}{\sigma_i}
+\ln\left(\frac{\bS_i(0)}{\bS_i(\infty)}\right)
+&=
+\bGamma\bD^{-1}\left(\bS(0)-\bS(\infty)\right)
++\beta\bh\mathbf{V}^{-1}\bI(0) \\
+&= 
+\frac{1}{\sigma_1}
+\ln\left(\frac{\bS_1(0)}{\bS_1(\infty)}\right)
+\end{align*}
+which is a final size relation for the general system when $\bS_i(0)>0$
+\end{frame}  
+
+
+\begin{frame}
+If incidence is mass action and $m=1$ (only one susceptible compartment), reduces to the KMK form
+\begin{equation}
+\label{eq:final_size_m1}
+\ln\left(
+\frac{S_0}{S_\infty}
+\right)
+=\frac{\mathcal{R}_0}{S_0}
+(S_0-S_\infty)+\beta\bh\mathbf{V}^{-1}\bI_0
+\end{equation}
+\end{frame}  
+
+
+\begin{frame}
+In the case of more general incidence functions, the final size relations are inequalities of the form, for $i=1,\ldots,m$,
+$$
+\ln\left(\frac{\bS_i(0)}{\bS_i(\infty)}\right)
+\geq
+\sigma_i\bGamma\bD^{-1}\left(\bS(0)-\bS(\infty)\right)
++\sigma_i\beta(K)\bh\mathbf{V}^{-1}\bI(0)
+$$
+where $K$ is the initial total population
+\end{frame}  
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{A variation on the SLIAR model}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{The SLIAR model}
+\bbullet Paper we have already seen: Arino, Brauer, PvdD, Watmough \& Wu. \href{http://dx.doi.org/10.1098/rsif.2006.0112}{Simple models for containment of a pandemic}, \emph{Journal of the Royal Society Interface} (2006)
+\vfill
+\bbullet However, suppose additionally that $L$ are also infectious
+\end{frame}  
+
+\begin{frame}
+\centering
+\includegraphics[width=\textwidth]{FIGS/SLIAR_infectiousL}
+\end{frame}  
+
+
+\begin{frame}
+Here, $\bS=S$, $\bI=(L,I,A)^T$ and $\bR=R$, so $m=1$, $n=3$ and 
+$$
+\bh=[\varepsilon\; 1\; \delta],
+\quad
+\bD=1,
+\quad 
+\bPi
+=\begin{pmatrix}
+1 \\ 0 \\0
+\end{pmatrix}
+\quad\text{and}\quad
+\mathbf{V}=
+\begin{pmatrix}
+\kappa & 0 & 0 \\
+-p\kappa & \alpha & 0 \\
+-(1-p)\kappa & 0 & \eta
+\end{pmatrix}
+$$
+Incidence is mass action so $\beta(\bE_0)=\beta$ and thus
+\begin{align*}
+\mathcal{R}_0
+&=
+\beta\bh\mathbf{V}^{-1}\bPi\bD\bS_0 \\
+&=
+\beta\;
+[\varepsilon\; 1\; \delta]
+\begin{pmatrix}
+1/\kappa & 0 & 0 \\
+p/\alpha & 1/\alpha & 0 \\
+(1-p)/\eta & 0 & 1/\eta
+\end{pmatrix}
+\begin{pmatrix}
+1 \\ 0 \\0
+\end{pmatrix}
+S_0 \\
+&=
+\beta S_0\left(
+\frac{\varepsilon}{\kappa}
++\frac{p}{\alpha}
++\frac{\delta(1-p)}{\eta}
+\right)
+\end{align*}
+\end{frame}  
+
+\begin{frame}
+For final size, since $m=1$, we can use $\eqref{eq:final_size_m1}$:
+\[
+\ln\left(
+\frac{S_0}{S_\infty}
+\right)
+=\frac{\mathcal{R}_0}{S_0}
+(S_0-S_\infty)+\beta\bh\mathbf{V}^{-1}\bI_0
+\]
+\vfill
+Suppose $\bI_0=(0,I_0,0)$, then
+\[
+\ln\left(
+\frac{S_0}{S_\infty}
+\right)
+=\mathcal{R}_0\frac{S_0-S_\infty}{S_0}
++\frac{\beta}{\alpha}I_0
+\]
+\vfill
+If $\bI_0=(L_0,I_0,A_0)$, then
+\[
+\ln\left(
+\frac{S_0}{S_\infty}
+\right)
+=\mathcal{R}_0\frac{S_0-S_\infty}{S_0}
++\beta\left(
+\frac{\varepsilon}{\kappa}
++\frac{p}{\alpha}
++\frac{\delta(1-p)}{\eta}
+\right)L_0
++\frac{\beta\delta}{\eta}A_0
++\frac{\beta}{\alpha}I_0
+\]
+\end{frame}  
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{A model with vaccination}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{A model with vaccination}
+\centering
+\begin{tikzpicture}[auto, %node distance = 2cm, auto,
+	cloud/.style={minimum width={width("N-1")+2pt},
+		draw, ellipse,fill=gray!20}]
+    \node [cloud, fill=green!90] (SU) {$S_U$};
+    \node [cloud, below=2cmof SU, fill=green!90] (SV) {$S_V$};
+    \node [cloud, right=3cm of SU, fill=red!30] (LU) {$L_U$};
+    \node [cloud, right=3cm of SV, fill=red!30] (LV) {$L_V$};
+	\node [cloud, right=of LU, fill=red!90] (IU) {$I_U$};
+	\node [cloud, right=of LV, fill=red!90] (IV) {$I_V$};
+	\node [cloud, below right=of IU, fill=blue!90] (R) {$R$};
+    \node [cloud, above right=2cm of IU, draw=none, fill=none] (h1) {};
+    \node [cloud, below right=2cm of IV, draw=none, fill=none] (h2) {};
+	%% Infections
+	\path [line, very thick] (SU) to node [midway, above] (TextNode) {$\beta S_U(I_U+\sigma_II_V)$} (LU);
+	\path [line, very thick] (SV) to node [midway, above] (TextNode) {$\sigma_S\beta S_V(I_U+\sigma_II_V)$} (LV);
+	\path [line, very thick] (LU) to node [midway, above, sloped] (TextNode) {$\kappa_U L_U$} (IU);
+	\path [line, very thick] (LV) to node [midway, above, sloped] (TextNode) {$\kappa_V L_V$} (IV);
+	\path [line, very thick] (IU) to node [midway, above, sloped] (TextNode) {$f_U\alpha_U I_U$} (R);
+	\path [line, very thick] (IV) to node [midway, above, sloped] (TextNode) {$f_V\alpha_V I_V$} (R);
+    \path [line, very thick] (IU) to node [midway, above, sloped] (TextNode) {$(1-f_U)\alpha_U I_U$} (h1);
+    \path [line, very thick] (IV) to node [midway, below, sloped] (TextNode) {$(1-f_V)\alpha_V I_V$} (h2);
+\end{tikzpicture}
+\end{frame}  
+
+
+\begin{frame}{A model with vaccination}
+Fraction $\gamma$ of $S_0$ are vaccinated before the epidemic; vaccination reduces probability and duration of infection, infectiousness and reduces mortality
+\begin{subequations}
+\begin{align}
+S_U\pprime &= -\beta S_U[I_U+\sigma_II_V] \\
+S_V\pprime &= -\sigma_S\beta S_V[I_U+\sigma_II_V] \\
+L_U\pprime &= \beta S_U[I_U+\sigma_II_V]-\kappa_UL_U\\
+L_V\pprime &= \sigma_S\beta S_V[I_U+\sigma_II_V]-\kappa_VL_V \\
+I_U\pprime &= \kappa_UL_U-\alpha_UI_U \\
+I_V\pprime &= \kappa_VL_V-\alpha_VI_V \\
+R\pprime &= f_U\alpha_UI_I+f_V\alpha_VI_V
+\end{align}
+\end{subequations}
+with $S_U(0)=(1-\gamma)S_0$ and $S_V(0)=\gamma S_0$
+\end{frame}  
+
+
+\begin{frame}
+Here, $m=2$, $n=4$,
+\[
+\bh = [0\;0\;1\;\sigma_I],\quad
+\bD=\begin{pmatrix}
+1 & 0 \\ 0 & \sigma_S
+\end{pmatrix},\quad
+\bPi=
+\begin{pmatrix}
+1 & 0 \\ 0 & 1 \\ 0 & 0 \\ 0 & 0
+\end{pmatrix}
+\]
+and
+\[
+\mathbf{V}=
+\begin{pmatrix}
+\kappa_U & 0 & 0 & 0 \\
+0 & \kappa_V & 0 & 0 \\
+-\kappa_U & 0 & \alpha_U & 0 \\
+0 & -\kappa_V & 0 & \alpha_V
+\end{pmatrix}
+\]
+\end{frame}
+
+\begin{frame}
+So
+\[
+\bGamma=\left[
+\frac{\beta}{\alpha_U}\; \frac{\sigma_I\sigma_S\beta}{\alpha_V}
+\right],
+\quad
+\mathcal{R}_c = S_0\beta\left(
+\frac{1-\gamma}{\alpha_U}+\frac{\sigma_I\sigma_S\gamma}{\alpha_V}
+\right)
+\]
+and the final size relation is
+\begin{multline*}
+\ln\left(
+\frac{(1-\gamma)S_U(0)}{S_U(\infty)}
+\right)
+= \\ 
+\frac{\beta}{\alpha_U}[(1-\gamma)S_U(0)-S_U(\infty)] \\
++\frac{\sigma_I\beta}{\alpha_V}[\gamma S_V(0)-S_V(\infty)]+\frac{\beta}{\alpha_U}I_0 \\
+\end{multline*}
+\[
+S_V(\infty) = \gamma S_U(0)\left(
+\frac{S_U(\infty)}{(1-\gamma)S_0}
+\right)^{\sigma_S}
+\]
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Antiviral resistance}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/ArinoBowmanMoghadas.png}
+\nocite{ArinoBowmanMoghadas2009}
+
+\begin{frame}{Adapting treatment to counter emergence of resistance}
+This work was undertaken at the request of the Public Health Agency of Canada during the pandemic preparadness phase prior to the 2009 p-H1N1 pandemic
+\vfill
+Problem: we have antivirals to use against influenza, either prophylactically or curatively. Using these antivirals may promote the emergence of antiviral-resistant strains. How do we minimise this risk?
+\end{frame}
+
+
+\begin{frame}
+\centering
+\resizebox{\textwidth}{!}{
+  \begin{tikzpicture}[%transform canvas={scale=1.3},
+      auto,
+      cloud/.style={minimum width={width("N-1")+2pt},
+      draw, 
+      ellipse,
+      fill=gray!20}]
+    %% S
+    \node [cloud, fill=green!90] at (0,0) (S) {$S$};
+    %% Untreated, resistant
+    \node [cloud, fill=red!90] at (3,1) (A_r) {$A_r$};
+    \node [cloud, fill=red!60] at (3,-1) (I_rU) {$I_{rU}$};
+    \node [cloud, fill=blue!60] at (6,0) (R_rU) {$R_{rU}$};
+    %% Untreated, sensitive
+    \node [cloud, fill=red!90] at (-3,1) (A) {$A$};
+    \node [cloud, fill=red!60] at (-3,-1) (I_U) {$I_U$};
+    \node [cloud, fill=blue!60] at (-6,0) (R_U) {$R_U$};
+    %% Treated
+    \node [cloud, fill=red!90] at (-1.5,-3) (I_T) {$I_T$};
+    \node [cloud, fill=red!90] at (1.5,-3) (I_rT) {$I_{rT}$};
+    \node [cloud, fill=red!90] at (0,-6) (I_Tr) {$I_{Tr}$};
+    %% Resistance
+    \node [cloud, fill=blue!60] at (-4.5,-3) (R_T) {$R_T$};
+    \node [cloud, fill=blue!60] at (4.5,-3) (R_rT) {$R_{rT}$};
+    \node [cloud, fill=blue!60] at (3,-6) (R_Tr) {$R_{Tr}$};
+    %%
+    %% Infections
+    \path [line, very thick] (S) to node [midway,above,sloped] (TextNode) {$(1-p)fS$} (A);
+    \path [line, very thick] (S) to node [midway,below,sloped] (TextNode) {$(1-q)pfS$} (I_U);
+    \path [line, very thick] (S) to node [midway,above,sloped] (TextNode) {$(1-p)gS$} (A_r);
+    \path [line, very thick] (S) to node [midway,below,sloped] (TextNode) {$(1-q)pgS$} (I_rU);
+    \path [line, very thick] (S) to node [near end,above,sloped] (TextNode) {$qpfS$} (I_T);
+    \path [line, very thick] (S) to node [midway,below,sloped] (TextNode) {$qpgS$} (I_rT);
+    %% Removals
+    \path [line, very thick] (A) to node [midway,below,sloped] (TextNode) {$\mu_AA$} (R_U);
+    \path [line, very thick] (I_U) to node [midway,below,sloped] (TextNode) {$(d_U+\mu_U)I_U$} (R_U);
+    \path [line, very thick] (A_r) to node [midway,below,sloped] (TextNode) {$\mu_AA_r$} (R_rU);
+    \path [line, very thick] (I_rU) to node [midway,below,sloped] (TextNode) {$(d_{rU}+\mu_U)I_{rU}$} (R_rU);
+    \path [line, very thick] (I_T) to node [midway,below,sloped] (TextNode) {$(d_T+\mu_T)I_T$} (R_T);
+    \path [line, very thick] (I_rT) to node [midway,below,sloped] (TextNode) {$(d_{rU}+\mu_U)I_{rT}$} (R_rT);
+    \path [line, very thick] (I_Tr) to node [midway,below,sloped] (TextNode) {$(d_{Ur}+\mu_U)I_{Tr}$} (R_Tr);
+    %% I_T transitions
+        \path [line, very thick] (I_T) to node [midway,below,sloped] (TextNode) {$\alpha I_T$} (I_Tr);
+    \path [line, very thick] (I_Tr) to node [midway,below,sloped] (TextNode) {$\gamma I_{Tr}$} (I_rT);
+  \end{tikzpicture}
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+\subsection{A COVID-19 model}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/ArinoPortet-2020.png}
+\nocite{ArinoPortet2020}
+
+\begin{frame}
+Extends the SLIAR model to take into account non-exponentially distributed stage durations (see course 02)
+\end{frame}
+
+\begin{frame}{The original model (well, almost the first one)}
+\centering
+\def\horzskip{*2}
+\def\vertskip{*2}
+\begin{tikzpicture}[auto, %node distance = 2cm, auto,
+	cloud/.style={minimum width={width("N-1")+2pt},
+		draw, ellipse,fill=red!20}]
+	\node [cloud] (S) at (0,0) {$S$};
+	\node [cloud] (L1) at (1\horzskip,0) {$L_1$};
+	\node [cloud] (L2) at (2\horzskip,0) {$L_2$};
+	\node [cloud,fill=blue!20] (I1) at (3\horzskip,-1\vertskip) {$I_1$};
+	\node [cloud] (A1) at (3\horzskip,1\vertskip) {$A_1$};
+	\node [cloud,fill=blue!20] (I2) at (4\horzskip,-1\vertskip) {$I_2$};
+	\node [cloud] (A2) at (4\horzskip,1\vertskip) {$A_2$};
+	\node [cloud,fill=blue!20] (RI) at (5\horzskip,0) {$R_I$};
+	\node [cloud] (RA) at (5\horzskip,1\vertskip) {$R_A$};
+	\node [cloud,, fill=blue!20] (D) at (5\horzskip,-2\vertskip) {$D$};
+	%% Infections
+	\path [line, very thick] (S) to node [midway,above] (TextNode) {$\Phi S$} (L1);
+	\path [line, very thick] (L1) to node [midway,above] (TextNode) {$\varepsilon L_1$} (L2);
+	\path [line, very thick] (L2) to node [midway,below,sloped] (TextNode) {$(1-\pi)\varepsilon L_2$} (I1);
+	\path [line, very thick] (L2) to node [midway,below,sloped] (TextNode) {$\pi\varepsilon L_2$} (A1);
+	\path [line, very thick] (I1) to node [midway, above] (TextNode) {$\gamma I_1$} (I2);
+	\path [line, very thick] (A1) to node [midway, above] (TextNode) {$\gamma A_1$} (A2);
+	\path [line, very thick] (I2) to node [midway,above,sloped] (TextNode) {$(1-\delta)\gamma I_2$} (RI);
+	\path [line, very thick] (A2) to node [midway, above] (TextNode) {$\gamma A_2$} (RA);
+	\path [line, very thick] (I2) to node [midway,below,sloped] (TextNode) {$\delta\gamma I_2$} (D);
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}{Reinterpreting terms}
+Here $D$ stands for \emph{detected}, $U$ is \emph{undetected}
+\vfill
+\centering
+\includegraphics[width=\textwidth]{FIGS/figure_SLDURM_base_model_with_different_epsilon_and_infectious_compartments}
+\end{frame}
+
+\begin{frame}{Working out when the first COVID-19 case occurred}
+\bbullet Details of emergence and precise timeline before amplification started unknown
+\vfill
+\bbullet Amplification in Wuhan
+\begin{itemize}
+\item Cluster of pneumonia cases mostly related to the Huanan Seafood Market
+\item 27 December 2019: first report to local government
+\item 31 December 2019: publication
+\item 8 January 2020: identification of SARS-CoV-2 as causative agent
+\item $\sim$ 23 January 2020: lockdown Wuhan and Hubei province + face mask mandates
+\end{itemize}
+\vfill
+\bbullet By 2020-01-29, virus in all provinces of mainland CHN
+\end{frame}
+
+
+\begin{frame}{Evidence of earlier spread}
+\bbullet Report to Wuhan authorities on 27 December 2019
+\vfill
+\bbullet First export detections in Thailand and Japan on 13 and 16 January 2020 (with actual importations on 8 and 6 January)
+\vfill
+$\implies$ amplification must have been occuring for a while longer
+\vfill
+\bbullet France: sample taken from 42-year-old male (last foreign travel to Algeria in August 2019) who presented to ICU on 27 December 2019
+\vfill
+\bbullet Retrospective studies in United Kingdom and Italy also showed undetected COVID-19 cases in prepandemic period
+\end{frame}
+
+\begin{frame}{Untangling the first case issue}
+\bbullet Robert, Rossman \& Jaric. Dating first cases of COVID-19. \emph{PLoS Pathogens} (2021)
+
+Find likely timing of first case of COVID-19 in China as November 17 (95\% CI October 4)
+\vfill
+\bbullet Pekar, Worobey, Moshiri, Scheffler \& Wertheim. Timing the SARS-CoV-2 index case in Hubei province. \emph{Science} (2021)
+
+Period between mid-October and mid-November 2019 is plausible interval when the first case of SARS-CoV-2 emerged in Hubei province
+\vfill
+Important when trying to understand global spread, so let me illustrate with the model I used, taking into account model evolution since
+\end{frame}
+
+\begin{frame}{Back-calculating the start of spread (example of China)}
+Cumulative confirmed case counts in China as reported to WHO was $c=547$ cases on $t_c=\textrm{2020-01-22}$
+\vfill
+Let $u$ be a point in parameter space. Solve ODE numerically over $[0,t]$, with $S(0)$ the population of China, $L_1(0)=1$ and other state variables 0. This gives a solution $x(t,t_0=0,u)$
+\vfill
+Extracting $L_2(t,t_0=0,u)$ from this solution, obtain cumulative number of new detections as
+\[
+C(t) = \int_{t_0=0}^{t} p\varepsilon_2 L_2(s,t_0,u)\ ds
+\]
+\vfill
+Let $t^\star$ be s.t. $C(t^\star)=547$; then $t_i=\textrm{2020-01-22}-t^\star$
+\end{frame}
+
+\begin{frame}
+\centering
+\includegraphics[width=\textwidth]{FIGS/start_time_vs_R0_and_p.png}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE>>=
+# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
+rmd_chunks_to_r_temp <- function(file){
+  callr::r(function(file, temp){
+    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
+    knitr::purl(file, output = out_file, documentation = 1)
+  }, args = list(file))
+}
+rmd_chunks_to_r_temp("L05-KMK-more.Rnw")
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{plain}
+\bibliography{local-bibliography}
+\end{frame}
+
+\end{document}

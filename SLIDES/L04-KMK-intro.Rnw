@@ -1,0 +1,935 @@
+\documentclass[aspectratio=169]{beamer}
+
+<<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
+# Load required libraries
+required_packages = c("deSolve",
+                      "dplyr", 
+                      "ggplot2", 
+                      "knitr", 
+                      "latex2exp",
+                      "lattice",
+                      "magick",
+                      "readr", 
+                      "tidyr",
+                      "viridis")
+
+for (p in required_packages) {
+  if (!require(p, character.only = TRUE)) {
+    install.packages(p, dependencies = TRUE)
+    require(p, character.only = TRUE)
+  }
+}
+# Knitr options
+opts_chunk$set(echo = TRUE, 
+               warning = FALSE, 
+               message = FALSE, 
+               dev = c("pdf", "png"),
+               fig.width = 6, 
+               fig.height = 4, 
+               fig.path = "FIGS/L04-",
+               fig.keep = "high",
+               fig.show = "hide")
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+options(knitr.table.format = "latex")
+# Date for front title page (if needed)
+yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
+@
+
+<<set-slide-background,echo=FALSE,results='asis'>>=
+# Are we plotting for a dark background?
+plot_blackBG = FALSE
+if (plot_blackBG) {
+  bg_color = "black"
+  fg_color = "white"
+  input_setup = "\\input{slides-setup-blackBG.tex}"
+} else {
+  bg_color = "white"
+  fg_color = "black"
+  input_setup = "\\input{slides-setup-whiteBG.tex}"
+}
+cat(input_setup)
+@
+
+\title{The Kermack-McKendrick model}
+\subtitle{MATH 8xyz -- Lecture 04}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
+
+
+\begin{frame}{Kermack and McKendrick (1927+)}
+Model in these slides is a particular case in
+\begin{itemize}
+  \item Kermack \& McKendrick. \href{https://doi.org/10.1098/rspa.1927.0118}{A contribution to the mathematical theory of epidemics} (1927) \end{itemize}
+\vfill
+That paper was followed by a series of ``Contributions to the mathematical theory of epidemics.''
+\begin{itemize}
+  \item \href{https://doi.org/10.1098/rspa.1932.0171}{II. The problem of endemicity} (1932)
+  \item \href{https://doi.org/10.1098/rspa.1933.0106}{III. Further studies of the problem of endemicity} (1933) \nocite{KermackMcKendrick1932}
+  \item \href{https://doi.org/10.1017/S0022172400034902}{IV. Analysis of experimental epidemics of the virus disease mouse ectromelia} (1937)
+  \item \href{https://doi.org/10.1017/S0022172400011918}{V. Analysis of experimental epidemics of mouse-typhoid; a bacterial disease conferring incomplete immunity} (1939)
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\section{Kermack-McKendrick-type epidemic models}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/KMK-title-page}
+\nocite{KermackMcKendrick1927}
+
+\begin{frame}{What is the \emph{size} of an epidemic?}
+\bbullet 
+If we are interested in the possibility that an epidemic occurs
+\begin{itemize}
+  \item Does an epidemic peak always take place?
+  \item If it does take place, what is its size?
+\end{itemize}
+\vfill
+\bbullet If an epidemic traverses a population, is everyone affected/infected?
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{The Kermack-McKendrick (KMK) model}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/KMK-model-in-paper}
+
+
+\begin{frame}{The Kermack-McKendrick SIR model without demography}
+\bbullet The period of time under consideration is sufficiently short that demography can be neglected (we also say the model has \emph{no vital dynamics})
+\vfill
+\bbullet Individuals are either \emph{susceptible} to the disease or \emph{infected} by (and \emph{infectious} with) the disease
+\vfill
+\bbullet After recovering or dying from the disease, individuals are \emph{removed} from the infectious compartment ($R$)
+\vfill
+\bbullet Incidence is of \defword{mass action} type and takes the form $\beta SI$
+\end{frame}
+
+
+\begin{frame}{The state variables}
+We formulate the model as a system of \defword{differential equations}
+\vfill
+Differential equations: unknowns are \emph{functions} (instead of scalars, like in algebraic equations)
+\vfill
+At time $t\geq 0$ (we typically assume time starts at $t=0$, but could also consider $t\geq t_0>0$), the \defword{state variables}, in the current model, are the numbers of individuals who are
+\begin{itemize}
+\item susceptible to the disease: $S(t)$
+\item infected and infectious with the disease: $I(t)$
+\item removed from the infectious comparment: $R(t)$
+\end{itemize}
+\vfill
+Often, we drop the dependence on $t$ if it is not explicitly required and write $S,I,R$
+\end{frame}
+
+
+
+\begin{frame}{Important -- Incidence functions}
+Incidence is the rate at which new cases arise, the incidence function then describes how contacts lead to new infections
+\vfill
+If there are $S$ susceptible individuals and $I$ infectious individuals in the population, we use a function of the form
+\[
+f(S,I)
+\]
+The function can also explicitly depend on the total population $N$, i.e., $f(S,I,N)$
+\vfill
+We return to incidence functions in \href{no.se}{Lecture 06}
+\vfill
+For now, just know the most common incidence functions are
+\begin{itemize}
+\item \defword{mass action incidence} $f(S,I,N)=\beta SI$
+\item \defword{standard} (or \defword{proportional}) \defword{incidence} $f(S,I,N)=\beta SI/N$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{The Kermack-McKendrick model}
+This model is typically called the \defword{Kermack-McKendrick} (KMK) \defword{SIR model} 
+  \begin{align*}
+    \frac{d}{dt}S(t) &= -\beta S(t)I(t) \\
+    \frac{d}{dt}I(t) &= \beta S(t)I(t)-\gamma I(t) \\
+    \frac{d}{dt}R(t) &= \gamma I(t) 
+    \end{align*}  
+\vfill
+\begin{center}
+  \begin{tikzpicture}[scale=1.25, transform shape]
+    \node [circle, fill=green!50, text=black] (S) {$S(t)$};
+    \node [circle, right=1.5cm of S, fill=red!90, text=black] (I) {$I(t)$};
+    \node [circle, right=1.5cm of I, fill=blue!90, text=black] (R) {$R(t)$};
+    %% Flows
+    \path [line, very thick] (S) to node [midway, above] (TextNode) {$\beta S(t)I(t)$} (I);
+    \path [line, very thick] (I) to node [midway, above] (TextNode) {$\gamma I(t)$} (R);
+  \end{tikzpicture}    
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{The Kermack-McKendrick model}
+As indicated, we often drop dependence on $t$ of the state variables; we also write $X':=dX(t)/dt$. So the KMK model is usually written
+\vfill
+\begin{subequations}\label{sys:KMK}
+  \begin{align}
+    S\pprime &= -\beta SI \label{sys:KMK_dS} \\
+    I\pprime &= \beta SI-\gamma I \label{sys:KMK_dI} \\
+    R\pprime &= \gamma I \label{sys:KMK_dR}
+    \end{align}  
+\end{subequations}
+\vfill
+\begin{center}
+  \begin{tikzpicture}[scale=1.5, transform shape]
+    \node [circle, fill=green!50, text=black] (S) {$S$};
+    \node [circle, right=1cm of S, fill=red!90, text=black] (I) {$I$};
+    \node [circle, right=1cm of I, fill=blue!90, text=black] (R) {$R$};
+    %% Flows
+    \path [line, very thick] (S) to node [midway, above] (TextNode) {$\beta SI$} (I);
+    \path [line, very thick] (I) to node [midway, above] (TextNode) {$\gamma I$} (R);
+  \end{tikzpicture}    
+\end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Mathematical analysis of KMK}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+
+\begin{frame}{Reduction of the model}
+  3 compartments, but when considered in detail, we notice that \emph{removed} do not have a direct influence on the dynamics of $S$ or $I$, in the sense that $R$ does not appear in \eqref{sys:KMK_dS} or \eqref{sys:KMK_dI}
+  \vfill
+  Furthermore, the total population (including deceased who are also in $R$) $N=S+I+R$ satisfies
+  \[
+  N\pprime=(S+I+R)'=0
+  \]
+  Thus, $N$ is constant and 
+  \begin{equation}\label{eq:constant_population}
+    S(t)+I(t)+R(t)=N_0,\quad t\geq 0.
+  \end{equation}
+  so the dynamics of $R$ can be deduced from $R=N-(S+I)$.
+  So we can consider
+  \begin{subequations}\label{sys:KMK_2d}
+    \begin{align}
+      S\pprime &= -\beta SI \label{sys:KMK_2d_dS}\\
+      I\pprime &= \beta SI-\gamma I  \label{sys:KMK_2d_dI}
+      \end{align}
+    \end{subequations}
+\end{frame}
+
+\begin{frame}{Equilibria}
+  Let us consider the equilibria of
+  \begin{subequations}
+    \begin{align}
+      S\pprime &= -\beta SI 
+      \tag{\ref{sys:KMK_2d_dS}} \\
+      I\pprime &= (\beta S-\gamma)I  
+      \tag{\ref{sys:KMK_2d_dI}}
+    \end{align}
+  \end{subequations}
+\vfill
+  From \eqref{sys:KMK_2d_dI}
+  \begin{itemize}
+    \item either $S^\star=\gamma/\beta$ 
+    \item or $I^\star=0$
+  \end{itemize}
+  \vfill
+  Substitute into \eqref{sys:KMK_2d_dS}
+  \begin{itemize}
+    \item in the first case, $(S^\star,I^\star)=(\gamma/\beta,0)$ 
+    \item in the second case, any $S^\star\geq 0$ is an EP
+  \end{itemize}
+  \vfill
+  The second case is an \emph{issue}: the usual linearisation does not work when there is a \emph{continuum} of equilibria as the EP are not \emph{isolated}
+\end{frame}
+
+\begin{frame}{What is the problem with non-isolated EP?}
+\begin{proposition}\label{prop:EP_KMK}
+The Kermack-McKendrick model SIR model \eqref{sys:KMK} has the continuum of equilibria
+\begin{equation}
+\label{eq:DFE_KMK}
+    E_0^\text{KMK}:=\left\{
+    (S^\star,I^\star,R^\star)=(S_\infty,0,N_0-S_\infty),\quad S_\infty\in[0,N_0]
+    \right\}
+\end{equation}
+\end{proposition}
+\end{frame}
+
+\begin{frame}{Proof}
+Let us consider \eqref{sys:KMK} and start with $I=I^\star=0$.
+Substitute this value into \eqref{sys:KMK_dS} at equilibrium, giving $0 = -\gamma S^\star I^\star(=0)$, meaning that any value of $S^\star$ satisfies this relation. From the conservation of the total population \eqref{eq:constant_population}, the equilibrium $E_0^\text{KMK}$ takes the form given by \eqref{eq:DFE_KMK}
+\vfill
+Now consider $S=S^\star=\gamma/\beta$. Substituting this value into \eqref{sys:KMK_dS} at equilibrium gives $0 = -\gamma I^\star$, from which it follows that $I^\star=0$, and, using the conservation of total population \eqref{eq:constant_population},
+\begin{equation}\label{eq:DFE_KMK_tmp}
+    (S^\star,I^\star,R^\star)=\left(
+    \frac{\gamma}{\beta},0,N_0-\frac{\gamma}{\beta}
+    \right)
+\end{equation}
+is an equilibrium of \eqref{sys:KMK}. 
+The equilibrium \eqref{eq:DFE_KMK_tmp} is biologically relevant only when $N_0-\gamma/\beta\geq 0$.
+Note that \eqref{eq:DFE_KMK} includes \eqref{eq:DFE_KMK_tmp} when the latter is biologically relevant
+\end{frame}
+
+\begin{frame}
+Adapting slightly the definitions in \cite{HirschSmale1974}, consider the ordinary differential equation
+\begin{equation}\label{eq:ODE}
+    x' = f(x)
+\end{equation}
+where $x(t)\in W$ and $f:W\to E$ is a function such that solutions to \eqref{eq:ODE} exist uniquely, e.g., a $C^1$ function, from an open set $W$ of the vector space $E$ into $E$
+\vfill
+Denote $x(t,x_0)$ the solution to \eqref{eq:ODE} through the initial value $x(t_0)=x_0$
+\end{frame}
+
+\begin{frame}
+A point $x^\star\in W$ is an \defword{equilibrium} if $f(x^\star)=0$
+\vfill
+\begin{definition}[Locally stable equilibrium]\label{def:LS_EP}
+An equilibrium point $x^\star$ of \eqref{eq:ODE} is \defword{locally stable} (LS) if for every neighbourhood $\mathcal{N}(x^\star)$ of $x^\star$ in $W$, there is a neighbourhood $\mathcal{N}_1\subseteq\mathcal{N}(x^\star)$ of $x^\star$ such that every solution $x(t,x_0)$ with $x_0\in\mathcal{N}_1$ is defined and in $\mathcal{N}(x^\star)$ for all $t>t_0$
+\end{definition}
+\vfill
+\begin{definition}[Locally asymptotically stable equilibrium]
+If $\mathcal{N}_1$ can be chosen so that in addition to the properties in Definition~\ref{def:LS_EP}, $\lim_{t\to\infty}x(t,x_0)=x^\star$ for all $x_0\in\mathcal{N}_1$, then $x^\star$ is \defword{locally asymptotically stable} (LAS)
+\end{definition}
+\end{frame}
+
+\begin{frame}
+DFE \eqref{eq:DFE_KMK} of \eqref{sys:KMK} are not \defword{isolated}: any (open) neighbourhood of an equilibrium contains infinitely many other equilibria
+\vfill
+\begin{center}
+    \begin{tikzpicture}
+    \coordinate (SN) at (4,0);
+    \coordinate (RN) at (0,4);
+    \coordinate (xs) at (1.5,2.5);
+    % The region
+    \fill[gray!10] (0,4) -| (4,4) -| (4,0) -| (0,0) -- cycle;
+    \draw[gray!40, thick]  (0,0) -- (4,0) -- (4,4) -- (0,4) -- cycle;
+    % axis, on the top
+    \draw[->] (0,0) -- (5.25,0) node[below left] {$S$};
+    \draw[->] (0,0) -- (0,5) node[below left] {$R$};
+    % The line of EP
+    \draw[thin] (SN) -- (RN) node[pos=0.3,right] {$S+R=N_0$};
+    \draw[line width=2] (1,3) -- (2,2);
+    \shade[ball color = gray!40, opacity = 0.4] (xs) circle (0.72);
+    % Intersections on S and R axes
+    \draw (SN) circle (0.1cm) node[below] {$S=N_0$};
+    \shade[ball color = blue, opacity = 1] (SN) circle (0.1cm);
+    \draw (RN) circle (0.1cm) node[left] {$R=N_0$};
+    \shade[ball color = blue, opacity = 1] (RN) circle (0.1cm);
+    % The equilibrium
+    \draw (xs) circle (0.1cm) node[above right] {$x^\star$};
+    \shade[ball color = red, opacity = 1] (xs) circle (0.1cm);
+    \end{tikzpicture}
+\end{center}
+\vfill
+Neighbourhood $\N(x^\star)$ of $x^\star\in E_0^\text{KMK}$ lying on the $S-R$ plane (the neighbourhood extends above and below the $S-R$ plane in the $I$ direction, not shown here). 
+The thin line is $E_0^\text{KMK}$, the thick line is $E_0^\text{KMK}\cap\N(x^\star)$
+\end{frame}
+
+\begin{frame}
+\begin{proposition}
+Consider a disease-free equilibrium $x^\star\in E_0^\text{KMK}$ of \eqref{sys:KMK}. Then $x^\star$ is LS but not LAS  
+\end{proposition}
+\vfill
+This means in particular that considering the Jacobian of \eqref{sys:KMK} at the DFE \textbf{makes no sense}!
+\end{frame}
+
+\begin{frame}{Proof}
+Let $x_1^\star\in E_0^\text{KMK}$ be an equilibrium of \eqref{sys:KMK}.
+Consider $\S_\mathcal{N}(x_1^\star)\subset E_0^\text{KMK}$, open subset of $E_0^\text{KMK}$ containing $x_1^\star$.
+Now take some $x_2^\star\in\S_\mathcal{N}(x_1^\star)$. Since $x_2^\star\in\S_\mathcal{N}(x_1^\star)\subset E_0^\text{KMK}$, $x_2^\star$ is an equilibrium of \eqref{sys:KMK} and thus $x(t,x_2^\star)=x_2^\star\in\S_\mathcal{N}(x_1^\star)$ for all $t\geq t_0$.
+As a consequence, $x_1^\star$ is locally stable
+\vfill
+$\Rightarrow$ any open neighbourhood $\mathcal{N}(x_1^\star)$ contains $\S_\mathcal{N}=\mathcal{N}(x_1^\star)\cap E_0^\text{KMK}$
+\vfill
+Consider, then, some $x_2^\star\in\S_\mathcal{N}$.
+Since $x_2^\star\in\S_\mathcal{N}$, $x_2^\star$ is an equilibrium and as a consequence, $\lim_{t\to\infty}x(t,x_2^\star)=x_2^\star$.
+Therefore, any open neighbourhood of $x_1^\star$ contains points $x_0$ not such that $\lim_{t\to\infty}x(t,x_0)=x_1^\star$ $\implies$ $x_1^\star$ is LS but not LAS
+\end{frame}
+
+\begin{frame}{The next generation matrix method in this context}
+Consider the method in \cite{VdDWatmough2002}
+\vfill
+To construct $\R_0$, they require \emph{local stability}
+\vfill
+Theorem 2 in \cite{VdDWatmough2002} pertaining to LAS, on the other hand, has one assumption (assumption A5) that the DFE be \emph{locally asymptotically stable}, with the assumption that all eigenvalues of the linearisation near a disease-free equilibrium have negative real parts
+\vfill
+Clearly, this cannot be true with \eqref{sys:KMK}
+\end{frame}
+
+
+\begin{frame}{Another approach -- Study $dI/dS$}
+  \begin{align}
+  S\pprime &= -\beta SI \tag{\ref{sys:KMK_2d_dS}}\\
+  I\pprime &= \beta SI-\gamma I  \tag{\ref{sys:KMK_2d_dI}}
+  \end{align}
+  \vfill
+  What is the dynamics of $dI/dS$? 
+  \begin{equation}
+    \label{eq:KMK_dI_over_dS}
+    \frac{dI}{dS}
+    =\frac{dI}{dt}\frac{dt}{dS}
+    =\frac{I'}{S'}
+    =\frac{\beta SI-\gamma I}{-\beta SI}
+    =\frac{\gamma}{\beta S}-1
+  \end{equation}
+ provided $S\neq 0$
+  \vfill
+  \textbf{Note --} Recall that $S$ and $I$ are $S(t)$ and $I(t)$.. \eqref{eq:KMK_dI_over_dS} thus describes the relation between $S$ and $I$ over solutions to the original ODE \eqref{sys:KMK_2d}
+\end{frame}
+
+
+\begin{frame}{}
+  Integrate $\eqref{eq:KMK_dI_over_dS}$ and obtain trajectories in state space
+  $$
+  I(S)=\frac\gamma\beta \ln S-S+C
+  $$
+  with $C\in\IR$
+  \vfill
+  IC $I(S_0)=I_0$ $\Rightarrow$ $C=S_0+I_0-\dfrac \gamma\beta \ln S_0$ and the solution to \eqref{sys:KMK} is, as a function of $S$
+  \begin{align*}
+  I(S)&=S_0+I_0-S+\frac\gamma\beta \ln \frac S{S_0} \\
+  R(S)&=N-S-I(S)=R_0-\frac\gamma\beta \ln \frac S{S_0}
+  \end{align*}
+  (since $N_0=S_0+I_0+R_0$)
+\end{frame}
+
+
+<<KMK_SI_plane,echo=FALSE>>=
+# Plot the trajectories of the KMK SIR system in the SI-plane
+# In this plot, the total population N is normalised to 1
+gamma = 1/5
+beta = 0.5
+# Store the values of S and I in lists
+S = list()
+I = list()
+i = 1
+# Solutions starting on the S axis
+for (S0 in seq(0.6, 1, 0.1)) {
+  I0 = 0
+  S[[i]] = seq(0.001, S0, 0.001)
+  I[[i]] = S0+I0-S[[i]]+gamma/beta*log(S[[i]]/S0)
+  i = i+1
+}
+# Solutions starting on the S+I=1 line
+for (S0 in seq(1, 0.05, -0.1)) {
+  I0 = 1-S0
+  S[[i]] = seq(0.001, S0, 0.001)
+  I[[i]] = S0+I0-S[[i]]+gamma/beta*log(S[[i]]/S0)
+  i = i+1
+}
+# S+I=1 line
+S[[i]] = seq(0, 1, 0.001)
+I[[i]] = 1-S[[i]]
+if (plot_blackBG) {
+  par(bg = 'black', fg = 'white') # set background to black, foreground white
+  colour = "white"
+} else {
+  colour = "black"
+}
+for (i in 1:length(S)) {
+  if (i == 1) {
+    plot(S[[i]], I[[i]],
+         type = "l", lwd = 3,
+         col = ifelse((I[[i]][length(I[[i]])] < max(I[[i]])), "red", colour),
+         xlim = c(0,1), ylim = c(0,1),
+         xaxs = "i", yaxs = "i",
+         xlab = "S", ylab = "I",
+         col.axis = colour, cex.axis = 1,
+         col.lab = colour, cex.lab = 1,
+         bty = "n")
+    points(S[[i]][length(S[[i]])], I[[i]][length(I[[i]])],
+          pch = 19, cex = 2, 
+          col = ifelse((I[[i]][length(I[[i]])] < max(I[[i]])), "red", colour))
+  } else if (i<length(S)) {
+    lines(S[[i]], I[[i]], 
+          col = ifelse((I[[i]][length(I[[i]])] < max(I[[i]])), "red", colour),
+          lwd = 3)
+    points(S[[i]][length(S[[i]])], I[[i]][length(I[[i]])],
+           pch = 19, cex = 2, 
+           col = ifelse((I[[i]][length(I[[i]])] < max(I[[i]])), "red", colour))
+  } else {
+    lines(S[[i]], I[[i]])
+  }
+}
+@
+
+\begin{frame}
+Trajectories of \eqref{sys:KMK_2d} in $(S,I)$-space, normalised, with IC $(S_0,1-S_0)$ and $\beta/\gamma=2.5$
+\vfill
+\begin{center}
+\includegraphics[width=0.9\textwidth]{\Sexpr{fig_chunk('KMK_SI_plane', 'pdf')}}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{}
+  Let us study
+  $$
+  I(S)=S_0+I_0-S+\frac\gamma\beta \ln \frac S{S_0} 
+  $$
+  We have
+  $$
+  \frac{d}{dS}I(S) = \frac{\gamma}{\beta S}-1
+  $$
+  So, in the previous curves, the max of $I(S)$ happens when $S=\gamma/\beta$ ($S=0.4$ in the example)
+  \vfill
+  At that point,
+  $$
+  I(S) = I_0+\left(
+    1-\frac{1}{\R_0} - \frac{\ln(\R_0)}{\R_0}
+  \right)S_0
+  $$
+\end{frame}
+
+
+\begin{frame}{}
+  \begin{theorem}[Epidemic or no epidemic?]
+    Let $(S(t),I(t))$ be a solution to \eqref{sys:KMK_2d} and $\R_0$ defined by
+    \begin{equation}\label{eq:R0_KMK}
+    \R_0=\frac{\beta}{\gamma}S_0
+    \end{equation}
+    \vfill
+    \begin{itemize}
+      \item If $\R_0\leq 1$, then $I(t)\searrow 0$ when $t\to\infty$ 
+      \item If $\R_0>1$, then $I(t)$ first reaches a maximum 
+      \begin{equation}\label{eq:max_I}
+        I_0+\left(
+      1-\frac{1}{\R_0} - \frac{\ln(\R_0)}{\R_0}
+      \right)S_0
+      \end{equation}
+      then goes to 0 as $t\to\infty$  
+    \end{itemize}    
+  \end{theorem}
+\end{frame}
+
+<<eval=TRUE>>=
+rhs_SIR_KMK <- function(t, x, p) {
+  with(as.list(c(x, p)), {
+    dS = - beta * S * I
+    dI = beta * S * I - gamma * I
+    dR = gamma * I
+    return(list(c(dS, dI, dR)))
+  })
+}
+# Initial condition for S (to compute R_0)
+S0 = 1000
+gamma = 1/14
+# Set beta so that R_0 = 1.5
+beta = 1.5 * gamma / S0 
+params = list(gamma = gamma, beta = beta)
+IC = c(S = S0, I = 1, R = 0)
+times = seq(0, 365, 1)
+sol_KMK <- ode(IC, times, rhs_SIR_KMK, params)  
+@
+
+
+
+\begin{frame}[fragile]{}
+<<KMK_R0eq1dot5>>=
+plot(sol_KMK[, "time"], sol_KMK[, "I"], 
+     type = "l", lwd = 2,
+     main = TeX("Kermack-McKendrick SIR, $R_0=1.5$"),
+     xlab = "Time (days)", ylab = "Prevalence")
+@
+\begin{center}
+\includegraphics[width=0.8\textwidth]{\Sexpr{fig_chunk('KMK_R0eq1dot5', 'pdf')}}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{The basic reproduction number $\R_0$}
+\bbullet Indicator often used in epidemiology. Verbally
+\begin{quote}
+  average number of secondary cases of infection produced when a single infectious individual is introduced in a wholly susceptible population
+\end{quote}
+\vfill
+\bbullet If $\R_0<1$, then each infectious individual infects on average less than 1 person and the epidemic is quite likely to go extinct 
+\vfill
+\bbullet If $R_0>1$, then each infectious individual infects on average more than 1 person and an epidemic is quite likely to occur
+\end{frame}
+
+\begin{frame}{A few sample values of $\R_0$}
+  $\R_0$ can be estimated from data (from the Anderson \& May book)
+  \vfill
+  \begin{center}
+  \begin{tabular}{llcc}
+  \hline 
+  Infection & Location & Period & $\R_0$ \\
+  \hline
+  Measles & Cirencester, England & 1947-50 & 13-14 \\
+  & England and Wales & 1950-68 & 16-18 \\
+  & Kansas, USA & 1918-21 & 5-6 \\
+  & Ontario, Canada & 1912-3 & 11-12 \\
+  & Willesden, England & 1912-3 & 11-12 \\
+  & Ghana & 1960-8 & 14-15 \\
+  & East Nigeria & 1960-8 & 16-17 \\
+  \end{tabular}
+  \end{center}
+\end{frame}
+    
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The final size of a KMK epidemic}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{Final size of an epidemic}
+  For a nonnegative valued integrable function $w(t)$, denote
+  $$
+  w_0=w(0),\qquad  w_\infty = \lim_{t\to\infty}w(t),\qquad\hat w = \int_0^\infty w(t)\ dt
+  $$
+  \vfill
+  In the subsystem
+  \begin{align}
+  S' &= -\beta SI \tag{\ref{sys:KMK_2d_dS}} \\
+  I' &= \beta SI-\gamma I \tag{\ref{sys:KMK_2d_dI}} 
+  \end{align}
+  compute the sum of \eqref{sys:KMK_2d_dS} and \eqref{sys:KMK_2d_dI}, making sure to show time dependence $$
+  \frac{d}{dt}(S(t)+I(t))=-\gamma I(t)
+  $$
+\end{frame}
+
+
+\begin{frame}{}
+  Integrate from 0 to $\infty$:
+  $$
+  \int_0^\infty\frac{d}{dt}(S(t)+I(t))\ dt=-\int_0^\infty\gamma I(t)dt 
+  $$
+  The left hand side gives
+  $$
+  \int_0^\infty\frac{d}{dt}(S(t)+I(t))\ dt
+  = S_\infty+I_\infty-S_0-I_0 = S_\infty-S_0-I_0
+  $$
+  since $I_\infty=0$
+  \vfill
+  The right hand side takes the form
+  $$
+  -\int_0^\infty\gamma I(t)dt = -\gamma\int_0^\infty I(t)dt = -\gamma \hat I
+  $$
+  We thus have
+  \begin{equation}
+  \label{eq:KMK_final_size_step1}
+  S_\infty-S_0-I_0 = -\gamma\hat I
+  \end{equation}
+\end{frame}
+
+
+
+\begin{frame}{}
+  Now consider \eqref{sys:KMK_2d_dS}:
+  $$
+  S' = -\beta SI
+  $$
+  Divide both sides by $S$:
+  $$
+  \frac{S'(t)}{S(t)} = -\beta I(t)
+  $$
+  Integrate from 0 to $\infty$:
+  \begin{equation}
+  \label{eq:KMK_final_size_step2}
+  \ln S_\infty-\ln S_0 = -\beta \hat I
+  \end{equation}
+  Express \eqref{eq:KMK_final_size_step1} and \eqref{eq:KMK_final_size_step2} in terms of $-\hat I$ and equate
+  $$
+  \frac{\ln S_\infty-\ln S_0}{\beta}
+  =
+  \frac{S_\infty-S_0-I_0}{\gamma}
+  $$
+  Thus we have
+  \begin{equation}
+  \label{eq:final_size}
+  (\ln S_0-\ln S_\infty)S_0 = (S_0-S_\infty)\R_0+I_0\R_0
+  \end{equation}
+\end{frame}
+
+
+
+\begin{frame}{}
+\begin{theorem}[Final size relation]
+  Let $(S(t),I(t))$ be a solution to \eqref{sys:KMK_2d} and $\R_0$ defined by \eqref{eq:R0_KMK}
+  \vskip0.5cm
+  The number $S(t)$ of susceptible individuals is a nonincreasing function and its limit $S_\infty$ is the only solution in $(0,S_0)$ of the transcendental equation
+  \begin{equation}\tag{\ref{eq:final_size}}
+  (\ln S_0-\ln S_\infty)S_0 = (S_0-S_\infty)\R_0+I_0\R_0
+  \end{equation}
+\end{theorem}
+\end{frame}
+
+
+
+\begin{frame}{The (transcendantal) final size equation}
+  Rewrite the final size equation
+  \begin{equation}
+    \tag{\ref{eq:final_size}}
+  (\ln S_0-\ln S_\infty)S_0 = (S_0-S_\infty)\R_0+I_0\R_0
+  \end{equation}
+  as
+  \begin{equation}
+  \label{eq:final_size_2}
+  T(S_\infty) =(\ln S_0-\ln S_\infty)S_0
+  - (S_0-S_\infty)\R_0 -I_0\R_0
+\end{equation}
+\vfill
+Thus, we seek the zeros of the function $T(S_\infty)$
+\end{frame}
+
+
+
+\begin{frame}{}
+  We seek $S_\infty$ in $(0,S_0]$ s.t. $T(S_\infty)=0$, with
+  \begin{equation}\tag{\ref{eq:final_size_2}}
+    T(S_\infty) =(\ln S_0-\ln S_\infty)S_0
+    - (S_0-S_\infty)\R_0 -I_0\R_0      
+  \end{equation}
+  \vfill
+  Note to begin that 
+  $$
+  \lim_{S_\infty\to 0}T(S_\infty)=\lim_{S_\infty\to 0}-S_0\ln(S_\infty)=\infty
+  $$
+  \vfill
+  Differentiating $T$ with respect to $S_\infty$, we get 
+  $$
+  T'(S_\infty)=\R_0-S_0/S_\infty
+  $$ 
+  \vfill
+  When $S_\infty\to 0$, $\R_0-S_0/S_\infty<0$, so $T$ decreases to $S_\infty=S_0/\R_0$
+  \vfill
+  So if $\R_0\leq 1$, the function $T$ is decreasing on $(0,S_0)$, while it has a minimum if $\R_0>1$
+\end{frame}
+
+
+
+\begin{frame}{Case $\R_0\leq 1$}
+  \begin{equation}\tag{\ref{eq:final_size_2}}
+    T(S_\infty) =(\ln S_0-\ln S_\infty)S_0
+    - (S_0-S_\infty)\R_0 -I_0\R_0      
+  \end{equation}
+  \vfill
+  \bbullet We have seen that $T$ decreases on $(0,S_0]$
+  \vfill
+  \bbullet Also, $T(S_0)=-I_0\R_0<0$ ($I_0=0$ is trivial and not considered)
+  \vfill
+  \bbullet $T$ is continuous
+  \vfill
+  $\implies$ there exists a unique $S_\infty\in (0,S_0]$ s.t. $T(S_\infty)=0$
+\end{frame}
+
+
+\begin{frame}{Case $\R_0> 1$}
+  \begin{equation}\tag{\ref{eq:final_size_2}}
+    T(S_\infty) =(\ln S_0-\ln S_\infty)S_0
+    - (S_0-S_\infty)\R_0 -I_0\R_0      
+  \end{equation}
+  \vfill
+  \bbullet We have seen that $T$ decreases on $(0,S_0/\R_0]$
+  \vfill
+  \bbullet For $S_\infty\in[S_0/\R_0]$, $T'>0$
+  \vfill
+  \bbullet As before, $T(S_\infty)=-I_0\R_0$
+  \vfill
+  \bbullet $T$ is continuous
+  \vfill
+  $\implies$ there exists a unique $S_\infty\in (0,S_0]$ s.t. $T(S_\infty)=0$. More precisely, in this case, $S_\infty\in(0,S_0/\R_0)$
+\end{frame}
+
+
+
+\begin{frame}[fragile]{}
+We solve numerically. We need a function
+<<eval=TRUE>>=
+final_size_eq = function(S_inf, S0 = 999, I0 = 1, R_0 = 2.5) {
+  OUT = S0*(log(S0)-log(S_inf)) - (S0+I0-S_inf)*R_0
+  return(OUT)
+}
+@
+and solve easily using \code{uniroot}:
+<<>>=
+uniroot(f = final_size_eq, interval = c(0.05, 999))
+@
+\end{frame}
+
+
+\begin{frame}[fragile]{A function to use this..}
+<<>>=
+final_size = function(L) {
+  with(as.list(L), {
+  S_inf = uniroot(f = function(x) 
+    final_size_eq(S_inf = x, 
+                  S0 = S0, I0 = I0, 
+                  R_0 = R_0),
+    interval = c(0.05, S0))
+  return(S_inf$root)
+  })
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]{A figure with all the information}
+<<KMK_final_size_0p8>>=
+N0 = 1000
+I0 = 1
+S0 = N0-I0
+R_0 = 0.8
+S = seq(0.1, S0, by = 0.1)
+fs = final_size_eq(S, S0 = S0, I0 = I0, R_0 = R_0)
+S_inf = uniroot(f = function(x) final_size_eq(S_inf = x, 
+                                              S0 = S0, I0 = I0, 
+                                              R_0 = R_0),
+                interval = c(0.05, S0))
+plot(S, fs, type = "l", ylab = "Value of equation (10)")
+abline(h = 0)
+points(x = S_inf$root, y = 0, pch = 19)
+text(x = S_inf$root, y = 0, labels = "S_inf", adj = c(-0.25,-1))
+@
+\end{frame}
+
+
+
+\begin{frame}{$\R_0=0.8$}
+\begin{center}
+  \includegraphics[width=\textwidth]{\Sexpr{fig_chunk('KMK_final_size_0p8', 'pdf')}}
+\end{center}
+\end{frame}
+
+
+<<KMK_final_size_2p5,echo=FALSE>>=
+N0 = 1000
+I0 = 1
+S0 = N0-I0
+R_0 = 2.5
+S = seq(0.1, S0, by = 0.1)
+fs = final_size_eq(S, S0 = S0, I0 = I0, R_0 = R_0)
+S_inf = uniroot(f = function(x) final_size_eq(S_inf = x, 
+                                              S0 = S0, I0 = I0, 
+                                              R_0 = R_0),
+                interval = c(0.05, S0))
+plot(S, fs, type = "l", ylab = "Value of equation (10)")
+abline(h = 0)
+points(x = S_inf$root, y = 0, pch = 19)
+text(x = S_inf$root, y = 0, labels = "S_inf", adj = c(-0.25,-1))    
+@
+
+
+\begin{frame}{$\R_0=2.4$}
+  \begin{center}
+    \includegraphics[width=\textwidth]{\Sexpr{fig_chunk('KMK_final_size_2p5', 'pdf')}}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{A little nicer}
+<<KMK_attack_rate>>=
+values = expand.grid(
+  R_0 = seq(0.01, 3, by = 0.01),
+  I0 = seq(1, 100, 1)
+)
+values$S0 = N0-values$I0
+L = split(values, 1:nrow(values))
+values$S_inf = sapply(X = L, FUN = final_size)
+values$final_size = values$S0-values$S_inf+values$I0
+values$attack_rate = (values$final_size / N0)*100
+
+p = levelplot(attack_rate ~ R_0*I0, data = values, 
+              xlab = TeX("$R_0$"), ylab = "I(0)",
+              col.regions = viridis(100))
+print(p)
+@
+(requires \code{lattice}, \code{viridis} and \code{latex2exp} librairies)
+\end{frame}
+
+\begin{frame}{Attack rate (in \%)}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{\Sexpr{fig_chunk('KMK_attack_rate', 'pdf')}}
+  \end{center}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Herd immunity in KMK}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+
+\begin{frame}{The simplest vaccination model}
+To implement vaccination in KMK, assume that vaccination reduces the number of susceptibles
+\vfill
+Let total population be $N$ with $S_0$ initially susceptible
+\vfill
+Vaccinate a fraction $p\in[0,1]$ of susceptible individuals
+\vfill
+Original IC (for simplicity, $R(0)=0$)
+\begin{equation}\label{eq:IC_KMK_novacc}
+IC: (S(0),I(0),R(0)) = (S_0,I_0,0)
+\end{equation}
+Post-vaccination IC 
+\begin{equation}\label{eq:IC_KMK_vacc}
+IC: (S(0),I(0),R(0)) = ((1-p)S_0,I_0,pS_0)
+\end{equation}
+\end{frame}
+
+
+\begin{frame}{Vaccination reproduction number}
+  Without vaccination
+  \begin{equation}\tag{\ref{eq:R0_KMK}}
+    \R_0=\frac{\beta}{\gamma}S_0
+  \end{equation}
+  \vfill
+  With vaccination, denoting $\R_{\text{v}}$ the reproduction number,
+  \begin{equation}
+    \R_{\text{v}} = \frac{\beta}{\gamma}(1-p)S_0
+  \end{equation}
+  \vfill
+  Since $p\in[0,1]$, $\R_{\text{v}}\leq\R_0$
+\end{frame}
+
+
+\begin{frame}{Herd immunity}
+  Therefore
+  \begin{itemize}
+    \item $\R_{\text{v}}<\R_0$ if $p>0$ 
+    \item To control the disease, $\R_{\text{v}}$ must take a value less than 1
+  \end{itemize}
+  \vfill
+To make $\R_{\text{v}}$ less than 1
+  \begin{equation}\label{eq:herd_immunity}
+    \R_{\text{v}}<1 \iff p> 1-\frac{1}{\R_0}
+  \end{equation}
+  \vfill
+  By vaccinating a fraction $p>1-1/\R_0$ of the susceptible population, we thus are in a situation where an epidemic peak is precluded (or, at the very least, the final size is reduced)
+  \vfill
+  This is \defword{herd immunity}
+\end{frame}
+
+
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE>>=
+# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
+rmd_chunks_to_r_temp <- function(file){
+  callr::r(function(file, temp){
+    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
+    knitr::purl(file, output = out_file, documentation = 1)
+  }, args = list(file))
+}
+rmd_chunks_to_r_temp("L04-KMK-intro.Rnw")
+@
+
+
+
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{plain}
+\bibliography{local-bibliography}
+\end{frame}
+
+\end{document}

@@ -15,7 +15,7 @@ Feel free to use the material in these slides or in the folders. If you find thi
 
 {% if site.data.slides %}
   {% for slide in site.data.slides %}
-- [{{ slide.full_title }}](SLIDES/{{ slide.pdf_filename }})
+- [{{ slide.lecture_number }} - {{ slide.title }}](SLIDES/{{ slide.pdf_filename }})
   {% endfor %}
 {% else %}
   {% comment %} Fallback: auto-detect PDF files if CSV data is not available {% endcomment %}

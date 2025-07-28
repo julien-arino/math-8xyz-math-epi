@@ -148,6 +148,13 @@ def create_slides_csv(output_file="slides_info.csv"):
         # Extract title and subtitle
         title, subtitle = extract_title_from_rnw(rnw_file)
         
+        # Extract lecture number from filename (e.g., L01, L02, L03)
+        lecture_num_match = re.search(r'L(\d+)', rnw_file.stem)
+        if lecture_num_match:
+            lecture_number = f"{int(lecture_num_match.group(1)):02d}"
+        else:
+            lecture_number = "00"  # Default if no lecture number found
+        
         # Create combined title
         if title and subtitle:
             full_title = f"{title}: {subtitle}"
@@ -158,6 +165,7 @@ def create_slides_csv(output_file="slides_info.csv"):
             full_title = rnw_file.stem.replace("-", " ").replace("_", " ").title()
         
         slides_info.append({
+            'lecture_number': lecture_number,
             'pdf_filename': pdf_filename,
             'title': title or '',
             'subtitle': subtitle or '',
@@ -176,7 +184,7 @@ def create_slides_csv(output_file="slides_info.csv"):
     output_path = data_dir / output_file
     
     with open(output_path, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['pdf_filename', 'title', 'subtitle', 'full_title', 'rnw_filename', 'basename']
+        fieldnames = ['lecture_number', 'pdf_filename', 'title', 'subtitle', 'full_title', 'rnw_filename', 'basename']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         writer.writeheader()

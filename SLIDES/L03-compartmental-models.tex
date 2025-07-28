@@ -630,16 +630,14 @@
     \end{theorem}
 \end{frame}
 
-\begin{frame}{Global Stability and Lyapunov Functions}
-    Local stability only tells us about behavior near an equilibrium. Global stability ensures the system converges to the equilibrium from (almost) any initial condition.
+\begin{frame}{Global stability and Lyapunov functions}
+    Local stability only tells us about behavior near an equilibrium. Global stability ensures the system converges to the equilibrium from (almost) any initial condition
     \begin{definition}[Lyapunov Function]
-        A Lyapunov function $L(\vect{x})$ for an equilibrium $\vect{x}^*$ is a scalar function that is positive definite ($L(\vect{x})>0$ for $\vect{x}\neq\vect{x}^*$, $L(\vect{x}^*)=0$) and its time derivative along trajectories is negative semi-definite ($\frac{dL}{dt} \le 0$).
+        A Lyapunov function $L(\vect{x})$ for an equilibrium $\vect{x}^*$ is a scalar function that is positive definite ($L(\vect{x})>0$ for $\vect{x}\neq\vect{x}^*$, $L(\vect{x}^*)=0$) and its time derivative along trajectories is negative semi-definite ($\frac{dL}{dt} \le 0$)
     \end{definition}
-    \textbf{Analogy:} A Lyapunov function is like the "energy" of the system. If the energy is always decreasing, the system must eventually settle at its minimum energy state (the equilibrium).
+    \textbf{Analogy:} A Lyapunov function is like the "energy" of the system. If the energy is always decreasing, the system must eventually settle at its minimum energy state (the equilibrium)
     \vfill
-    Finding a Lyapunov function is an art, but for many epidemiological models, they can be constructed to prove global stability of either the DFE (when $R_0 < 1$) or the EE (when $R_0 > 1$). This provides much stronger guarantees about the system's behavior.
-    \vfill
-    \small{Work by Simon and others has been instrumental in using these techniques for epidemiological models.}
+    Finding a Lyapunov function is an art, but for many epidemiological models, they can be constructed to prove global stability of either the DFE (when $R_0 < 1$) or the EE (when $R_0 > 1$). This provides much stronger guarantees about the system's behaviour
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -649,21 +647,6 @@
 \section{Advanced and modern topics}
 % The section page
 \newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_k5h4qlk5h4qlk5h4.png}
-
-\begin{frame}{Time-Varying and Periodic Models}
-    What if parameters are not constant?
-    \begin{itemize}
-        \item \textbf{Seasonal Forcing:} Disease transmission rates often vary with seasons (e.g., flu in winter). This makes $\beta$ a function of time, $\beta(t)$.
-        $$ \frac{dS}{dt} = -\frac{\beta(t) S I}{N} $$
-        \item \textbf{Interventions:} Public health measures (lockdowns, mask mandates) can be modeled as changes in parameters over time.
-    \end{itemize}
-    \vfill
-    \textbf{Analysis:}
-    \begin{itemize}
-        \item The concept of a single $R_0$ may no longer be sufficient. One might consider an average $R_0$ or use Floquet theory for periodic systems.
-        \item Time-varying systems can exhibit much more complex dynamics, including chaotic behavior, even in simple models.
-    \end{itemize}
-\end{frame}
 
 \begin{frame}{Stochastic Compartmental Models}
     ODEs are deterministic: given the same initial conditions, the outcome is always the same. Real life is stochastic.
@@ -700,7 +683,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Data Assimilation and Parameter Estimation}
+\begin{frame}{Data assimilation and parameter estimation}
     A model is only as good as its parameters.
     \begin{itemize}
         \item \textbf{The Inverse Problem:} Given real-world data (e.g., daily case counts), what are the most likely parameter values ($\beta, \gamma, \dots$)?

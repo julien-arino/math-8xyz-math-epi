@@ -578,15 +578,15 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \end{alltt}
 \begin{verbatim}
 ##    column_1 colour
-## 1 0.8364559  green
-## 2 0.9900375    red
-## 3 0.4562253  green
-## 4 0.3518242  green
-## 5 0.7496756  green
-## 6 0.5944279  green
-## 7 0.8800637    red
-## 8 0.7226687    red
-## 9 0.1551393  green
+## 1 0.2368836    red
+## 2 0.9093716  green
+## 3 0.1690112  green
+## 4 0.4303304    red
+## 5 0.3957714  green
+## 6 0.4186790    red
+## 7 0.8200106  green
+## 8 0.7801870    red
+## 9 0.5531897    red
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -600,12 +600,12 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \end{alltt}
 \begin{verbatim}
 ##     column_1         colour         
-##  Min.   :0.1551   Length:9          
-##  1st Qu.:0.4562   Class :character  
-##  Median :0.7227   Mode  :character  
-##  Mean   :0.6374                     
-##  3rd Qu.:0.8365                     
-##  Max.   :0.9900
+##  Min.   :0.1690   Length:9          
+##  1st Qu.:0.3958   Class :character  
+##  Median :0.4303   Mode  :character  
+##  Mean   :0.5237                     
+##  3rd Qu.:0.7802                     
+##  Max.   :0.9094
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -776,13 +776,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.5862167
+## [1] 0.1612626
 ## 
 ## [[2]]
-## [1] 0.7039031 0.5135628
+## [1] 0.2717255 0.0958482
 ## 
 ## [[3]]
-## [1] 0.5523024 0.4519802 0.5929349
+## [1] 0.27931983 0.08733973 0.71334139
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -796,13 +796,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.5862167
+## [1] 0.1612626
 ## 
 ## [[2]]
-## [1] 0.6087329
+## [1] 0.1837868
 ## 
 ## [[3]]
-## [1] 0.5324059
+## [1] 0.3600003
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -816,7 +816,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.5862167 0.6087329 0.5324059
+## [1] 0.1612626 0.1837868 0.3600003
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -827,7 +827,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.5862167 0.6087329 0.5324059
+## [1] 0.1612626 0.1837868 0.3600003
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1378,7 +1378,7 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
-To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-and-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
+To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
 \vfill
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1390,16 +1390,17 @@ To finish, we use the command \code{purl} to generate an \code{R} file (\code{L0
     \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
   \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
 \hldef{\}}
-\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L01-course-organisation-and-intro-R-julia.Rnw"}\hldef{)}
+\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L01-course-organisation-intro-R-julia.Rnw"}\hldef{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}\end{kframe}
+\begin{verbatim}
+## [1] "../CODE/L01-course-organisation-intro-R-julia.R"
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{About that \code{R} file}
-Source the file \code{L01-course-organisation-and-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
+Source the file \code{L01-course-organisation-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
 \vfill
 Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
 \vfill
