@@ -1,6 +1,7 @@
 lecture_number,pdf_filename,title,subtitle,full_title,rnw_filename,basename
-01,L01-course-organisation-intro-R-julia.pdf,General information about the course & (brief) Introduction to `R` and `julia`,MATH 8xyz -- Lecture 01,General information about the course & (brief) Introduction to `R` and `julia`: MATH 8xyz -- Lecture 01,L01-course-organisation-intro-R-julia.Rnw,L01-course-organisation-intro-R-julia
+01,L01-course-organisation-intro-R-julia.pdf,General information about the course & (brief) Introduction to R and julia,MATH 8xyz -- Lecture 01,General information about the course & (brief) Introduction to R and julia: MATH 8xyz -- Lecture 01,L01-course-organisation-intro-R-julia.Rnw,L01-course-organisation-intro-R-julia
 02,L02-epidemiology-math-epi.pdf,Epidemiology & A brief history of Mathematical epidemiology,MATH 8xyz -- Lecture 02,Epidemiology & A brief history of Mathematical epidemiology: MATH 8xyz -- Lecture 02,L02-epidemiology-math-epi.Rnw,L02-epidemiology-math-epi
 03,L03-compartmental-models.pdf,Compartmental models,MATH 8xyz -- Lecture 03,Compartmental models: MATH 8xyz -- Lecture 03,L03-compartmental-models.Rnw,L03-compartmental-models
 04,L04-KMK-intro.pdf,The Kermack-McKendrick model,MATH 8xyz -- Lecture 04,The Kermack-McKendrick model: MATH 8xyz -- Lecture 04,L04-KMK-intro.Rnw,L04-KMK-intro
 05,L05-KMK-more.pdf,Extensions of the Kermack-McKendrick model,MATH 8xyz -- Lecture 05,Extensions of the Kermack-McKendrick model: MATH 8xyz -- Lecture 05,L05-KMK-more.Rnw,L05-KMK-more
+06,L06-sojourn-times.pdf,Sojourn time in compartments,MATH 8xyz -- Lecture 06,Sojourn time in compartments: MATH 8xyz -- Lecture 06,L06-sojourn-times.Rnw,L06-sojourn-times

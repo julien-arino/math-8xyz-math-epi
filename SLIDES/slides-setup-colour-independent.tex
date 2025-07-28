@@ -468,7 +468,6 @@ minimum height=2em]
 
 % The title page with figure
 \newcommand{\titlepagewithfigure}[1]{%
-%\makeatletter
 \begin{frame}[noframenumbering,plain]
   \begin{tikzpicture}[remember picture,overlay]
     \node[above right,inner sep=0pt,opacity=0.1] at (current page.south west)
@@ -492,17 +491,17 @@ minimum height=2em]
     % \node[align=center, anchor=south,
     % above=0.5cm of land_acknowledgement,
     % text=black,
-    % font=\bfseries] {\@date};
+    % font=\bfseries] {\insertdate};
 \end{tikzpicture}
   \setbeamercolor{title}{fg=subsub_header_section}
   \setbeamercolor{author}{fg=subsub_header_section} 
+  \setbeamercolor{date}{fg=subsub_header_section} 
   \setbeamerfont{title}{size=\large,series=\bfseries}
   \setbeamerfont{author}{size=\large,series=\bfseries}
   \setbeamerfont{date}{series=\bfseries}
 	\titlepage
 \end{frame}
 \addtocounter{page}{-1}
-%\makeatother
 }
 
 

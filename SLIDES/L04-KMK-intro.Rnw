@@ -914,11 +914,13 @@ To make $\R_{\text{v}}$ less than 1
 \end{frame}
 
 
-<<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE>>=
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
 rmd_chunks_to_r_temp <- function(file){
-  callr::r(function(file, temp){
-    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
+  callr::r(function(file){
+    out_dir <- "../CODE"
+    if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
+    out_file = sprintf("%s/%s", out_dir, gsub(".Rnw", ".R", basename(file)))
     knitr::purl(file, output = out_file, documentation = 1)
   }, args = list(file))
 }

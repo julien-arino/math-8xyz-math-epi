@@ -48,7 +48,7 @@ if (plot_blackBG) {
 cat(input_setup)
 
 
-## ----convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE------------------
+## ----convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE,results='hide'----
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
 rmd_chunks_to_r_temp <- function(file){
   callr::r(function(file, temp){

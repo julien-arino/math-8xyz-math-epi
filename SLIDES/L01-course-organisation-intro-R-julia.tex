@@ -54,7 +54,7 @@
 
 \input{slides-setup-whiteBG.tex}
 
-\title{General information about the course \& (brief) Introduction to \code{R} and \code{julia}}
+\title{General information about the course \& (brief) Introduction to R and julia}
 \subtitle{MATH 8xyz -- Lecture 01}
 \author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
 \date{Winter 20XX}
@@ -258,6 +258,7 @@ As a modeller, you will be called on to provide guidance to public health author
 	\end{itemize}
 \end{frame}
 
+\maxFrameImage{FIGS/dedication-Fred-Brauer-169}
 
 \begin{frame}{Reading recommendations}
     \begin{itemize}
@@ -315,11 +316,11 @@ As a modeller, you will be called on to provide guidance to public health author
 %%%%%%%%%%%%%%%%%%%%
 \section{Introduction to R}
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_1d5vb51d5vb51d5v.png}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_pst41tpst41tpst4.png}
 
 
 \begin{frame}
-	Most of the programming in this course is done using the \code{R} language
+	Most of the code in this course is in the \code{R} programming language
 	\vfill
 	Code that you see in these slides is executable (and executed to create the slides)
 	\vfill
@@ -577,16 +578,16 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hldef{A}
 \end{alltt}
 \begin{verbatim}
-##    column_1 colour
-## 1 0.2368836    red
-## 2 0.9093716  green
-## 3 0.1690112  green
-## 4 0.4303304    red
-## 5 0.3957714  green
-## 6 0.4186790    red
-## 7 0.8200106  green
-## 8 0.7801870    red
-## 9 0.5531897    red
+##      column_1 colour
+## 1 0.569188669    red
+## 2 0.002450943    red
+## 3 0.542869912  green
+## 4 0.838625103  green
+## 5 0.241574387  green
+## 6 0.206331410  green
+## 7 0.353893949  green
+## 8 0.853185170  green
+## 9 0.105037163    red
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -599,13 +600,13 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hlkwd{summary}\hldef{(A)}
 \end{alltt}
 \begin{verbatim}
-##     column_1         colour         
-##  Min.   :0.1690   Length:9          
-##  1st Qu.:0.3958   Class :character  
-##  Median :0.4303   Mode  :character  
-##  Mean   :0.5237                     
-##  3rd Qu.:0.7802                     
-##  Max.   :0.9094
+##     column_1           colour         
+##  Min.   :0.002451   Length:9          
+##  1st Qu.:0.206331   Class :character  
+##  Median :0.353894   Mode  :character  
+##  Mean   :0.412573                     
+##  3rd Qu.:0.569189                     
+##  Max.   :0.853185
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -776,13 +777,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.1612626
+## [1] 0.4892528
 ## 
 ## [[2]]
-## [1] 0.2717255 0.0958482
+## [1] 0.04432139 0.41960576
 ## 
 ## [[3]]
-## [1] 0.27931983 0.08733973 0.71334139
+## [1] 0.2177509 0.8844657 0.4112428
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -796,13 +797,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.1612626
+## [1] 0.4892528
 ## 
 ## [[2]]
-## [1] 0.1837868
+## [1] 0.2319636
 ## 
 ## [[3]]
-## [1] 0.3600003
+## [1] 0.5044865
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -816,7 +817,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.1612626 0.1837868 0.3600003
+## [1] 0.4892528 0.2319636 0.5044865
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -827,7 +828,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.1612626 0.1837868 0.3600003
+## [1] 0.4892528 0.2319636 0.5044865
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -878,7 +879,7 @@ The argument to the function you define is a list entry ({\tt L[[1]]}, {\tt L[[2
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-You can split this list, use it on different machines, etc. And can use {\tt future\_lapply}
+You can split this list, use it on different machines, use {\tt future\_lapply}, etc.
 \end{frame} 
 
 
@@ -942,10 +943,7 @@ Recent movement (5-10 years): governments (local or higher) create portals where
 \begin{alltt}
 \hldef{pop_data_CTRY} \hlkwb{<-} \hlkwd{wb_data}\hldef{(}\hlkwc{country} \hldef{=} \hlsng{"CAN"}\hldef{,} \hlkwc{indicator} \hldef{=} \hlsng{"SP.POP.TOTL"}\hldef{,}
                          \hlkwc{mrv} \hldef{=} \hlnum{100}\hldef{,} \hlkwc{return_wide} \hldef{=} \hlnum{FALSE}\hldef{)}
-\end{alltt}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in wb\_data(country = "{}CAN"{}, indicator = "{}SP.POP.TOTL"{}, mrv = 100, : could not find function "{}wb\_data"{}}}\begin{alltt}
 \hlkwd{ggplot}\hldef{(pop_data_CTRY,} \hlkwd{aes}\hldef{(}\hlkwc{x} \hldef{= date,} \hlkwc{y} \hldef{= value))} \hlopt{+}
   \hlkwd{geom_line}\hldef{()} \hlopt{+}
   \hlkwd{labs}\hldef{(}\hlkwc{title} \hldef{=} \hlsng{"Population of Canada"}\hldef{,} \hlkwc{x} \hldef{=} \hlsng{"Year"}\hldef{,} \hlkwc{y} \hldef{=} \hlsng{"Population"}\hldef{)} \hlopt{+}
@@ -953,9 +951,7 @@ Recent movement (5-10 years): governments (local or higher) create portals where
     \hlkwc{labels} \hldef{=} \hlkwd{label_number}\hldef{(}\hlkwc{scale} \hldef{=} \hlnum{1e-6}\hldef{,} \hlkwc{suffix} \hldef{=} \hlsng{"M"}\hldef{))} \hlopt{+}
   \hlkwd{theme_minimal}\hldef{()}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'pop\_data\_CTRY' not found}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 \end{frame}
 
@@ -1046,25 +1042,25 @@ You can even implement your own integration method
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
-\section{Very brief introduction to julia}
+\section{Introduction to julia}
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_ubwp96ubwp96ubwp.png}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_yww2hayww2hayww2.png}
 
 \begin{frame}
   \frametitle{What is Julia?}
   \begin{itemize}
-    \item A \textbf{high-level}, \textbf{high-performance}, \textbf{dynamic} programming language
+    \item High-level, high-performance, dynamic programming language
     \vfill
-    \item Designed for scientific computing, machine learning, data science, and large-scale linear algebra
+    \item Designed for scientific computing, machine learning, data science and large-scale linear algebra
     \vfill
     \item First appeared in 2012, with version 1.0 released in 2018
     \vfill
-    \item Aims to solve the \textbf{"two-language problem"}
+    \item Aims to solve the ``two-language problem''
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{The "Two-Language Problem"}
+  \frametitle{The ``two-language problem''}
   \begin{columns}[T]
     \begin{column}{.5\textwidth}
       \textbf{Prototyping}
@@ -1336,7 +1332,7 @@ plot(sol, label="N(t)", lw=2)\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Advanced Control: ODE Callbacks}
+  \frametitle{Advanced control: ODE callbacks}
 \bbullet Callbacks allow to intervene during the ODE solution process to perform actions or modify the state. Useful for event handling, data logging, or enforcing constraints
 \vfill
 \bbullet For example, we can ensure a population model never becomes negative
@@ -1361,15 +1357,15 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
 \begin{frame}
   \frametitle{Getting started}
   \begin{itemize}
-    \item \textbf{Download Julia:} go to \href{https://julialang.org/downloads/}{\textcolor{blue}{https://julialang.org/downloads/}}
+    \item Download Julia at \href{https://julialang.org/downloads/}{\textcolor{blue}{https://julialang.org/downloads/}}
     \vfill
-    \item \textbf{Official documentation:} \href{https://docs.julialang.org}{\textcolor{blue}{https://docs.julialang.org}}
+    \item See the official documentation at \href{https://docs.julialang.org}{\textcolor{blue}{https://docs.julialang.org}}
     \vfill
-    \item \textbf{IDE/Editor Support:}
-    I recommend using VS Code
+    \item The julia forum at \href{https://discourse.julialang.org}{\textcolor{blue}{https://discourse.julialang.org}} is very reactive (and useful)
     \vfill
-    \item \textbf{Start the REPL:}
-    Open your terminal and type `julia` to start the interactive Read-Eval-Print Loop
+    \item For an IDE/Editor, I recommend using VS Code and the julia extension. Julia also runs really well in jupyter notebooks
+    \vfill
+    \item To start the REPL (interactive Read-Eval-Print Loop), open your terminal and type \code{julia}
   \end{itemize}
 \end{frame}
 
@@ -1392,9 +1388,6 @@ To finish, we use the command \code{purl} to generate an \code{R} file (\code{L0
 \hldef{\}}
 \hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L01-course-organisation-intro-R-julia.Rnw"}\hldef{)}
 \end{alltt}
-\begin{verbatim}
-## [1] "../CODE/L01-course-organisation-intro-R-julia.R"
-\end{verbatim}
 \end{kframe}
 \end{knitrout}
 \end{frame}

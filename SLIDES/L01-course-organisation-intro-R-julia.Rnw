@@ -47,7 +47,7 @@ if (plot_blackBG) {
 cat(input_setup)
 @
 
-\title{General information about the course \& (brief) Introduction to \code{R} and \code{julia}}
+\title{General information about the course \& (brief) Introduction to R and julia}
 \subtitle{MATH 8xyz -- Lecture 01}
 \author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
 \date{Winter 20XX}
@@ -252,6 +252,7 @@ As a modeller, you will be called on to provide guidance to public health author
 	\end{itemize}
 \end{frame}
 
+\maxFrameImage{FIGS/dedication-Fred-Brauer-169}
 
 \begin{frame}{Reading recommendations}
     \begin{itemize}
@@ -309,11 +310,11 @@ As a modeller, you will be called on to provide guidance to public health author
 %%%%%%%%%%%%%%%%%%%%
 \section{Introduction to R}
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_1d5vb51d5vb51d5v.png}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_pst41tpst41tpst4.png}
 
 
 \begin{frame}
-	Most of the programming in this course is done using the \code{R} language
+	Most of the code in this course is in the \code{R} programming language
 	\vfill
 	Code that you see in these slides is executable (and executed to create the slides)
 	\vfill
@@ -657,7 +658,7 @@ for (i in 1:dim(tmp)[1]) {
     }
 }
 @
-You can split this list, use it on different machines, etc. And can use {\tt future\_lapply}
+You can split this list, use it on different machines, use {\tt future\_lapply}, etc.
 \end{frame} 
 
 
@@ -808,25 +809,25 @@ You can even implement your own integration method
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
-\section{Very brief introduction to julia}
+\section{Introduction to julia}
 % The section page
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_ubwp96ubwp96ubwp.png}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_yww2hayww2hayww2.png}
 
 \begin{frame}
   \frametitle{What is Julia?}
   \begin{itemize}
-    \item A \textbf{high-level}, \textbf{high-performance}, \textbf{dynamic} programming language
+    \item High-level, high-performance, dynamic programming language
     \vfill
-    \item Designed for scientific computing, machine learning, data science, and large-scale linear algebra
+    \item Designed for scientific computing, machine learning, data science and large-scale linear algebra
     \vfill
     \item First appeared in 2012, with version 1.0 released in 2018
     \vfill
-    \item Aims to solve the \textbf{"two-language problem"}
+    \item Aims to solve the ``two-language problem''
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{The "Two-Language Problem"}
+  \frametitle{The ``two-language problem''}
   \begin{columns}[T]
     \begin{column}{.5\textwidth}
       \textbf{Prototyping}
@@ -1098,7 +1099,7 @@ plot(sol, label="N(t)", lw=2)\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Advanced Control: ODE Callbacks}
+  \frametitle{Advanced control: ODE callbacks}
 \bbullet Callbacks allow to intervene during the ODE solution process to perform actions or modify the state. Useful for event handling, data logging, or enforcing constraints
 \vfill
 \bbullet For example, we can ensure a population model never becomes negative
@@ -1123,15 +1124,15 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
 \begin{frame}
   \frametitle{Getting started}
   \begin{itemize}
-    \item \textbf{Download Julia:} go to \href{https://julialang.org/downloads/}{\textcolor{blue}{https://julialang.org/downloads/}}
+    \item Download Julia at \href{https://julialang.org/downloads/}{\textcolor{blue}{https://julialang.org/downloads/}}
     \vfill
-    \item \textbf{Official documentation:} \href{https://docs.julialang.org}{\textcolor{blue}{https://docs.julialang.org}}
+    \item See the official documentation at \href{https://docs.julialang.org}{\textcolor{blue}{https://docs.julialang.org}}
     \vfill
-    \item \textbf{IDE/Editor Support:}
-    I recommend using VS Code
+    \item The julia forum at \href{https://discourse.julialang.org}{\textcolor{blue}{https://discourse.julialang.org}} is very reactive (and useful)
     \vfill
-    \item \textbf{Start the REPL:}
-    Open your terminal and type `julia` to start the interactive Read-Eval-Print Loop
+    \item For an IDE/Editor, I recommend using VS Code and the julia extension. Julia also runs really well in jupyter notebooks
+    \vfill
+    \item To start the REPL (interactive Read-Eval-Print Loop), open your terminal and type \code{julia}
   \end{itemize}
 \end{frame}
 
@@ -1142,7 +1143,7 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
 \begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
 To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
 \vfill
-<<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE,results='hide'>>=
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
 rmd_chunks_to_r_temp <- function(file){
   callr::r(function(file, temp){

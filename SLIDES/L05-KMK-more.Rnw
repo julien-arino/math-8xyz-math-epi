@@ -179,7 +179,6 @@ S_0(\ln S_0-\ln S_\infty) =
 \maxFrameImage{FIGS/Arino_etal-SLIAR-treatment-doses.png}
 \maxFrameImage{FIGS/Arino_etal-SLIAR-treatment-cases.png}
 \maxFrameImage{FIGS/Arino_etal-SLIAR-conclusions.png}
-\maxFrameImage{FIGS/dedication-Fred-Brauer-169}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -737,7 +736,7 @@ Let $t^\star$ be s.t. $C(t^\star)=547$; then $t_i=\textrm{2020-01-22}-t^\star$
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-<<convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE>>=
+<<convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE,results='hide'>>=
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
 rmd_chunks_to_r_temp <- function(file){
   callr::r(function(file, temp){

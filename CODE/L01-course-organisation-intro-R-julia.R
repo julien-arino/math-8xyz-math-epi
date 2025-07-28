@@ -221,7 +221,7 @@ times = seq(0, 100, 1)
 sol <- ode(IC, times, rhs_logistic, params)
 
 
-## ----convert-Rnw-to-R,warning=FALSE,message=FALSE-----------------------------
+## ----convert-Rnw-to-R,warning=FALSE,message=FALSE,results='hide'--------------
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
 rmd_chunks_to_r_temp <- function(file){
   callr::r(function(file, temp){
