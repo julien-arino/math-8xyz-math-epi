@@ -1,61 +1,15 @@
-## ----set-options,echo=FALSE,warning=FALSE,message=FALSE-----------------------
-# Load required libraries
-required_packages = c("adaptivetau",
-                      "deSolve",
-                      "dplyr",
-                      "future",
-                      "future.apply",
-                      "GillespieSSA2",
-                      "ggplot2", 
-                      "knitr", 
-                      "latex2exp",
-                      "lattice",
-                      "magick",
-                      "readr", 
-                      "tidyr",
-                      "viridis")
+## ----set-lecture-number,echo=FALSE--------------------------------------------
+lecture_number = "06"
 
-for (p in required_packages) {
-  if (!require(p, character.only = TRUE)) {
-    install.packages(p, dependencies = TRUE)
-    require(p, character.only = TRUE)
-  }
-}
-# Knitr options
-opts_chunk$set(echo = TRUE, 
-               warning = FALSE, 
-               message = FALSE, 
-               dev = c("pdf", "png"),
-               fig.width = 6, 
-               fig.height = 4, 
-               fig.path = "FIGS/L06-",
-               fig.keep = "high",
-               fig.show = "hide")
-knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
-options(knitr.table.format = "latex")
-# Date for front title page (if needed)
-yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
-# The kframe environment can conflict with allowframebreaks, 
-# so we remove it.
-knit_hooks$set(document = function(x) {
-  gsub('\\\\(begin|end)\\{kframe\\}', '', x)
-})
+
+## ----set-options,echo=FALSE,warning=FALSE,message=FALSE-----------------------
+# Source the code common to all lectures
+source("common-code.R")
 
 
 ## ----set-slide-background,echo=FALSE,results='asis'---------------------------
-# Are we plotting for a dark background?
-plot_blackBG = FALSE
-if (plot_blackBG) {
-  bg_colour = "black"
-  fg_colour = "white"
-  input_setup = "\\input{slides-setup-blackBG.tex}"
-  fill_colour = "lightblue"
-} else {
-  bg_colour = "white"
-  fg_colour = "black"
-  input_setup = "\\input{slides-setup-whiteBG.tex}"
-  fill_colour = "lightblue"
-}
+# Are we plotting for a dark background? Setting is in common-code.R, but
+# cat command must run here.
 cat(input_setup)
 
 
@@ -426,7 +380,7 @@ legend("topright", legend = c("Data","Best Erlang fit"),
        lwd = c(1,2), lty = c(NA,1), pch = c(16,NA))
 
 
-## ----convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE------------------
+## ----convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE,results='hide'----
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
 rmd_chunks_to_r_temp <- function(file){
   callr::r(function(file){

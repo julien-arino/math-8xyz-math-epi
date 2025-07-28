@@ -14,52 +14,13 @@ lecture_number = "04"
 \title{The Kermack-McKendrick model}
 
 <<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
-# Load required libraries
-required_packages = c("deSolve",
-                      "dplyr", 
-                      "ggplot2", 
-                      "knitr", 
-                      "latex2exp",
-                      "lattice",
-                      "magick",
-                      "readr", 
-                      "tidyr",
-                      "viridis")
-
-for (p in required_packages) {
-  if (!require(p, character.only = TRUE)) {
-    install.packages(p, dependencies = TRUE)
-    require(p, character.only = TRUE)
-  }
-}
-# Knitr options
-opts_chunk$set(echo = TRUE, 
-               warning = FALSE, 
-               message = FALSE, 
-               dev = c("pdf", "png"),
-               fig.width = 6, 
-               fig.height = 4, 
-               fig.path = sprintf("FIGS/L%s-", lecture_number),
-               fig.keep = "high",
-               fig.show = "hide")
-knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
-options(knitr.table.format = "latex")
-# Date for front title page (if needed)
-yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
+# Source the code common to all lectures
+source("common-code.R")
 @
 
 <<set-slide-background,echo=FALSE,results='asis'>>=
-# Are we plotting for a dark background?
-plot_blackBG = FALSE
-if (plot_blackBG) {
-  bg_color = "black"
-  fg_color = "white"
-  input_setup = "\\input{slides-setup-blackBG.tex}"
-} else {
-  bg_color = "white"
-  fg_color = "black"
-  input_setup = "\\input{slides-setup-whiteBG.tex}"
-}
+# Are we plotting for a dark background? Setting is in common-code.R, but
+# cat command must run here.
 cat(input_setup)
 @
 
@@ -923,16 +884,7 @@ To make $\R_{\text{v}}$ less than 1
 
 
 <<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
-# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
-rmd_chunks_to_r_temp <- function(file){
-  callr::r(function(file){
-    out_dir <- "../CODE"
-    if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
-    out_file = sprintf("%s/%s", out_dir, gsub(".Rnw", ".R", basename(file)))
-    knitr::purl(file, output = out_file, documentation = 1)
-  }, args = list(file))
-}
-rmd_chunks_to_r_temp("L04-KMK-intro.Rnw")
+rmd_chunks_to_r_temp()
 @
 
 

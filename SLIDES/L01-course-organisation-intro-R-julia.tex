@@ -585,16 +585,16 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hldef{A}
 \end{alltt}
 \begin{verbatim}
-##    column_1 colour
-## 1 0.6488144    red
-## 2 0.3197430    red
-## 3 0.4919539  green
-## 4 0.4202335    red
-## 5 0.3761147  green
-## 6 0.3340144  green
-## 7 0.5114461    red
-## 8 0.1416506  green
-## 9 0.2787306  green
+##     column_1 colour
+## 1 0.14213838    red
+## 2 0.37166989  green
+## 3 0.29192626  green
+## 4 0.93122959  green
+## 5 0.90076286    red
+## 6 0.40401501    red
+## 7 0.38331117    red
+## 8 0.07349887  green
+## 9 0.87506595    red
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -608,12 +608,12 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \end{alltt}
 \begin{verbatim}
 ##     column_1         colour         
-##  Min.   :0.1417   Length:9          
-##  1st Qu.:0.3197   Class :character  
-##  Median :0.3761   Mode  :character  
-##  Mean   :0.3914                     
-##  3rd Qu.:0.4920                     
-##  Max.   :0.6488
+##  Min.   :0.0735   Length:9          
+##  1st Qu.:0.2919   Class :character  
+##  Median :0.3833   Mode  :character  
+##  Mean   :0.4860                     
+##  3rd Qu.:0.8751                     
+##  Max.   :0.9312
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -784,13 +784,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.6497524
+## [1] 0.7400481
 ## 
 ## [[2]]
-## [1] 0.8626384 0.4569467
+## [1] 0.6990676 0.7108983
 ## 
 ## [[3]]
-## [1] 0.3106894 0.3554189 0.1044373
+## [1] 0.9138512 0.7265316 0.8786943
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -804,13 +804,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.6497524
+## [1] 0.7400481
 ## 
 ## [[2]]
-## [1] 0.6597926
+## [1] 0.704983
 ## 
 ## [[3]]
-## [1] 0.2568485
+## [1] 0.8396924
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -824,7 +824,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.6497524 0.6597926 0.2568485
+## [1] 0.7400481 0.7049830 0.8396924
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -835,7 +835,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.6497524 0.6597926 0.2568485
+## [1] 0.7400481 0.7049830 0.8396924
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -958,7 +958,9 @@ Recent movement (5-10 years): governments (local or higher) create portals where
     \hlkwc{labels} \hldef{=} \hlkwd{label_number}\hldef{(}\hlkwc{scale} \hldef{=} \hlnum{1e-6}\hldef{,} \hlkwc{suffix} \hldef{=} \hlsng{"M"}\hldef{))} \hlopt{+}
   \hlkwd{theme_minimal}\hldef{()}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in label\_number(scale = 1e-06, suffix = "{}M"{}): could not find function "{}label\_number"{}}}\end{kframe}
 \end{knitrout}
 \end{frame}
 
@@ -1380,27 +1382,13 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
-To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
+\begin{frame}\frametitle{Can I have this wrapped up to go?}
+For each slide set including \code{R} code, we generate an \code{R} file in the \code{CODE} directory with all the code chunks in this \code{Rnw} file and no \LaTeX
 \vfill
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
-\hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
-  \hldef{callr}\hlopt{::}\hlkwd{r}\hldef{(}\hlkwa{function}\hldef{(}\hlkwc{file}\hldef{,} \hlkwc{temp}\hldef{)\{}
-    \hldef{out_file} \hlkwb{=} \hlkwd{sprintf}\hldef{(}\hlsng{"../CODE/%s"}\hldef{,} \hlkwd{gsub}\hldef{(}\hlsng{".Rnw"}\hldef{,} \hlsng{".R"}\hldef{, file))}
-    \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
-  \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
-\hldef{\}}
-\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L01-course-organisation-intro-R-julia.Rnw"}\hldef{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-\end{frame}
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
 
-\begin{frame}[fragile]\frametitle{About that \code{R} file}
-Source the file \code{L01-course-organisation-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
+Source the file (if you are reading \code{filename.pdf}, then you want \code{filename.R}) to reproduce all results in the slide set without generating a pdf
 \vfill
 Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
 \vfill

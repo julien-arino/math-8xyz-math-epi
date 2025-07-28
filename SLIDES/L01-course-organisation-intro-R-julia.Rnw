@@ -14,49 +14,13 @@ lecture_number = "01"
 \title{Course organisation and introduction: R and Julia}
 
 <<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
-# Load required libraries
-required_packages = c("deSolve",
-                      "dplyr", 
-                      "ggplot2", 
-                      "knitr", 
-                      "scales",
-                      "viridis",
-                      "wbstats")
-
-for (p in required_packages) {
-  if (!require(p, character.only = TRUE)) {
-    install.packages(p, dependencies = TRUE)
-    require(p, character.only = TRUE)
-	}
-}
-# Knitr options
-opts_chunk$set(echo = TRUE, 
-warning = FALSE, 
-message = FALSE, 
-dev = c("pdf", "png"),
-fig.width = 6, 
-fig.height = 4, 
-fig.path = sprintf("FIGS/L%s-", lecture_number),
-fig.keep = "high",
-fig.show = "hide")
-knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
-options(knitr.table.format = "latex")
-# Date for front title page (if needed)
-yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
+# Source the code common to all lectures
+source("common-code.R")
 @
 
 <<set-slide-background,echo=FALSE,results='asis'>>=
-# Are we plotting for a dark background?
-plot_blackBG = FALSE
-if (plot_blackBG) {
-	bg_color = "black"
-	fg_color = "white"
-	input_setup = "\\input{slides-setup-blackBG.tex}"
-} else {
-	bg_color = "white"
-	fg_color = "black"
-	input_setup = "\\input{slides-setup-whiteBG.tex}"
-}
+# Are we plotting for a dark background? Setting is in common-code.R, but
+# cat command must run here.
 cat(input_setup)
 @
 
@@ -1147,23 +1111,15 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
-To finish, we use the command \code{purl} to generate an \code{R} file (\code{L01-course-organisation-intro-R-julia.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
+\begin{frame}\frametitle{Can I have this wrapped up to go?}
+For each slide set including \code{R} code, we generate an \code{R} file in the \code{CODE} directory with all the code chunks in this \code{Rnw} file and no \LaTeX
 \vfill
-<<convert-Rnw-to-R,warning=FALSE,message=FALSE,results='hide'>>=
-# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
-rmd_chunks_to_r_temp <- function(file){
-  callr::r(function(file, temp){
-    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
-    knitr::purl(file, output = out_file, documentation = 1)
-  }, args = list(file))
-}
-rmd_chunks_to_r_temp("L01-course-organisation-intro-R-julia.Rnw")
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
+rmd_chunks_to_r_temp()
 @
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{About that \code{R} file}
-Source the file \code{L01-course-organisation-intro-R-julia.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
+Source the file (if you are reading \code{filename.pdf}, then you want \code{filename.R}) to reproduce all results in the slide set without generating a pdf
 \vfill
 Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
 \vfill

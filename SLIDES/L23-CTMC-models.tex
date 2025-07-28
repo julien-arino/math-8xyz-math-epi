@@ -748,7 +748,7 @@ To use multiple compartments to better fit residence times, we need to find the 
 $\implies$ compute RSS errors between data points generated from the given Gamma distribution and an Erlang
 \vfill 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{error_Gamma} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{theta}\hldef{,}\hlkwc{shape}\hldef{,}\hlkwc{t}\hldef{,}\hlkwc{d}\hldef{) \{}
   \hldef{test_points} \hlkwb{<-} \hlkwd{dgamma}\hldef{(t,} \hlkwc{shape} \hldef{= shape,} \hlkwc{scale} \hldef{= theta)}
@@ -756,7 +756,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
   \hlkwd{return}\hldef{(ls_error)}
 \hldef{\}}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -764,7 +764,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
 \begin{frame}[fragile, allowframebreaks]
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{optimize_gamma} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{t}\hldef{,}\hlkwc{d}\hldef{) \{}
   \hldef{max_shape} \hlkwb{<-} \hlnum{10}
@@ -795,7 +795,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
   \hlkwd{return}\hldef{(result_optim)}
 \hldef{\}}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -804,7 +804,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
 \begin{frame}[fragile]
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{time_points} \hlkwb{<-} \hlkwd{seq}\hldef{(}\hlnum{0}\hldef{,}\hlnum{60}\hldef{)}
 \hldef{data_points} \hlkwb{<-} \hlkwd{dgamma}\hldef{(time_points,} \hlkwc{shape} \hldef{=} \hlnum{1.57}\hldef{,}
@@ -814,7 +814,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
 \hlcom{# Which is the best Erlang to fit the data}
 \hldef{idx_best} \hlkwb{<-} \hlkwd{which.min}\hldef{(optim_fits}\hlopt{$}\hldef{error)}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -1390,7 +1390,7 @@ while {$t\leq t_f$}\\
 \begin{frame}[fragile, allowframebreaks]
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{birth_death_CTMC} \hlkwb{=} \hlkwa{function}\hldef{(}\hlkwc{b} \hldef{=} \hlnum{0.01}\hldef{,} \hlkwc{d} \hldef{=} \hlnum{0.01}\hldef{) \{}
   \hldef{t_0} \hlkwb{=} \hlnum{0}    \hlcom{# Initial time}
@@ -1427,7 +1427,7 @@ while {$t\leq t_f$}\\
        \hlkwc{main} \hldef{=} \hlkwd{paste}\hldef{(}\hlsng{"Birth-death CTMC with b ="}\hldef{, b,} \hlsng{"and d ="}\hldef{, d))}
 \hldef{\}}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -1465,27 +1465,27 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \begin{frame}[fragile]{Last one did not go well}
     \begin{itemize}
         \item Wanted 1000 time units (days?)
-        \item Interrupted at 334.734714 because of the test
+        \item Interrupted at 306.5004148 because of the test
         \newline (Slide with $b<d$: sim stopped because the population went extinct, I did not stop it!)
         \item At stop time
         \begin{itemize}
-            \item $N =$ \ensuremath{9.4825\times 10^{4}}
-            \item $|N| =$ 188918 (and $|t|$ as well, of course!)
+            \item $N =$ \ensuremath{4.1792\times 10^{4}}
+            \item $|N| =$ 83361 (and $|t|$ as well, of course!)
             \item time was moving slowly
         \end{itemize}
     \end{itemize}
     \vfill
     
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{tail}\hldef{(}\hlkwd{diff}\hldef{(results}\hlopt{$}\hldef{t))}
 \end{alltt}
 \begin{verbatim}
-## [1] 2.146970e-04 1.396753e-05 2.127474e-04 6.475388e-05 7.938970e-05
-## [6] 5.875791e-09
+## [1] 3.880759e-04 9.737268e-05 1.435169e-03 1.051413e-03 5.459647e-04
+## [6] 6.695757e-09
 \end{verbatim}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -1508,7 +1508,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \begin{frame}[fragile, allowframebreaks]
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{library}\hldef{(GillespieSSA2)}
 \hldef{Pop} \hlkwb{<-} \hlnum{1000}
@@ -1536,7 +1536,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hlkwd{plot}\hldef{(sol}\hlopt{$}\hldef{time, sol}\hlopt{$}\hldef{state[,}\hlsng{"I"}\hldef{],} \hlkwc{type} \hldef{=} \hlsng{"l"}\hldef{,}
      \hlkwc{xlab} \hldef{=} \hlsng{"Time (days)"}\hldef{,} \hlkwc{ylab} \hldef{=} \hlsng{"Number infectious"}\hldef{)}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -1561,7 +1561,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \end{frame}
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{library}\hldef{(adaptivetau)}
 \hlkwd{library}\hldef{(future.apply)}
@@ -1676,13 +1676,13 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}\end{kframe}
 \end{knitrout}
 
 \begin{frame}[fragile, allowframebreaks]{Common part -- The function we run}
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{run_one_sim} \hlkwb{=} \hlkwa{function}\hldef{(}\hlkwc{params}\hldef{) \{}
     \hldef{IC} \hlkwb{<-} \hlkwd{c}\hldef{(}\hlkwc{S} \hldef{= (params}\hlopt{$}\hldef{Pop}\hlopt{-}\hldef{params}\hlopt{$}\hldef{I_0),} \hlkwc{I} \hldef{= params}\hlopt{$}\hldef{I_0)}
@@ -1710,7 +1710,7 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
     \hlkwd{return}\hldef{(sol)}
 \hldef{\}}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -2110,7 +2110,7 @@ And the question becomes: how long does the chain ``linger on'' (``stutter'') be
 
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
 \hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
@@ -2123,7 +2123,7 @@ And the question becomes: how long does the chain ``linger on'' (``stutter'') be
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: ! in callr subprocess.\\\#\# Caused by error in `file(con, "{}r"{})`:\\\#\# ! cannot open the connection}}\end{kframe}
 \end{knitrout}
 
 

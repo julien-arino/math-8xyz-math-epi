@@ -690,7 +690,7 @@ To use multiple compartments to better fit residence times, we need to find the 
 $\implies$ compute RSS errors between data points generated from the given Gamma distribution and an Erlang
 \vfill 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{error_Gamma} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{theta}\hldef{,}\hlkwc{shape}\hldef{,}\hlkwc{t}\hldef{,}\hlkwc{data}\hldef{) \{}
   \hldef{test_points} \hlkwb{<-} \hlkwd{dgamma}\hldef{(t,} \hlkwc{shape} \hldef{= shape,} \hlkwc{scale} \hldef{= theta)}
@@ -698,7 +698,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
   \hlkwd{return}\hldef{(ls_error)}
 \hldef{\}}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -706,7 +706,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
 \begin{frame}[fragile, allowframebreaks]
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{optimize_gamma} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{t}\hldef{,}\hlkwc{d}\hldef{) \{}
   \hldef{max_shape} \hlkwb{<-} \hlnum{10}
@@ -737,7 +737,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
   \hlkwd{return}\hldef{(result_optim)}
 \hldef{\}}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -746,7 +746,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
 \begin{frame}[fragile]
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{time_points} \hlkwb{<-} \hlkwd{seq}\hldef{(}\hlnum{0}\hldef{,}\hlnum{60}\hldef{)}
 \hldef{data_points} \hlkwb{<-} \hlkwd{dgamma}\hldef{(time_points,} \hlkwc{shape} \hldef{=} \hlnum{1.57}\hldef{,}
@@ -756,7 +756,7 @@ $\implies$ compute RSS errors between data points generated from the given Gamma
 \hlcom{# Which is the best Erlang to fit the data}
 \hldef{idx_best} \hlkwb{<-} \hlkwd{which.min}\hldef{(optim_fits}\hlopt{$}\hldef{error)}
 \end{alltt}
-
+\end{kframe}
 \end{knitrout}
 
 \end{frame}
@@ -1036,22 +1036,11 @@ I'(t)=\beta\frac{(N-I(t))I(t)}{N}
 
 
 
-% %%%%%%%%%%%%%%%%%%%
-% %%%%%%%%%%%%%%%%%%%
-% %%%%%%%%%%%%%%%%%%%
-% %%%%%%%%%%%%%%%%%%%
-% <<convert-Rnw-to-R,echo=FALSE,warning=FALSE,message=FALSE>>=
-% # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
-% rmd_chunks_to_r_temp <- function(file){
-%   callr::r(function(file){
-%     out_dir <- "../CODE"
-%     if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
-%     out_file = sprintf("%s/%s", out_dir, gsub(".Rnw", ".R", basename(file)))
-%     knitr::purl(file, output = out_file, documentation = 1)
-%   }, args = list(file))
-% }
-% rmd_chunks_to_r_temp("L06-sojourn-times.Rnw")
-% @
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+
 
 
 %%%%%%%%%%%%%%%%%%%

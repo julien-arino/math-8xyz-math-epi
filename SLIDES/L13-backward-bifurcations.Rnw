@@ -14,52 +14,13 @@ lecture_number = "13"
 \title{Backward bifurcations}
 
 <<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
-# Load required libraries
-required_packages = c("deSolve",
-                      "dplyr", 
-                      "ggplot2", 
-                      "knitr", 
-                      "latex2exp",
-                      "lattice",
-                      "magick",
-                      "readr", 
-                      "tidyr",
-                      "viridis")
-
-for (p in required_packages) {
-  if (!require(p, character.only = TRUE)) {
-    install.packages(p, dependencies = TRUE)
-    require(p, character.only = TRUE)
-  }
-}
-# Knitr options
-opts_chunk$set(echo = TRUE, 
-               warning = FALSE, 
-               message = FALSE, 
-               dev = c("pdf", "png"),
-               fig.width = 6, 
-               fig.height = 4, 
-               fig.path = sprintf("FIGS/L%s-", lecture_number),
-               fig.keep = "high",
-               fig.show = "hide")
-knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
-options(knitr.table.format = "latex")
-# Date for front title page (if needed)
-yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
+# Source the code common to all lectures
+source("common-code.R")
 @
 
 <<set-slide-background,echo=FALSE,results='asis'>>=
-# Are we plotting for a dark background?
-plot_blackBG = FALSE
-if (plot_blackBG) {
-  bg_color = "black"
-  fg_color = "white"
-  input_setup = "\\input{slides-setup-blackBG.tex}"
-} else {
-  bg_color = "white"
-  fg_color = "black"
-  input_setup = "\\input{slides-setup-whiteBG.tex}"
-}
+# Are we plotting for a dark background? Setting is in common-code.R, but
+# cat command must run here.
 cat(input_setup)
 @
 
@@ -122,18 +83,11 @@ cat(input_setup)
 \includegraphics[width=0.7\textwidth]{FIGS/SIRV_bif_backward}
 \end{frame}
 
-
-<<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
-# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
-rmd_chunks_to_r_temp <- function(file){
-  callr::r(function(file, temp){
-    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
-    knitr::purl(file, output = out_file, documentation = 1)
-  }, args = list(file))
-}
-rmd_chunks_to_r_temp("L07-endemic-SIRS.Rnw")
-@
-\end{frame}
+% % Convert the file to R code. Only include if including R code in the document,
+% % otherwise it will generate a meaningless file with just R and knitr options.
+% <<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
+% rmd_chunks_to_r_temp()
+% @
 
 
 \begin{frame}[allowframebreaks]{Bibliography}

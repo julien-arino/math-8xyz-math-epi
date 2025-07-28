@@ -13,65 +13,14 @@ lecture_number = "26"
 % Title of the lecture
 \title{Agent-based models}
 
-
 <<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
-# Load required libraries
-required_packages = c("adaptivetau",
-                      "deSolve",
-                      "dplyr",
-                      "future",
-                      "future.apply",
-                      "GillespieSSA2",
-                      "ggplot2", 
-                      "knitr", 
-                      "latex2exp",
-                      "lattice",
-                      "magick",
-                      "readr", 
-                      "tidyr",
-                      "viridis")
-
-for (p in required_packages) {
-  if (!require(p, character.only = TRUE)) {
-    install.packages(p, dependencies = TRUE)
-    require(p, character.only = TRUE)
-  }
-}
-# Knitr options
-opts_chunk$set(echo = TRUE, 
-               warning = FALSE, 
-               message = FALSE, 
-               dev = c("pdf", "png"),
-               fig.width = 6, 
-               fig.height = 4, 
-               fig.path = sprintf("FIGS/L%s-", lecture_number),
-               fig.keep = "high",
-               fig.show = "hide")
-knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
-options(knitr.table.format = "latex")
-# Date for front title page (if needed)
-yyyy = strsplit(as.character(Sys.Date()), "-")[[1]][1]
-# The kframe environment can conflict with allowframebreaks, 
-# so we remove it.
-knit_hooks$set(document = function(x) {
-  gsub('\\\\(begin|end)\\{kframe\\}', '', x)
-})
+# Source the code common to all lectures
+source("common-code.R")
 @
 
 <<set-slide-background,echo=FALSE,results='asis'>>=
-# Are we plotting for a dark background?
-plot_blackBG = FALSE
-if (plot_blackBG) {
-  bg_colour = "black"
-  fg_colour = "white"
-  input_setup = "\\input{slides-setup-blackBG.tex}"
-  fill_colour = "lightblue"
-} else {
-  bg_colour = "white"
-  fg_colour = "black"
-  input_setup = "\\input{slides-setup-whiteBG.tex}"
-  fill_colour = "lightblue"
-}
+# Are we plotting for a dark background? Setting is in common-code.R, but
+# cat command must run here.
 cat(input_setup)
 @
 
@@ -87,8 +36,163 @@ cat(input_setup)
 
 
 
+%%%%%%%%%%%%%%%%%%%%
+\section{What are agent-based models (ABM)}
+\begin{frame}{What are agent-based models (ABM)}
+\bbullet Early in the life of these models, they were called IBM (individual-based models)
+\bbullet Over the years, a "philosophical" distinction has emerged:
+\begin{itemize}
+  \item IBM are mathematical models that consider individuals as the units; e.g., DTMC, CTMC, branching processes, etc.
+  \item ABM are computational models whose study is, for the most part, only possible numerically
+\end{itemize}
+\end{frame}
 
-<<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
+\begin{frame}{ABM vs Network models}
+\bbullet Network models endow vertices with simple systems and couple them through graphs
+\bbullet Can be ABM, but some networks can also be studied analytically
+\bbullet Not enough time to go into this, a very interesting subject!
+\end{frame}
+
+\section{When to use ABM}
+\begin{frame}{When to use ABM}
+\bbullet ABM are very useful to decipher contact processes
+\bbullet Classic mathematical models capture contact by using approximations of what contact could be like
+\bbullet Classic models allow some flexibility (see section about incidence functions in Lecture 02) but they remain limited
+\bbullet ABM can model actual trajectories of individuals, so given a definition of what a contact is (how close do you need to be for a contact to take place), can count them efficaciously
+\end{frame}
+
+\begin{frame}{ABM are very useful to understand behavioural responses}
+\bbullet ABM are very useful to understand behavioural responses
+\end{frame}
+
+\section{When not to use ABM}
+\begin{frame}{When not to use ABM}
+\bbullet As with all tools, beware!
+\bbullet There is a law of large numbers effects happening often: if you have many units, unless some emergent behaviour arises, you get the same results using ODEs...
+\end{frame}
+
+\begin{frame}{With this specific tool, beware!}
+\bbullet There is a certain tendency in CS people to create yet another system and seek adoption by users
+\end{frame}
+
+\section{Some examples}
+\begin{frame}{Some examples}
+\bbullet Antibiotic resistance in hospitals
+\bbullet Effectiveness of contact tracing
+\bbullet Contacts during Hajj
+\end{frame}
+
+\section{Antibiotic resistance in hospitals}
+\begin{frame}{Antibiotic resistance in hospitals}
+\bbullet D’Agata, Magal, Olivier, Ruand \& Webb. Modeling antibiotic resistance in hospitals: The impact of minimizing treatment duration, Journal of Theoretical Biology (2007)
+\end{frame}
+
+\begin{frame}{An IBM that's almost an ABM}
+\bbullet This work is a good illustration of the "cultural proximity" between IBM and ABM
+\bbullet Model is stochastic and individual-based, in good enough form that approximating ODE can be derived
+\bbullet Allows for very specific tracking of the status of individuals through the process (almost an ABM in this sense)
+\end{frame}
+
+\begin{frame}{The setup}
+\bbullet Three processes:
+\begin{enumerate}
+  \item admission and exit of patients
+  \item infection of patients by HCW (health care workers)
+  \item contamination of HCW by patients
+\end{enumerate}
+\bbullet Contamination of HCW is "transient": they are carriers, if they wash their hands properly, they become OK
+\bbullet Each day has 3 shifts of 8h for HCW
+\bbullet Patients are put in contact by visits of HCW
+\bbullet Rules for contaminations per unit time
+\end{frame}
+
+\maxFrameImage{FIGS/Dagata_etal_patients_profiles.jpg}
+
+\maxFrameImage{FIGS/Dagata_etal_comparisons.jpg}
+
+\section{Effectiveness of contact tracing}
+\begin{frame}{Effectiveness of contact tracing}
+\bbullet Tian, Osgood, Al-Azem \& Hoeppner. Evaluating the Effectiveness of Contact Tracing on Tuberculosis Outcomes in Saskatchewan Using Individual-Based Modeling, Health Education \& Behavior (2013)
+\end{frame}
+
+\begin{frame}{Evaluation of contact tracing in TB}
+\bbullet Evaluation of contact tracing in TB
+\end{frame}
+
+\maxFrameImage{FIGS/TianOsgood_etal_TB_CT.jpeg}
+
+\maxFrameImage{FIGS/TianOsgood_etal_state_flow_agent.jpeg}
+
+\maxFrameImage{FIGS/TianOsgood_etal_model_CT.jpeg}
+
+\begin{frame}{Scenarios}
+\bbullet They can then formulate scenarios
+\href{https://raw.githubusercontent.com/julien-arino/3MC-course-epidemiological-modelling/main/FIGS/TianOsgood_etal_scenarios.jpeg}{Scenario illustration}
+\bbullet They then run these scenarios and compare results
+\end{frame}
+
+\maxFrameImage{FIGS/TianOsgood_etal_scenario_results.jpeg}
+
+\section{Contacts during Hajj}
+\begin{frame}{Contacts during Hajj}
+\bbullet Tofighi, Asgary, Tofighi, Najafabadi, Arino, Amiche, Rahman, McCarthy, Bragazzi, Thommes,  Coudeville, Grunnill, Bourouiba and Wu. Estimating Social Contacts in Mass Gatherings for Disease Outbreak Prevention and Management (Case of Hajj Pilgrimage), Tropical Diseases, Travel Medicine and Vaccines
+\end{frame}
+
+\begin{frame}{Contacts during Hajj}
+\bbullet In a mass gathering event like Hajj, lots of people come together originating from many countries
+\bbullet If propagation occurs during the event, this has the capacity to spread infection far and wide when individuals (pilgrims here) return home
+\bbullet Contacts during part of the event are really specific in their configuration
+\end{frame}
+
+\begin{frame}{The setup}
+\bbullet Word of warning: I am quite fuzzy on the specifics :)
+\bbullet Pilgrims enter Masjid al-Haram mosque through several gates
+\bbullet Proceed to Mataaf (area around Kaaba), circle the Kaaba 7 times counterclockwise (process is the Tawaf)
+\bbullet Then do seven trips between Safa and Marwah (process is the Sa'ee)
+\end{frame}
+
+%\maxFrameImage{https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Great_Mosque_of_Mecca.jpg/1280px-Great_Mosque_of_Mecca.jpg}
+
+\begin{frame}{Tawaf in pre-COVID-19 times}
+\bbullet \href{https://www.youtube.com/embed/L-YyR1oN66w}{YouTube: Tawaf in pre-COVID-19 times}
+\end{frame}
+
+\begin{frame}{Tawaf - Socially distanced version}
+\bbullet \href{https://www.youtube.com/embed/Rl8a0wQePCo}{YouTube: Tawaf - Socially distanced version}
+\end{frame}
+
+\begin{frame}{Sa'ee in pre-COVID-19 times}
+\bbullet \href{https://www.youtube.com/embed/r1qM-mHj2d0}{YouTube: Sa'ee in pre-COVID-19 times}
+\end{frame}
+
+\begin{frame}{Sa'ee - Socially distanced version}
+\bbullet \href{https://www.youtube.com/embed/JVges7Q2Mow}{YouTube: Sa'ee - Socially distanced version}
+\end{frame}
+
+\begin{frame}{Crowd dynamics}
+\bbullet Typically high density crowds
+\bbullet Very specific mixing patterns
+\bbullet Opportunities for transmission are very high
+\bbullet However, control mechanisms are also available
+\bbullet Understanding contact patterns and frequency would help
+\end{frame}
+
+\maxFrameImage{FIGS/ABM_Hajj_MAH_3Dmodel.png}
+
+\maxFrameImage{FIGS/ABM_Hajj_setup.png}
+
+\maxFrameImage{FIGS/ABM_Hajj_config_tawaf.png}
+
+\begin{frame}{Simulation video 1}
+\bbullet \href{https://www.youtube.com/embed/_oOf4uNIghw?loop=1&modestbranding=1&origin=https://julien-arino.github.io/&rel=0}{YouTube: Hajj simulation 1}
+\end{frame}
+
+\begin{frame}{Simulation video 2}
+\bbullet \href{https://www.youtube.com/embed/qcWBi17qKnU?start=9&loop=1&modestbranding=1&origin=https://julien-arino.github.io/&rel=0}{YouTube: Hajj simulation 2}
+\end{frame}
+
+
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
 rmd_chunks_to_r_temp <- function(file){
   callr::r(function(file, temp){
@@ -96,11 +200,16 @@ rmd_chunks_to_r_temp <- function(file){
     knitr::purl(file, output = out_file, documentation = 1)
   }, args = list(file))
 }
-rmd_chunks_to_r_temp("course-03-stochastic-aspects.Rnw")
+rmd_chunks_to_r_temp("L26-ABM-models.Rnw")
 @
 
 
-\begin{frame}[allowframebreaks]{Bibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]
+\frametitle{Bibliography}
 \bibliographystyle{apalike}
 \bibliography{local-bibliography}
 \end{frame}
