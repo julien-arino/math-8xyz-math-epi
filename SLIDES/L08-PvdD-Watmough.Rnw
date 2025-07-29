@@ -11,7 +11,7 @@ lecture_number = "08"
 \date{Winter 20XX}
 
 % Title of the lecture
-\title{Next generation matrix method for computing $\R_0$}
+\title{Next generation matrix method}
 
 <<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
 # Source the code common to all lectures

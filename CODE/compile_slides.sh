@@ -66,21 +66,19 @@ compile_rnw() {
     
     if [ ! -f "$basename.tex" ]; then
         print_error "knitr failed to produce $basename.tex"
+        cd - > /dev/null
         return 1
     fi
     
     # Step 2: Compile LaTeX to PDF (run twice for references)
     print_status "Compiling LaTeX to PDF..."
     pdflatex -interaction=batchmode "$basename.tex" &> /dev/null
-    
-    if [ -f "$basename.aux" ]; then
-        # Run pdflatex again for cross-references, bibliography, etc.
-        pdflatex -interaction=batchmode "$basename.tex" &> /dev/null
-    fi
+    pdflatex -interaction=batchmode "$basename.tex" &> /dev/null
     
     # Check if PDF was created successfully
     if [ ! -f "$basename.pdf" ]; then
         print_error "PDF compilation failed for $basename"
+        cd - > /dev/null
         return 1
     fi
     
@@ -112,37 +110,41 @@ main() {
     # Check dependencies first
     check_dependencies
 
+    # Clean up generated R files in CODE directory
+    print_status "Removing old generated R files in CODE..."
+    rm -f L??-*.R
+
     # Clean up generated figures before compiling
-    print_status "Removing old generated figures in FIGS..."
-    rm -f FIGS/L??-*.pdf FIGS/L??-*.png
+    print_status "Removing old generated figures in ../FIGS..."
+    rm -f ../FIGS/L??-*.pdf ../FIGS/L??-*.png
 
     # Clean up generated tex and pdf files
-    print_status "Removing old generated tex and pdf files in SLIDES..."
-    rm -f SLIDES/L??-*.tex SLIDES/L??-*.pdf
+    print_status "Removing old generated tex and pdf files in ../SLIDES..."
+    rm -f ../SLIDES/L??-*.tex ../SLIDES/L??-*.pdf
 
     # Change to SLIDES directory
-    if [ ! -d "SLIDES" ]; then
-        print_error "SLIDES directory not found. Run this script from the repository root."
+    if [ ! -d "../SLIDES" ]; then
+        print_error "SLIDES directory not found. Run this script from the CODE directory."
         exit 1
     fi
-    
+
     # Store original directory
     original_dir=$(pwd)
-    
+
     if [ $# -eq 0 ]; then
         # No arguments - process all Rnw files in SLIDES directory
-        print_status "Processing all Rnw files in SLIDES directory..."
-        
-        rnw_files=$(find SLIDES -name "*.Rnw" -type f)
-        
+        print_status "Processing all Rnw files in ../SLIDES directory..."
+
+        rnw_files=$(find ../SLIDES -name "*.Rnw" -type f)
+
         if [ -z "$rnw_files" ]; then
-            print_warning "No Rnw files found in SLIDES directory"
+            print_warning "No Rnw files found in ../SLIDES directory"
             exit 0
         fi
-        
+
         success_count=0
         total_count=0
-        
+
         while IFS= read -r rnw_file; do
             total_count=$((total_count + 1))
             if compile_rnw "$rnw_file"; then
@@ -150,9 +152,9 @@ main() {
             fi
             echo # Empty line for readability
         done <<< "$rnw_files"
-        
+
         print_status "Compilation complete: $success_count/$total_count files processed successfully"
-        
+
     else
         # Process specific file(s)
         for rnw_file in "$@"; do
@@ -160,20 +162,20 @@ main() {
                 print_error "File not found: $rnw_file"
                 continue
             fi
-            
+
             if [[ "$rnw_file" != *.Rnw ]]; then
                 print_error "File is not an Rnw file: $rnw_file"
                 continue
             fi
-            
+
             compile_rnw "$rnw_file"
             echo # Empty line for readability
         done
     fi
-    
+
     # Return to original directory
     cd "$original_dir"
-    
+
     # Update slides CSV data file
     print_status "Updating slides data file..."
     if command -v python3 &> /dev/null; then
@@ -187,20 +189,18 @@ main() {
         print_status "Script completed"
         return
     fi
-    
-    if [ -f "CODE/extract_slide_titles.py" ]; then
-        cd CODE
+
+    if [ -f "extract_slide_titles.py" ]; then
         $python_cmd extract_slide_titles.py --output slides.csv
         if [ $? -eq 0 ]; then
             print_status "Successfully updated slides data file"
         else
             print_warning "Failed to update slides data file"
         fi
-        cd "$original_dir"
     else
         print_warning "extract_slide_titles.py not found in CODE directory"
     fi
-    
+
     print_status "Script completed"
 }
 
