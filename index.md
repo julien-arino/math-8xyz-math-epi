@@ -11,6 +11,7 @@ I will be recording videos to match the slides but have not started yet.
 
 On the [GitHub version](https://github.com/julien-arino/math-8xyz-math-epi/) of the page, you have access to all the files. You can also download the entire repository by clicking the buttons on the left. (You can also of course clone this repo, but you will need to do that from the GitHub version of the site.)
 
+### Using/copying this material
 Feel free to use the material in these slides or in the folders. If you find this useful, I will be happy to know.
 
 ### Slides
