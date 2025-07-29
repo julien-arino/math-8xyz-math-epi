@@ -17,6 +17,27 @@ a:hover {
     font-weight: normal;
 }
 
+ol { /* Target ordered lists explicitly */
+    margin-top: 0.5em; /* You can reduce this further if needed, e.g., 0.2em or 0 */
+    margin-bottom: 0.5em; /* You can reduce this further if needed, e.g., 0.2em or 0 */
+    padding-left: 2em; /* This padding provides indentation for the numbers */
+}
+
+ol li { /* Target list items within ordered lists explicitly */
+    margin-bottom: 0.1em; /* Keep these small for tight spacing */
+    margin-top: 0.1em;
+    padding: 0; /* Ensures no extra padding is added to the list item itself */
+}
+
+/* Add a rule to remove default margins from paragraphs inside list items,
+   as Markdown often wraps list content in <p> tags. */
+ol li p {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+/* General list styles - useful if you also have unordered lists and want similar spacing */
 ul {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -28,4 +49,9 @@ ul li {
     margin-top: 0.1em;
     padding: 0;
 }
-  
+
+ul li p {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+}
