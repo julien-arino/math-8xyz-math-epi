@@ -1465,12 +1465,12 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \begin{frame}[fragile]{Last one did not go well}
     \begin{itemize}
         \item Wanted 1000 time units (days?)
-        \item Interrupted at 306.5004148 because of the test
+        \item Interrupted at 289.8661328 because of the test
         \newline (Slide with $b<d$: sim stopped because the population went extinct, I did not stop it!)
         \item At stop time
         \begin{itemize}
-            \item $N =$ \ensuremath{4.1792\times 10^{4}}
-            \item $|N| =$ 83361 (and $|t|$ as well, of course!)
+            \item $N =$ \ensuremath{4.2908\times 10^{4}}
+            \item $|N| =$ 85961 (and $|t|$ as well, of course!)
             \item time was moving slowly
         \end{itemize}
     \end{itemize}
@@ -1482,8 +1482,8 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hlkwd{tail}\hldef{(}\hlkwd{diff}\hldef{(results}\hlopt{$}\hldef{t))}
 \end{alltt}
 \begin{verbatim}
-## [1] 3.880759e-04 9.737268e-05 1.435169e-03 1.051413e-03 5.459647e-04
-## [6] 6.695757e-09
+## [1] 1.911574e-04 1.527582e-05 4.113673e-04 4.753229e-05 1.030327e-04
+## [6] 6.899427e-09
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1611,10 +1611,6 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 
 \hlcom{# By default, use all available cores}
 \hlkwd{plan}\hldef{(multisession)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: Cannot create 128 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.}}\begin{alltt}
 \hlcom{## To use fewer workers, leaving one empty for }
 \hlcom{# instance}
 \hlcom{# plan(multisession, availableCores()-1)}
@@ -1639,10 +1635,6 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hldef{SIMS} \hlkwb{=} \hlkwd{future_lapply}\hldef{(}
   \hlkwc{X} \hldef{=} \hlnum{1}\hlopt{:}\hldef{params}\hlopt{$}\hldef{nb_sims,}
   \hlkwc{FUN} \hldef{=}  \hlkwa{function}\hldef{(}\hlkwc{x}\hldef{)} \hlkwd{run_one_sim}\hldef{(CTMC, params))}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: Cannot create 128 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.}}\begin{alltt}
 \hlcom{#  Liberate the workers!}
 \hlkwd{stopCluster}\hldef{(cl)}
 \end{alltt}
@@ -1652,10 +1644,6 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hlcom{# Find max y value for plot}
 \hldef{y_max} \hlkwb{=} \hlkwd{max}\hldef{(}\hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(SIMS,} \hlkwa{function}\hldef{(}\hlkwc{x}\hldef{)} \hlkwd{max}\hldef{(x}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{I))),}
             \hlkwc{na.rm} \hldef{=} \hlnum{TRUE}\hldef{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}\begin{alltt}
 \hlcom{# Now plot}
 \hlkwd{plot}\hldef{(SIMS[[}\hlnum{1}\hldef{]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{time,}
      \hldef{SIMS[[}\hlnum{1}\hldef{]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{I,}
@@ -1664,19 +1652,13 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
      \hlkwc{ylab} \hldef{=} \hlsng{"Number infectious"}\hldef{,}
      \hlkwc{ylim} \hldef{=} \hlkwd{c}\hldef{(}\hlnum{0}\hldef{, y_max),}
      \hlkwc{main} \hldef{=} \hlkwd{paste}\hldef{(}\hlsng{"CTMC with R0 ="}\hldef{, params}\hlopt{$}\hldef{R0))}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}\begin{alltt}
 \hlkwa{for} \hldef{(i} \hlkwa{in} \hlnum{2}\hlopt{:}\hlkwd{length}\hldef{(SIMS)) \{}
   \hlkwd{lines}\hldef{(SIMS[[i]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{time,}
         \hldef{SIMS[[i]]}\hlopt{$}\hldef{interp_I}\hlopt{$}\hldef{I,}
         \hlkwc{type} \hldef{=} \hlsng{"l"}\hldef{,} \hlkwc{lwd} \hldef{=} \hlnum{0.5}\hldef{)}
 \hldef{\}}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'SIMS' not found}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 \begin{frame}[fragile, allowframebreaks]{Common part -- The function we run}

@@ -34,6 +34,322 @@ cat(input_setup)
 \titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_uckjmbuckjmbuckj.jpeg}
 \outlinepage{FIGS-slides-admin/Gemini_Generated_Image_sq8p8jsq8p8jsq8p.jpeg}
 
+% Why network models
+\begin{frame}{Why network models?}
+  \begin{itemize}
+    \item Classical models allow some flexibility (see e.g. the section in \href{https://julien-arino.github.io/petit-cours-epidemio-mathematique/cours-04-modeles-SIS-SIR.html}{Course 04} on incidence functions or \href{https://julien-arino.github.io/petit-cours-epidemio-mathematique/cours-11-modeles-groupes.html}{Course 11} on group models), but this remains limited and an approximation.
+    \item Like agent-based models (\href{https://julien-arino.github.io/petit-cours-epidemio-mathematique/cours-18-modeles-agents.html}{Course 18}), network models are considered to make the description of contact processes in pathogen transmission more realistic.
+  \end{itemize}
+\end{frame}
+
+% Human life is organized in networks
+\begin{frame}{Human life is organized in networks}
+  \begin{itemize}
+    \item Family
+    \item Circles of friends
+    \item Professional network
+    \item ...
+    \item Social network theory has existed and been used for years, e.g., in professional settings (how to improve interactions in a company)
+  \end{itemize}
+\end{frame}
+
+% Social networks
+\begin{frame}{Social networks}
+  \begin{itemize}
+    \item Before considering epidemics on networks, a few notions of social networks, because they are generally useful for understanding networks
+    \item Social network methods introduce measures to evaluate certain properties of graphs that are useful to know
+    \item A network is a (mathematical) graph, directed or not, in which edges represent connections (of any kind) between individuals, who are the nodes of the graph
+  \end{itemize}
+\end{frame}
+
+% Context
+\begin{frame}{Context}
+  \begin{itemize}
+    \item $\mathcal{G}(\mathcal{V},\mathcal{E})$ an undirected graph
+    \item $\mathcal{D}(\mathcal{V},\mathcal{A})$ a digraph (directed graph)
+    \item $\mathcal{V}$ the set of nodes (vertices)
+    \item $\mathcal{E}$ the set of edges in the undirected case
+    \item $\mathcal{A}$ the set of arcs in the directed graph
+  \end{itemize}
+\end{frame}
+
+% Example: air transport network
+\begin{frame}{Example: Air transport network}
+  \begin{itemize}
+    \item We illustrate with data from the global air transport network
+    \item Data is quite good (sometimes very good), and a clear advantage:
+    \item When a plane leaves somewhere and arrives elsewhere, it's quite ... deterministic
+  \end{itemize}
+\end{frame}
+
+% (Images would be inserted here in a real presentation)
+
+% Graph density
+\begin{frame}{Graph density}
+  An (un)directed graph is \textbf{complete} if every pair of nodes is connected (by an edge in each direction for digraphs).
+  
+  If there are $n=|\mathcal{V}|$ nodes, then there are $n(n-1)/2$ (resp. $n(n-1)$) edges in the complete graph (resp. digraph).
+  
+  (We do not count self-loops.)
+  
+  Density of $\mathcal{G}$ (undirected):
+  $$
+  \mathsf{dens}_\mathcal{G}=\frac{2\ |\mathcal{E}|}{n(n-1)}
+  $$
+  Density of $\mathcal{D}$ (directed):
+  $$
+  \mathsf{dens}_\mathcal{D}=\frac{|\mathcal{A}|}{n(n-1)}
+  $$
+\end{frame}
+
+% Graph density table
+\begin{frame}{Density of considered digraphs}
+  \begin{tabular}{lcccc}
+    Digraph & \# nodes & \# arcs & density \\
+    \hline
+    Manitoba & 24 & 64 & 0.1159 \\
+    Canada & 222 & 804 & 0.0164 \\
+    North America & 934 & 7,814 & 0.009 \\
+    Global & 3403 & 32,576 & 0.0028 \\
+  \end{tabular}
+\end{frame}
+
+% Degree
+\begin{frame}{Degree}
+  \begin{itemize}
+    \item \textbf{Degree} $d_\mathcal{G}(v)$ of node $v\in\mathcal{V}$ in $\mathcal{G}$: number of edges incident to $v$
+    \item \textbf{In-degree} $d^-_\mathcal{D}(v)$ in $\mathcal{D}$: number of arcs with head $v$
+    \item \textbf{Out-degree} $d^+_\mathcal{D}(v)$ in $\mathcal{D}$: number of arcs with tail $v$
+    \item \textbf{Degree} $d_\mathcal{D}(v)$ in $\mathcal{D}(\mathcal{V},\mathcal{A})$: number of arcs incident to $v$ in the underlying undirected graph $\mathcal{G}$ (where every arc is considered bidirectional)
+  \end{itemize}
+\end{frame}
+
+% In-degree table
+\begin{frame}{Global in-degree of the air transport network}
+  \begin{tabular}{l l c c}
+    City & Country & In-degree & Rank \\
+    \hline
+    London & UK & 365 & 1 \\
+    Paris & France & 294 & 2 \\
+    Frankfurt & Germany & 287 & 3 \\
+    Atlanta & USA & 249 & 4 \\
+    New York & USA & 241 & 5 \\
+    Moscow & Russia & 225 & 6 \\
+    Amsterdam & Netherlands & 204 & 7 \\
+    Chicago & USA & 203 & 8 \\
+    Munich & Germany & 200 & 9 \\
+    Milan & Italy & 181 & 10 \\
+  \end{tabular}
+\end{frame}
+
+% Shortest path
+\begin{frame}{Shortest path}
+  Let $\mathcal{D}$ be a digraph. The (or the) shortest path(s) from $i$ to $j$ in $\mathcal{V}$:
+  $$
+  d_\mathcal{D}(i,j)=\min_{p\in\mathcal{P}(i,j)} f(p)
+  $$
+  where $\mathcal{P}(i,j)$ is the set of paths from $i$ to $j$ and $f(p)$ is a valuation of the arcs in path $p$. We define $d_\mathcal{D}(i,j)=\infty$ if there is no path from $i$ to $j$.
+  
+  $f(p)$ can be:
+  \begin{itemize}
+    \item the number of arcs in $p$ from $i$ to $j$ (\textbf{geodesic distance})
+    \item great circle distance of the arcs in $p$
+    \item flight duration of the arcs in $p$
+  \end{itemize}
+\end{frame}
+
+% Eccentricity
+\begin{frame}{Eccentricity}
+  \textbf{Eccentricity} (or \textbf{König number}) of node $v$ in $\mathcal{G}(\mathcal{V},\mathcal{E})$:
+  $$
+  e(v)=\max_{v'\in\mathcal{V}}d_\mathcal{D}(v,v')
+  $$
+  \textbf{In-eccentricity} in $\mathcal{D}(\mathcal{V},\mathcal{A})$:
+  $$
+  e^-(v)=\max_{v'\in\mathcal{V}}d_\mathcal{D}(v',v)
+  $$
+  \textbf{Out-eccentricity} in $\mathcal{D}(\mathcal{V},\mathcal{A})$:
+  $$
+  e^+(v)=\max_{v'\in\mathcal{V}}d_\mathcal{D}(v,v')
+  $$
+\end{frame}
+
+% Radius
+\begin{frame}{Radius}
+  \textbf{Radius} of $\mathcal{G}$
+  $$
+  \rho_\mathcal{G}=\min_{v\in\mathcal{V}}e(v)
+  $$
+  \textbf{In-radius} of $\mathcal{D}$
+  $$
+  \rho_\mathcal{D}^- = \min_{v\in\mathcal{V}}e^-(v)
+  $$
+  \textbf{Out-radius} of $\mathcal{D}$
+  $$
+  \rho_\mathcal{D}^+ = \min_{v\in\mathcal{V}}e^+(v)
+  $$
+  Radius = $\min(\max(\cdot))$ $\rightarrow$ directionality
+\end{frame}
+
+% Radius table
+\begin{frame}{Radius of the air transport network}
+  \begin{tabular}{lccc}
+    Graph & $\rho^-$ & $\rho^+$ \\
+    \hline
+    Manitoba & 2 & 3 \\
+    Canada & 6 & 6 \\
+    North America & 6 & 7 \\
+    Global & 7 & 7 \\
+  \end{tabular}
+\end{frame}
+
+% Center
+\begin{frame}{Center of a graph}
+  \textbf{Center} of $\mathcal{D}$:
+  $$
+  \mathcal{C}_\mathcal{D}=\left\{v\in\mathcal{V}:e(v)=\rho_\mathcal{D}\right\}
+  $$
+\end{frame}
+
+% Center table
+\begin{frame}{Center of the air transport network}
+  \begin{tabular}{lcccc}
+    Graph & $\mathcal{C}^-$ & $\|\mathcal{C}^-\|$ & $\mathcal{C}^+$ & $\|\mathcal{C}^+\|$ \\
+    \hline
+    Manitoba & 2 & 1 (YWG) & 3 & 7 \\
+    Canada & 6 & 1 (YTO) & 6 & 1 (YTO) \\
+    North America & 6 & 1 (YTO) & 7 & 18 \\
+    Global & 7 & 131 & 7 & 20 \\
+  \end{tabular}
+  
+  $\{\text{YYC},\text{YEA},\text{Halifax},\text{Kelowna},\text{Moncton},\text{YMQ},\text{YOW},\text{Quebec},\text{St John's},\text{YTO},\text{YVR}, \text{Victoria},\text{YWG}\}\subset\mathcal{C}^-$
+  
+  $\{\text{Toronto},\text{Vancouver}\}\subset\mathcal{C}^+$
+\end{frame}
+
+% Diameter
+\begin{frame}{Diameter}
+  \textbf{Diameter} of $\mathcal{D}$
+  $$
+  \mathsf{diam}_\mathcal{D}=\max_{v\in\mathcal{V}}e(v)
+  $$
+  diameter = $\max(\max(.))$ $\rightarrow$ no directionality
+\end{frame}
+
+% Diameter table
+\begin{frame}{Diameter of the air transport network}
+  \begin{tabular}{lc}
+    Graph & Diameter \\
+    \hline
+    Manitoba & 5 \\
+    Canada & 12 \\
+    North America & 13 \\
+    Global & 13 \\
+  \end{tabular}
+\end{frame}
+
+% Periphery
+\begin{frame}{Periphery of a graph}
+  \textbf{Periphery} of $\mathcal{D}$
+  $$
+  \mathcal{P}_\mathcal{D}=\left\{v\in\mathcal{V}:e(v)=\mathsf{diam}_\mathcal{D}\right\}
+  $$
+\end{frame}
+
+% Periphery table
+\begin{frame}{Periphery of the air transport network}
+  \begin{tabular}{lcc}
+    Graph & In-periphery & Out-periphery \\
+    \hline
+    Manitoba & Lynn Lake & Cross Lake, Red Sucker Lake, Brandon \\
+    Canada & Peawanuck & Peawanuck, Port Hope Simpson | Port Hope Simpson \\
+    North America & Stony River & Peawanuck, Port Hope Simpson \\
+    Global & Stony River, Hooker Creek, Peawanuck & Hooker Creek, Beni, Peawanuck, Port Hope Simpson \\
+  \end{tabular}
+\end{frame}
+
+% Other measures
+\begin{frame}{Many other measures}
+  \begin{itemize}
+    \item betweenness
+    \item closeness
+    \item $k$-cores
+    \item $\ldots$
+  \end{itemize}
+\end{frame}
+
+% General framework for network models
+\begin{frame}{General framework for network models}
+  See for example:
+  \begin{itemize}
+    \item Newman. \href{https://doi.org/10.1103/PhysRevE.66.016128}{Spread of epidemic disease on networks}, 2002
+    \item Keeling \& Eames. \href{https://doi.org/10.1098/rsif.2005.0051}{Networks and epidemic models}, 2005
+    \item Meyers et al. \href{https://doi.org/10.1016/j.jtbi.2004.07.026}{Network theory and SARS: predicting outbreak diversity}, 2005
+    \item Meyers, Newman \& Pourbohloul. \href{https://doi.org/10.1016/j.jtbi.2005.10.004}{Predicting epidemics on directed contact networks}, 2006
+    \item Bansal et al. \href{https://doi.org/10.1080/17513758.2010.503376}{The dynamic nature of contact networks in infectious disease epidemiology}, 2010
+  \end{itemize}
+\end{frame}
+
+% Typical network model
+\begin{frame}{Typical network model}
+  Typically, we consider a graph (or digraph) in which:
+  \begin{itemize}
+    \item each node is an individual
+    \item the existence of an arc from $i$ to $j$ indicates that $i$ is in contact with $j$ and can transmit the infection
+    \item in the undirected case, the existence of an arc from $i$ to $j$ implies the same arc from $j$ to $i$ and establishes that the two individuals are connected
+    \item the connection is not permanent, but rather describes the possibility of a connection: $i$ and $j$ come into contact regularly
+  \end{itemize}
+\end{frame}
+
+% Adjacency matrix
+\begin{frame}{Adjacency matrix}
+  We often use the \textbf{adjacency matrix} $A=[a_{ij}]$, where $a_{ij}=1$ if node $i$ has a link to node $j$ and $a_{ij}=0$ otherwise.
+  
+  Sometimes we write $A(\mathcal{D})$ to indicate that $A$ is the adjacency matrix of digraph $\mathcal{D}$, and conversely, $\mathcal{D}(A)$ to indicate that the graph is built using the adjacency matrix.
+  
+  If the graph is undirected, then $A$ is symmetric.
+\end{frame}
+
+% Nature of the network
+\begin{frame}{Nature of the network}
+  \begin{itemize}
+    \item Sometimes we have precise data on links between individuals (surveys, etc.)
+    \item Often we idealize networks, choosing networks with given properties
+  \end{itemize}
+\end{frame}
+
+% Degree distribution and transmissibility
+\begin{frame}{Degree distribution of the (di)graph}
+  The \textbf{transmissibility} $T$ of a disease in a graph is the average probability that an infectious individual transmits the disease to a susceptible individual with whom they are in contact.
+  
+  In an uncorrelated network,
+  $$
+  T_c = \frac{\langle k\rangle}{\langle k^2\rangle-\langle k\rangle}
+  $$
+  where $\langle k\rangle$ and $\langle k^2\rangle$ are the mean degree and the mean squared degree.
+  
+  It is necessary that $T>T_c$ for an outbreak to become a major epidemic.
+\end{frame}
+
+% EpiModel library
+\begin{frame}{The EpiModel library}
+  Jenness SM, Goodreau SM and Morris M. \href{https://doi.org/10.18637%2Fjss.v084.i08}{EpiModel: An R Package for Mathematical Modeling of Infectious Disease over Networks}. Journal of Statistical Software. 2018; 84(8): 1-47
+\end{frame}
+
+% EpiModel
+\begin{frame}{EpiModel}
+  \begin{itemize}
+    \item R package providing tools to simulate and analyze network-based epidemiological models
+    \item Provides two types of approaches:
+      \begin{itemize}
+        \item Simulation of compartmental ODE models (not very interesting)
+        \item Simulation of network models
+      \end{itemize}
+    \item Their \href{https://www.epimodel.org}{website} contains some useful tutorials
+    \item Part of the meta-package \href{http://statnet.org/}{statnet}
+  \end{itemize}
+\end{frame}
+
 
 <<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
 # From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
