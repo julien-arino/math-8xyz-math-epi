@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+
 ## Math 8xyz - Mathematical epidemiology
 
 This GitHub repo contains material (slides and code) for a graduate course on Mathematical epidemiology.
