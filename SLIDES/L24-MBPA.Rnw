@@ -1,0 +1,294 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Set lecture number for later use
+<<set-lecture-number,echo=FALSE>>=
+lecture_number = "24"
+@
+
+% Part common to all the lectures
+\subtitle{MATH 8xyz -- Lecture \Sexpr{lecture_number}}
+\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\date{Winter 20XX}
+
+% Title of the lecture
+\title{Multi-type branching process approximation to CTMC}
+
+<<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
+# Source the code common to all lectures
+source("common-code.R")
+@
+
+<<set-slide-background,echo=FALSE,results='asis'>>=
+# Are we plotting for a dark background? Setting is in common-code.R, but
+# cat command must run here.
+cat(input_setup)
+@
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE AND OUTLINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_uckjmbuckjmbuckj.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_sq8p8jsq8p8jsq8p.jpeg}
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+\section{Branching process approximations of CTMC}
+% The section page
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
+
+\begin{frame}
+    \frametitle{What is a Branching Process?}
+    \begin{block}{The Core Idea}
+        A branching process is a mathematical model for a population where individuals produce a random number of offspring and then die.
+    \end{block}
+    
+    \begin{itemize}
+        \item Think of bacteria splitting, a virus spreading, or even the survival of family surnames.
+        \item We start with an initial population, $Z_0$.
+        \item Each individual in generation $n$ produces a number of offspring for generation $n+1$.
+        \item This "number of offspring" is a random variable. All individuals produce offspring according to the same probability distribution, independently of each other.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Galton-Watson Process}
+    
+    Let $Z_n$ be the size of the population in generation $n$. We typically start with $Z_0 = 1$.
+    
+    The population evolves according to the rule:
+    $$ Z_{n+1} = \sum_{i=1}^{Z_n} X_{n,i} $$
+    
+    \begin{itemize}
+        \item The term $X_{n,i}$ represents the number of offspring produced by the $i$-th individual in generation $n$.
+        \item The variables $\{X_{n,i}\}$ are assumed to be \textbf{independent and identically distributed (i.i.d.)} integer-valued random variables.
+        \item We call their common distribution $\{p_k\}_{k=0}^\infty$ the \textbf{offspring distribution}, where $p_k = P(X = k)$.
+    \end{itemize}
+    
+    \begin{alertblock}{The Fundamental Questions}
+    \begin{enumerate}
+        \item What is the long-term expected size of the population?
+        \item What is the probability that the population eventually dies out?
+    \end{enumerate}
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Mean Offspring}
+
+    The fate of the population hinges on a single parameter: the mean of the offspring distribution
+
+    $$ \mu = E[X] = \sum_{k=0}^{\infty} k \cdot p_k $$
+
+    \begin{block}{Expected Population Size}
+        Using the law of total expectation, we find the expected size of the next generation:
+        $$ E[Z_{n+1} | Z_n] = E\left[\sum_{i=1}^{Z_n} X_{n,i} \bigg| Z_n\right] = Z_n E[X] = Z_n \mu $$
+
+        Taking the expectation again, we get a simple recurrence:
+        $$ E[Z_{n+1}] = \mu E[Z_n] $$
+
+        This implies:
+        $$ E[Z_n] = Z_0 \mu^n $$
+    \end{block}
+\end{frame}
+
+% --- SLIDE 5: The Three Regimes of Population Growth ---
+\begin{frame}
+    \frametitle{The Three Regimes of Population Growth}
+
+    The behavior of $E[Z_n] = Z_0 \mu^n$ suggests three distinct cases:
+
+    \begin{columns}[T]
+        \begin{column}{0.33\textwidth}
+            \begin{block}{Subcritical ($\mu < 1$)}
+                $E[Z_n] \to 0$. The population is expected to shrink. It goes extinct with probability 1.
+            \end{block}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \begin{block}{Critical ($\mu = 1$)}
+                $E[Z_n] = Z_0$. The population is expected to remain stable. Surprisingly, it still goes extinct with probability 1.
+            \end{block}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \begin{block}{Supercritical ($\mu > 1$)}
+                $E[Z_n] \to \infty$. The population is expected to grow exponentially. It has a non-zero probability of surviving forever.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% --- SLIDE 6: Calculating the Extinction Probability ---
+\begin{frame}
+    \frametitle{Tool: The Probability Generating Function}
+
+    To find the extinction probability, we need a powerful tool: the \textbf{probability generating function (PGF)} of the offspring distribution $X$.
+
+    $$ G(s) = E[s^X] = \sum_{k=0}^{\infty} p_k s^k \quad \text{for } |s| \le 1 $$
+
+    \begin{block}{Key Properties}
+    \begin{itemize}
+        \item $G(1) = \sum p_k = 1$
+        \item The mean can be found from the derivative: $G'(1) = \sum k p_k = \mu$.
+        \item The PGF of $Z_n$ is the $n$-th iterate of $G(s)$ with itself. If $G_n(s)$ is the PGF of $Z_n$, then $G_{n+1}(s) = G(G_n(s))$.
+    \end{itemize}
+    \end{block}
+
+\end{frame}
+
+% --- SLIDE 7: The Extinction Probability Equation ---
+\begin{frame}
+    \frametitle{The Extinction Probability Equation}
+    Let $\pi_0$ be the probability of eventual extinction, starting with $Z_0=1$.
+    $$ \pi_0 = P(\text{population dies out}) = \lim_{n \to \infty} P(Z_n = 0) $$
+
+    Since $P(Z_n=0) = G_n(0)$, and $G_{n+1}(0) = G(G_n(0))$, in the limit the extinction probability $\pi_0$ must satisfy the equation:
+
+    \begin{center}
+        \Huge
+        $ \pi_0 = G(\pi_0) $
+    \end{center}
+
+
+
+    \begin{theorem}
+    The extinction probability $\pi_0$ is the \textbf{smallest non-negative solution} to the equation $s = G(s)$.
+    \end{theorem}
+
+    \begin{itemize}
+        \item If $\mu \le 1$, the only solution in $[0,1]$ is $s=1$. So $\pi_0=1$.
+        \item If $\mu > 1$, there is a unique solution in $[0,1)$, which is the extinction probability $\pi_0 < 1$.
+    \end{itemize}
+\end{frame}
+
+% --- SLIDE 8: From Discrete to Continuous Time ---
+\begin{frame}
+    \frametitle{From Discrete to Continuous Time}
+
+    \begin{block}{Limitation of Galton-Watson}
+        Generations don't happen in synchronized steps in the real world. Individuals give birth and die at random times.
+    \end{block}
+
+    This leads us to \textbf{Continuous-Time Markov Chains (CTMCs)}.
+
+    \begin{itemize}
+        \item The state of the system is the population size, $k \in \{0, 1, 2, \dots\}$.
+        \item Instead of generations, we have transition rates:
+            \begin{itemize}
+                \item $\lambda_k$: rate of birth when population is size $k$ (moves to $k+1$).
+                \item $\delta_k$: rate of death when population is size $k$ (moves to $k-1$).
+            \end{itemize}
+        \item Often, we assume these rates are linear: $\lambda_k = k\lambda$ and $\delta_k = k\delta$. This means individuals act independently.
+    \end{itemize}
+\end{frame}
+
+% --- SLIDE 9: Branching Process Approximation of a CTMC ---
+\begin{frame}
+    \frametitle{Branching Process Approximation of a CTMC}
+
+    \begin{alertblock}{The Key Insight}
+    At the beginning of an outbreak (or for a very large population), the dynamics caused by a single individual are largely independent of others.
+    \end{alertblock}
+
+    This allows us to approximate the start of a CTMC population process with a branching process.
+
+    \textbf{Example: A Simple Epidemic (SIR Model)}
+    \begin{itemize}
+        \item $S$: Susceptible, $I$: Infected, $R$: Recovered.
+        \item An infected person meets others at a certain rate. If they meet a susceptible, a new infection may occur (an "offspring").
+        \item The infected person recovers (or dies) at another rate, ending their infectious period.
+        \item \textbf{Question:} How many new infections does a single infected person cause on average?
+    \end{itemize}
+\end{frame}
+
+% --- SLIDE 10: Case Study: The Basic Reproduction Number $\mathcal{R}_0$ ---
+\begin{frame}
+    \frametitle{Case Study: The Basic Reproduction Number $\mathcal{R}_0$}
+
+    Consider a single infected individual in a large population of susceptibles.
+    \begin{itemize}
+        \item Let $\beta$ be the infection rate (rate of producing "offspring").
+        \item Let $\gamma$ be the recovery rate (rate of "dying").
+    \end{itemize}
+
+    The individual's infectious lifetime is an exponential random variable with mean $1/\gamma$.
+
+
+
+    The average number of secondary infections they cause is:
+    $$ \mathcal{R}_0 = (\text{rate of infection}) \times (\text{average infectious period}) = \beta \times \frac{1}{\gamma} = \frac{\beta}{\gamma} $$
+
+    \begin{block}{The Connection}
+    $\mathcal{R}_0$ is precisely the \textbf{mean offspring number} $\mu$ for the embedded branching process that approximates the start of the epidemic.
+    \end{block}
+\end{frame}
+
+% --- SLIDE 11: Applying Branching Theory to Epidemics ---
+\begin{frame}
+    \frametitle{Applying Branching Theory to Epidemics}
+
+    The fate of the epidemic's initial phase is determined by $\mathcal{R}_0$:
+
+    \begin{itemize}
+        \item If $\mathcal{R}_0 \le 1$ ($\mu \le 1$): The number of infected individuals is a subcritical or critical process. The epidemic will die out with probability 1.
+
+        \item If $\mathcal{R}_0 > 1$ ($\mu > 1$): The process is supercritical. There is a positive probability that the epidemic takes off and causes a major outbreak.
+    \end{itemize}
+
+
+
+    We can even calculate the probability of a major outbreak! It is $1 - \pi_0$, where $\pi_0$ is the extinction probability.
+
+    For this simple birth-death infection process, the PGF is $G(s) = \frac{\gamma}{\beta+\gamma} + \frac{\beta}{\beta+\gamma}s$. Solving $s=G(s)$ gives the extinction probability:
+
+    $$ \pi_0 = \frac{\gamma}{\beta} = \frac{1}{\mathcal{R}_0} $$
+
+    The probability of a major outbreak is $1 - 1/\mathcal{R}_0$.
+\end{frame}
+
+% --- SLIDE 12: Summary ---
+\begin{frame}
+    \frametitle{Summary}
+
+    \begin{itemize}
+        \item \textbf{Branching Processes} model populations with i.i.d. offspring generation.
+
+        \item The fate of the population is determined by the \textbf{mean offspring number} $\mu$. Extinction is certain if $\mu \le 1$.
+
+        \item The \textbf{extinction probability} $\pi_0$ can be calculated as the smallest non-negative fixed point of the probability generating function $G(s)$.
+
+        \item The initial stages of many large-scale \textbf{Continuous-Time Markov Chains} can be approximated by a branching process.
+
+        \item This allows us to apply the theory to real-world problems, like calculating an epidemic's \textbf{basic reproduction number $\mathcal{R}_0$} and its probability of causing a major outbreak.
+    \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
+rmd_chunks_to_r_temp()
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{local-bibliography}
+\end{frame}
+
+
+
+
+\end{document}

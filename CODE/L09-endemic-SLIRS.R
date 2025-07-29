@@ -13,13 +13,6 @@ source("common-code.R")
 cat(input_setup)
 
 
-## ----convert-Rnw-to-R,warning=FALSE,message=FALSE-----------------------------
-# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
-rmd_chunks_to_r_temp <- function(file){
-  callr::r(function(file, temp){
-    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
-    knitr::purl(file, output = out_file, documentation = 1)
-  }, args = list(file))
-}
-rmd_chunks_to_r_temp("L09-endemic-SLIRS.Rnw")
+## ----convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'----
+rmd_chunks_to_r_temp()
 

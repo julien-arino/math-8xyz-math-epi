@@ -75,26 +75,18 @@
 \titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
 \outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
 
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
-\hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
-  \hldef{callr}\hlopt{::}\hlkwd{r}\hldef{(}\hlkwa{function}\hldef{(}\hlkwc{file}\hldef{,} \hlkwc{temp}\hldef{)\{}
-    \hldef{out_file} \hlkwb{=} \hlkwd{sprintf}\hldef{(}\hlsng{"../CODE/%s"}\hldef{,} \hlkwd{gsub}\hldef{(}\hlsng{".Rnw"}\hldef{,} \hlsng{".R"}\hldef{, file))}
-    \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
-  \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
-\hldef{\}}
-\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L07-endemic-SIRS.Rnw"}\hldef{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "../CODE/L07-endemic-SIRS.R"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[allowframebreaks]{Bibliography}
 \bibliographystyle{plain}
 \bibliography{local-bibliography}

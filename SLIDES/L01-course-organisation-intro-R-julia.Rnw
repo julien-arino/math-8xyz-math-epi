@@ -11,7 +11,7 @@ lecture_number = "01"
 \date{Winter 20XX}
 
 % Title of the lecture
-\title{Course organisation and introduction: R and Julia}
+\title{Course organisation and introduction to R and Julia}
 
 <<set-options,echo=FALSE,warning=FALSE,message=FALSE>>=
 # Source the code common to all lectures

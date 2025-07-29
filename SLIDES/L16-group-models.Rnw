@@ -198,12 +198,20 @@ V=\tau_1\int_{S^*}^{S}\frac{\Phi(\xi)-\Phi(S^*)}{\Phi(\xi)}d\xi+\sum_{i=1}^n\tau
 \bbullet The variant importation model simulations will be discussed in the stochastic lectures
 \end{frame}
 
-% % Convert the file to R code. Only include if including R code in the document,
-% % otherwise it will generate a meaningless file with just R and knitr options.
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
 % <<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
 % rmd_chunks_to_r_temp()
 % @
 
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[allowframebreaks]{Bibliography}
 \bibliographystyle{apalike}
 \bibliography{local-bibliography}

@@ -83,13 +83,20 @@ cat(input_setup)
 \includegraphics[width=0.7\textwidth]{FIGS/SIRV_bif_backward}
 \end{frame}
 
-% % Convert the file to R code. Only include if including R code in the document,
-% % otherwise it will generate a meaningless file with just R and knitr options.
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
 % <<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
 % rmd_chunks_to_r_temp()
 % @
 
-
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[allowframebreaks]{Bibliography}
 \bibliographystyle{plain}
 \bibliography{local-bibliography}

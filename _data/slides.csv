@@ -1,5 +1,5 @@
 lecture_number,pdf_filename,title,subtitle,full_title,rnw_filename,basename
-01,L01-course-organisation-intro-R-julia.pdf,Course organisation and introduction: R and Julia,MATH 8xyz -- Lecture lecture_number,Course organisation and introduction: R and Julia: MATH 8xyz -- Lecture lecture_number,L01-course-organisation-intro-R-julia.Rnw,L01-course-organisation-intro-R-julia
+01,L01-course-organisation-intro-R-julia.pdf,Course organisation and introduction to R and Julia,MATH 8xyz -- Lecture lecture_number,Course organisation and introduction to R and Julia: MATH 8xyz -- Lecture lecture_number,L01-course-organisation-intro-R-julia.Rnw,L01-course-organisation-intro-R-julia
 02,L02-epidemiology-math-epi.pdf,Epidemiology and mathematical epidemiology,MATH 8xyz -- Lecture lecture_number,Epidemiology and mathematical epidemiology: MATH 8xyz -- Lecture lecture_number,L02-epidemiology-math-epi.Rnw,L02-epidemiology-math-epi
 03,L03-compartmental-models.pdf,Compartmental models,MATH 8xyz -- Lecture lecture_number,Compartmental models: MATH 8xyz -- Lecture lecture_number,L03-compartmental-models.Rnw,L03-compartmental-models
 04,L04-KMK-intro.pdf,The Kermack-McKendrick model,MATH 8xyz -- Lecture lecture_number,The Kermack-McKendrick model: MATH 8xyz -- Lecture lecture_number,L04-KMK-intro.Rnw,L04-KMK-intro
@@ -22,6 +22,7 @@ lecture_number,pdf_filename,title,subtitle,full_title,rnw_filename,basename
 21,L21-advanced-time-of-sojourn.pdf,Advanced time of sojourn models,MATH 8xyz -- Lecture lecture_number,Advanced time of sojourn models: MATH 8xyz -- Lecture lecture_number,L21-advanced-time-of-sojourn.Rnw,L21-advanced-time-of-sojourn
 22,L22-discrete-time.pdf,Models using a deterministic discrete time formulation,MATH 8xyz -- Lecture lecture_number,Models using a deterministic discrete time formulation: MATH 8xyz -- Lecture lecture_number,L22-discrete-time.Rnw,L22-discrete-time
 23,L23-CTMC-models.pdf,Models using continuous-time Markov chains,MATH 8xyz -- Lecture lecture_number,Models using continuous-time Markov chains: MATH 8xyz -- Lecture lecture_number,L23-CTMC-models.Rnw,L23-CTMC-models
-24,L24-SDE-models.pdf,Models using stochastic differential equations,MATH 8xyz -- Lecture lecture_number,Models using stochastic differential equations: MATH 8xyz -- Lecture lecture_number,L24-SDE-models.Rnw,L24-SDE-models
-25,L25-network-models.pdf,Network models,MATH 8xyz -- Lecture lecture_number,Network models: MATH 8xyz -- Lecture lecture_number,L25-network-models.Rnw,L25-network-models
+24,L24-MBPA.pdf,Multi-type branching process approximation to CTMC,MATH 8xyz -- Lecture lecture_number,Multi-type branching process approximation to CTMC: MATH 8xyz -- Lecture lecture_number,L24-MBPA.Rnw,L24-MBPA
+25,L25-SDE-models.pdf,Models using stochastic differential equations,MATH 8xyz -- Lecture lecture_number,Models using stochastic differential equations: MATH 8xyz -- Lecture lecture_number,L25-SDE-models.Rnw,L25-SDE-models
 26,L26-ABM-models.pdf,Agent-based models,MATH 8xyz -- Lecture lecture_number,Agent-based models: MATH 8xyz -- Lecture lecture_number,L26-ABM-models.Rnw,L26-ABM-models
+27,L27-network-models.pdf,Network models,MATH 8xyz -- Lecture lecture_number,Network models: MATH 8xyz -- Lecture lecture_number,L27-network-models.Rnw,L27-network-models

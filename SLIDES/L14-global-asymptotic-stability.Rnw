@@ -2388,22 +2388,16 @@ Global stability follows from results on asymptotically autonomous systems.
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
-To finish, we use the command \code{purl} to generate an \code{R} file (\code{course-01-introduction-math-epi.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
-\vfill
-<<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
-# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
-rmd_chunks_to_r_temp <- function(file){
-  callr::r(function(file, temp){
-    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
-    knitr::purl(file, output = out_file, documentation = 1)
-  }, args = list(file))
-}
-rmd_chunks_to_r_temp("L07-endemic-SIRS.Rnw")
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE,echo=FALSE,results='hide'>>=
+rmd_chunks_to_r_temp()
 @
-\end{frame}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[allowframebreaks]{Bibliography}
 \bibliographystyle{plain}
 \bibliography{local-bibliography}

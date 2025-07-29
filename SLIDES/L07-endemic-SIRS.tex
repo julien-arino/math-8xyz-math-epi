@@ -1807,29 +1807,14 @@ Model here used for instance to model Giardia transmission from possums to human
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]\frametitle{\textsc{Can I have this wrapped up to go?}}
-To finish, we use the command \code{purl} to generate an \code{R} file (\code{course-01-introduction-math-epi.R}) in the CODE directory with all the code chunks in this \code{Rnw} file
-\vfill
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
-\hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
-  \hldef{callr}\hlopt{::}\hlkwd{r}\hldef{(}\hlkwa{function}\hldef{(}\hlkwc{file}\hldef{,} \hlkwc{temp}\hldef{)\{}
-    \hldef{out_file} \hlkwb{=} \hlkwd{sprintf}\hldef{(}\hlsng{"../CODE/%s"}\hldef{,} \hlkwd{gsub}\hldef{(}\hlsng{".Rnw"}\hldef{,} \hlsng{".R"}\hldef{, file))}
-    \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
-  \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
-\hldef{\}}
-\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"L07-endemic-SIRS.Rnw"}\hldef{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "../CODE/L07-endemic-SIRS.R"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-\end{frame}
+% Convert the file to R code. Only include if including R code in the document,
+% otherwise it will generate a meaningless file with just R and knitr options.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[allowframebreaks]{Bibliography}
 \bibliographystyle{plain}
 \bibliography{local-bibliography}
