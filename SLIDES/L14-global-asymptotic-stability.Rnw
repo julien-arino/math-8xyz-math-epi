@@ -1860,6 +1860,530 @@ Model here used for instance to model Giardia transmission from possums to human
 \bbullet A few models for vector-borne or water-borne diseases
 \end{frame}
 
+
+% Global properties of the SLIRS model
+\begin{frame}{Global properties of the SLIRS model}
+\end{frame}
+
+% SLIRS - Mukherjee, Chattopadhyay & Tapaswi
+\begin{frame}{SLIRS - Mukherjee, Chattopadhyay & Tapaswi}
+SLIRS (SEIRS) with constant birth $d$, per capita death $d$ and incidence function
+$$
+f(S,I,N)=\beta S^q I^p
+$$
+They establish uniform boundedness, then define
+$$
+V(S,E,I)=\frac 12\left(
+(S-S^\star )^2+(E-E^\star )^2+(I-I^\star )^2\right)
+$$
+\smallskip
+\href{https://doi.org/10.1016/0895-7177(93)90009-N}{Mukherjee, Chattopadhyay & Tapaswi, Math. Comput. Modelling 18 (1993)}
+\end{frame}
+
+% Matrix A and theorem
+\begin{frame}{Matrix A and theorem}
+Defining
+$$
+A=\left(
+\begin{array}{ccc}
+\beta I^{*p}g(S)+d+\nu & \frac 12 (\nu-\beta I^{*p}g(S)) & \frac 12
+(\beta S^q h(I)+\nu) \\
+\frac 12(\nu-\beta I^{*p}g(S)) & \varepsilon+d & -\frac 12 (\beta S^q
+h(I)+\varepsilon) \\
+\frac 12 (\beta S^q h(I)+\nu) & -\frac 12(\beta S^qh(I)+\varepsilon) &
+\gamma+d
+\end{array}
+\right)
+$$
+with functions $g$ and $h$ such that
+$$
+S^q-S^{*q}=(S-S^\star )g(S),\quad I^p-I^{*p}=(I-I^\star )h(I)
+$$
+\medskip
+\textbf{Theorem:} The function $V$ is such that $V'<0$ if
+\begin{itemize}
+  \item $4(\beta I^{*p}g(S)+d+\nu)(\varepsilon+d)>(\nu-\beta I^{*p}g(S))^2$
+  \item $\det A>0$
+\end{itemize}
+Clearly, hard to check in practice, so the system is studied in other ways.
+\end{frame}
+
+% Li & Muldowney (1995)
+\begin{frame}{Li & Muldowney (1995)}
+\href{https://doi.org/10.1016/0025-5564(95)92756-5}{Li & Muldowney (1995)}
+$$
+\begin{align}
+S' &= d-\beta S^qI^p-dS \\
+L' &= \beta S^qI^p -(\varepsilon+d)L \\
+I' &= \varepsilon L-(\gamma+d)I \\
+R' &= \gamma I-dR
+\end{align}
+$$
+\end{frame}
+
+% Li, Muldowney & PvdD - CAMQ (1999)
+\begin{frame}{Li, Muldowney & PvdD - CAMQ (1999)}
+SLIRS (SEIRS) with incidence
+$$
+f(S,I,N)=\beta g(I)S
+$$
+where $g$ such that $g(0)=0$, $g(I)>0$ for $I\in(0,1]$ and $g\in C^1(0,1]$.
+Normalize total population to $S+E+I+R=1$. Additional assumption on $g$:
+\begin{itemize}
+  \item[(H)] $c=\lim_{I\to 0^+} \frac{g(I)}{I}\leq +\infty$; when $0<c<+\infty$, $g(I)\leq cI$ for small $I$
+\end{itemize}
+\end{frame}
+
+% R0 formula
+\begin{frame}{Basic reproduction number}
+We have
+$$
+\frac{\partial\overline{f}}{\partial I}=\beta\frac{\partial\overline{g}}{\partial I}
+$$
+Since $\dfrac{\partial\overline{g}}{\partial I}=\lim_{I\to 0^+} \dfrac{g(I)}{I}=c$,
+$$
+\mathcal{R}_0=\frac{c\beta\varepsilon}{(d+\varepsilon)(d+\gamma)}
+$$
+\end{frame}
+
+% Uniform persistence theorem
+\begin{frame}{Uniform persistence theorem}
+\textbf{Theorem:} If $g(I)$ satisfies (H), then the system with incidence $f(S,I,N)=\beta S^q I^p$ is uniformly persistent $\iff \mathcal{R}_0>1$.
+
+The system is \textbf{uniformly persistent} if there exists $0<\epsilon_0<1$ such that any solution $(S(t),E(t),I(t),R(t))$ of SEIRS with initial conditions $(S(0),E(0),I(0),R(0))\in \overset{\circ}{\Gamma}$ satisfies
+$$
+\begin{array}{c}
+\liminf_{t\to\infty} S(t)\geq \epsilon_0,\quad 
+\liminf_{t\to\infty} E(t)\geq \epsilon_0 \\
+\liminf_{t\to\infty} I(t)\geq \epsilon_0,\quad 
+\liminf_{t\to\infty} R(t)\geq \epsilon_0
+\end{array}
+$$
+\end{frame}
+
+% No closed orbits theorem
+\begin{frame}{No closed orbits theorem}
+\textbf{Theorem:} Suppose the incidence $f(S,I,N)=\beta S^q I^p$ satisfies (H) and
+$$
+|g'(I)|I\leq g(I) \text{ for }I\in(0,1]
+$$
+Suppose additionally that $\mathcal{R}_0>1$ and one of the conditions
+$$
+\begin{gather*}
+\gamma\nu<\epsilon_0(\beta\eta_0+\gamma+d)(\beta\eta_0+\nu+d) \\
+\varepsilon-\gamma-d<\nu
+\end{gather*}
+$$
+is satisfied, where
+$$
+\eta_0=\min_{I\in[\epsilon_0,1]}g(I)>0
+$$
+and $\epsilon_0$ is as previously defined. Then there is no rectifiable closed curve invariant under the SEIRS flow. Moreover, every semi-trajectory in $\Gamma$ converges to an equilibrium.
+
+The proof uses compound matrices (see later).
+\end{frame}
+
+% Lyapunov function for SLIR and SLIS
+\begin{frame}{Lyapunov function for SLIR and SLIS}
+Andrei Korobeinikov considers an SLIR with normalized constant population 1 and vertical transmission:
+$$
+\begin{align}
+S' &= d-\beta SI -pdI-qdL-dS \\
+L' &= \beta SI +pdI-(\varepsilon+d-qd)L \\
+I' &= \varepsilon L-(\gamma+d)I
+\end{align}
+$$
+\begin{itemize}
+  \item $p$ proportion of newborns from $I$ who are $I$ at birth
+  \item $q$ proportion of newborns from $L$ who are $L$ at birth
+  \item $R$ does not influence the system dynamics, so is not shown
+\end{itemize}
+\end{frame}
+
+% Equilibria
+\begin{frame}{Equilibria}
+- DFE: $E_0=(1,0,0)$
+- EE: $E^\star =(S^\star,L^\star,I^\star)$ with
+$$
+S^\star =\frac 1{\mathcal{R}_0^v}\quad L^\star =\frac{d}{\varepsilon+d}\left(1-\frac 1{\mathcal{R}_0^v}\right) \\
+I^\star =\frac{d\varepsilon}{(\varepsilon+d)(\gamma+d)}\left(1-\frac 1{\mathcal{R}_0^v}\right)
+$$
+where
+$$
+\mathcal{R}_0^v=\frac{\beta\varepsilon}{(\gamma+d)(\varepsilon+d)-qd(\varepsilon+d)-pd\varepsilon}
+$$
+is the basic reproduction number with vertical transmission. We have $\mathcal{R}_0=\mathcal{R}_0^v$ iff $p=q=0$. Also, $\mathcal{R}_0^v=1$ when $\mathcal{R}_0=1$.
+
+$E^\star$ is biologically valid only when $\mathcal{R}_0^v>1$.
+\end{frame}
+
+% Lyapunov function
+\begin{frame}{Lyapunov function}
+We use the function
+$$
+V=\sum a_i(x_i-x_i^\star  \ln x_i)
+$$
+\textbf{Theorem:}
+\begin{itemize}
+  \item If $\mathcal{R}_0>1$, then \eqref{sys:SEIR_vert_transmission_dS}-\eqref{sys:SEIR_vert_transmission_dI} has the GAS equilibrium $E^\star$
+  \item If $\mathcal{R}_0\leq 1$, then \eqref{sys:SEIR_vert_transmission_dS}-\eqref{sys:SEIR_vert_transmission_dI} has the DFE $E_0$ GAS and $E^\star$ is not biologically valid
+\end{itemize}
+\end{frame}
+
+% Compound matrices
+\begin{frame}{Compound matrices}
+\end{frame}
+
+% Compound matrix method
+\begin{frame}{The compound matrix method}
+- Extension of Dulac's criterion to higher-dimensional systems
+- Useful to rule out periodic orbits
+- Was very popular for a while, but main limitation:
+  - Becomes difficult to use when system dimension $\geq 4$
+\end{frame}
+
+% Fiedler reference
+\begin{frame}{Fiedler reference}
+See Fiedler \href{https://books.google.ca/books?id=SwzDAgAAQBAJ}{Special Matrices and Their Applications in Numerical Mathematics} (2013) for details.
+Let $A=(a_{ij})$, $i=1,\ldots,m$, $j=1,\ldots,n$ an $m\times n$ matrix and $k$ an integer, $1\leq k\leq\min(m,n)$.
+Let $M=\{1,\ldots,m\}$ and $N=\{1,\ldots,n\}$, $M^{(k)}$ and $N^{(k)}$ the sets of $k$-tuples of elements of $M$ and $N$ ordered lexicographically, respectively.
+\end{frame}
+
+% k-th compound matrix
+\begin{frame}{k-th compound matrix}
+The $k$-th compound matrix $A^{(k)}$ of $A$ is the $C(m,k)\times C(n,k)$ matrix, with rows indexed by elements of $M^{(k)}$ and columns by elements of $N^{(k)}$, such that the element $A^{(k)}(I,J)$, $I\in M^{(k)}$, $J\in N^{(k)}$ is the determinant $\det A(I,J)$.
+$A(I,J)$ is the submatrix of $A$ consisting of rows in $I$ and columns in $J$.
+Another interpretation of $A^{(k)}$ is as the $k$-th exterior product of $A$.
+\end{frame}
+
+% Additive compound matrix
+\begin{frame}{Additive compound matrix}
+Suppose $A$ is an $n\times n$ matrix. The matrix $(I+tA)^{(k)}$ is a $C(n,k)\times C(n,k)$ matrix whose elements are polynomials in $t$ of degree at most $k$.
+Grouping monomials of the same degree in $t$:
+$$
+(I+tA)^{(k)}=A^{(k,0)}+tA^{(k,1)}+\cdots+t^kA^{(k,k)}
+$$
+where the matrices $A^{(k,s)}$ do not depend on $t$.
+The matrix $A^{(k,1)}$ is the $k$-th \textbf{additive compound matrix} of $A$ and is denoted $A^{[k]}$. It satisfies
+$$
+A^{[k]}=\lim_{h\to 0}
+\left(\frac 1h\left((I+hA)^{(k)}-I^{(k)}\right)\right)
+$$
+This can also be written as
+$$
+A^{[k]}=D_+(I+hA)^{(k)}|_{h=0}
+$$
+where $D_+$ is the right derivative.
+\end{frame}
+
+% Theorem for additive compound matrix
+\begin{frame}{Theorem for additive compound matrix}
+\textbf{Theorem:} Suppose $A=(a_{pq})$. Then, for $I,J\in N^{(k)}$
+$$
+A^{[k]}(I,J)=\left\{
+\begin{array}{ll}
+\sum_{p\in I}a_{pp} & \text{if } J=I \\
+0 & \text{if }|I\cap J|\leq k-2 \\
+(-1)^\sigma a_{pq} & \text{if } |I\cap J|=k-1
+\end{array}
+\right.
+$$
+where $p$ is the element of $I\setminus(I\cap J)$, $q$ is the element of  $J\setminus(I\cap J)$ and $\sigma$ is the number of elements of $I\cap J$ between $p$ and $q$.
+\end{frame}
+
+% k=2 case
+\begin{frame}{Case k=2}
+When $k=2$:
+\textbf{Theorem:} Suppose $A=(a_{ij})$. For all $i=1,\ldots,C(n,2)$, let $(i)=(i_1,i_2)$ be the $i$-th element of the lexicographic order of pairs $(i_1,i_2)$ of integers with $1\leq i_1<i_2\leq n$.
+Then the element $(i,j)$ of $A^{[2]}$ is
+$$
+a_{ij}=\left\{
+\begin{array}{ll}
+a_{i_1i_1}+a_{i_2i_2} & \text{if } (j)=(i) \\
+(-1)^{r+s}a_{i_rj_s} & \text{if exactly one element  } i_r\text{ of }(i)\text{ does not appear in }(j)\text{ and }j_s \text{ does not appear in }(i) \\
+0 & \text{if no element of }(i)\text{ appears in }(j) 
+\end{array}
+\right.
+$$
+where $p$ is the element in $I\setminus(I\cap J)$, $q$ is the element in $J\setminus(I\cap J)$ and $\sigma$ is the number of elements of $I\cap J$ between $p$ and $q$.
+\end{frame}
+
+% Example
+\begin{frame}{Example}
+Let
+$$
+A_2=\left(
+\begin{matrix}
+a_{11} & a_{12} \\
+a_{21} & a_{22} 
+\end{matrix}
+\right),\quad
+A_3=\left(
+\begin{matrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{matrix}
+\right)
+$$
+$$
+A_4=\left(
+\begin{matrix}
+a_{11} & a_{12} & a_{13} & a_{14} \\
+a_{21} & a_{22} & a_{23} & a_{24} \\
+a_{31} & a_{32} & a_{33} & a_{34} \\
+a_{41} & a_{42} & a_{43} & a_{44}
+\end{matrix}
+\right)
+$$
+\end{frame}
+
+% Example continued
+\begin{frame}{Example continued}
+Then
+$$
+A_2^{[2]}=a_{11}+a_{22},\quad
+A_3^{[2]}=\left(
+\begin{matrix}
+a_{11}+a_{22} & a_{23} & -a_{13} \\
+a_{32} & a_{11}+a_{33} & a_{12} \\
+-a_{31} & a_{21} & a_{22}+a_{33}
+\end{matrix}
+\right)
+$$
+\end{frame}
+
+% Example continued 2
+\begin{frame}{Example continued 2}
+$$
+A_4^{[2]}=\left(
+\begin{matrix}
+a_{11}+a_{22} & a_{23} & a_{24} & -a_{13} & -a_{14} & 0 \\
+a_{32} & a_{11}+a_{33} & a_{34} & a_{12} & 0 & -a_{14} \\
+a_{42} & a_{43} & a_{11}+a_{44} & 0 & a_{12} & a_{13} \\
+-a_{31} & a_{21} & 0 & a_{22}+a_{33} & a_{34} & -a_{24} \\
+-a_{41} & 0 & a_{21} & a_{43} & a_{22}+a_{44} & a_{23} \\
+0 & -a_{41} & a_{31} & -a_{42} & a_{32} & a_{33}+a_{44}
+\end{matrix}
+\right)
+$$
+$$
+A_3^{[3]}=a_{11}+a_{22}+a_{33}
+$$
+$$
+A_4^{[3]}=\left(
+\right)
+$$
+\end{frame}
+
+% Theorem for compound matrices
+\begin{frame}{Theorem for compound matrices}
+\textbf{Theorem:} Let $A,B$ be two $n\times n$ matrices. Then
+\begin{itemize}
+  \item The number of nonzero off-diagonal elements of $A^{[k]}$ is $C(n-2,k-1)$ times the number of nonzero off-diagonal elements of $A$
+  \item $A^{[1]}=A$, $A^{[n]}=\mathsf{tr} A$
+  \item $(A+B)^{[k]}=A^{[k]}+B^{[k]}$ (hence the name additive)
+  \item Let $S$ be a nonsingular $n\times n$ matrix. Then
+$$
+(SAS)^{[k]}=S^{{k}}A^{[k]}(S^{-1})^{(k)}
+$$
+\end{itemize}
+\end{frame}
+
+% Theorem for eigenvalues
+\begin{frame}{Theorem for eigenvalues}
+\textbf{Theorem:} Let $A$ be a real $m\times m$ matrix. For $A$ to have all eigenvalues with strictly negative real parts, it is necessary and sufficient that
+\begin{itemize}
+  \item the second additive compound matrix $A^{[2]}$ has all eigenvalues with strictly negative real parts
+  \item $(-1)^m\det(A)>0$
+\end{itemize}
+\end{frame}
+
+% Role in stability
+\begin{frame}{Role in stability}
+Consider the differential equation
+$$
+x'=f(x)
+$$
+\textbf{Theorem:} A sufficient condition for a periodic orbit $\gamma=\{p(t):0\leq t\leq\omega\}$ of $x'=f(x)$ to be asymptotically orbitally stable with asymptotic phase is that the linear system
+$$
+z'(t)=\left(\frac{\partial f^{[2]}}{\partial x}(p(t))\right)z(t)
+$$
+is asymptotically stable.
+
+Li & Muldowney (1995)
+\end{frame}
+
+% Global stability in metapopulations
+\begin{frame}{Global stability in metapopulations}
+\end{frame}
+
+% Remarks on global stability in metapopulations
+\begin{frame}{Remarks on global stability in metapopulations}
+- Unlike local analysis, there is no algorithm to systematically address this problem
+- It is handled case by case. Two examples in the rest of this lecture
+- Some elements of systematic global theory: work by Zhisheng Shuai and collaborators, mainly
+- The question, as often: is global stability really important? It depends on the context of the work...
+\end{frame}
+
+% |P|-SLIRS model
+\begin{frame}{|P|-SLIRS model}
+Consider a particular case of the $|\mathcal{P}|$-SLIRS system with constant birth
+$$
+\begin{align}
+S_{p}' &=b_p+\nu_pR_p-\Phi_p-d_pS_p
++\textstyle{\sum_{q\in\mathcal{P}}} m_{Spq}S_{q} \\
+L_{p}' &=\Phi_p-\left( \varepsilon_{p}+d_{p}\right)L_{p}
++\textstyle{\sum_{q\in\mathcal{P}}} m_{Lpq}L_{q} \\
+I_{p}' &=\varepsilon_pL_p-(\gamma_p+d_p)I_p
++\textstyle{\sum_{q\in\mathcal{P}}} m_{Ipq}I_{q} \\
+R_{p}' &=\gamma _{p}I_{p}-\left(\nu_{p}+d_{p}\right)R_{p}
++\textstyle{\sum_{q\in\mathcal{P}}} m_{Rpq}R_{q}
+\end{align}
+$$
+and standard incidence
+$$
+\Phi_p=\beta_p\frac{S_pI_p}{N_p}
+$$
+\smallskip
+\href{https://server.math.umanitoba.ca/~jarino/publications/ArinoVdD-2006-FIC48.pdf}{Arino & van den Driessche, Fields Inst. Commun. 48:1-13 (2006)}
+\end{frame}
+
+% Global stability theorem for |P|-SLIRS
+\begin{frame}{Global stability theorem for |P|-SLIRS}
+\textbf{Theorem:} Compute $\mathcal{R}_0$ as explained earlier. If $\mathcal{R}_0<1,$ then the DFE of the $|\mathcal{P}|$-SLIRS system is globally asymptotically stable.
+\end{frame}
+
+% Proof for |P|-SLIRS
+\begin{frame}{Proof for |P|-SLIRS}
+Since $S_{p}\leq N_{p}$ for all $t$, it follows that $\Phi_p\leq\beta_pN_pI_p/N_p=\beta_pI_p,$ and equation for $L_p$ gives the inequality
+$$
+L_p' \leq \beta_pI_p-(\varepsilon_p+d_p)L_p+\sum_{q\in\mathcal{P}}m_{Lpq}L_{q}
+$$
+To use a comparison theorem, define a linear system consisting of the equations for $L_p$ and $I_p$:
+$$
+\begin{align}
+L_p' &= \beta_pI_p-(\varepsilon_p+d_p)L_p+\sum_{q\in\mathcal{P}}m_{Lpq}L_q \\
+I_p' &= \varepsilon_pL_p-(\gamma_p+d_p+\delta_p)I_p+\sum_{q\in\mathcal{P}}m_{Ipq}I_q
+\end{align}
+$$
+\end{frame}
+
+% Proof continued
+\begin{frame}{Proof continued}
+- The linear system above has matrix $F-V$ as its coefficient matrix, so (by arguments in the proof of the $\mathcal{R}_0$ result of van den Driessche & Watmough) satisfies $\lim\limits_{t\rightarrow \infty }L_{p}=0$ and $\lim\limits_{t\rightarrow \infty }I_{p}=0$ for $\mathcal{R}_{0}=\rho (FV^{-1})<1$ 
+- Using a comparison theorem, these limits also hold for the nonlinear subsystem
+- It follows by the same reasoning as before that $\lim\limits_{t\rightarrow \infty }R_{p}=0$ and $\lim\limits_{t\rightarrow \infty }S_{p}=N_{p}^\star$
+
+Thus, when $\mathcal{R}_{0}<1,$ the DFE is GAS, the disease dies out.
+\end{frame}
+
+% |S||P|-SLIRS (multi-species)
+\begin{frame}{|S||P|-SLIRS (multi-species)}
+Consider the system with total constant population, equal movement for all states and irreducible
+$$
+\begin{align}
+S_{sp}' &= d_{sp}N_{sp}+\nu_{sp}R_{sp}-\Phi_{sp}-d_{sp}S_{sp}
++\textstyle{\sum_{q\in\mathcal{P}}} m_{spq}S_{sq} \\
+L_{sp}' &= \Phi_{sp}-(\varepsilon_{sp}+d_{sp})L_{sp}
++\textstyle{\sum_{q\in\mathcal{P}}}m_{spq}L_{sq} \\
+I_{sp}' &= \varepsilon_{sp}L_{sp}-(\gamma_{sp}+d_{sp})I_{sp}
++\textstyle{\sum_{q\in\mathcal{P}}} m_{spq}I_{sq} \\
+R_{sp} &= \gamma _{sp}I_{sp}-(\nu_{sp}+d_{sp})R_{sp}
++\textstyle{\sum_{q\in\mathcal{P}}} m_{spq}R_{sq}
+\end{align}
+$$
+and standard incidence
+$$
+\Phi_{sp}=\sum_{k\in\mathcal{S}}\beta_{skp}\frac{S_{sp}I_{kp}}{N_p}
+$$
+\smallskip
+\href{https://server.math.umanitoba.ca/~jarino/papers/ArinoDavisHartleyJordanMillerVdD-2005-MMB22.pdf}{Arino et al., Math. Med. Biol. 22(2):129-142 (2005)}
+\end{frame}
+
+% Global stability theorem for |S||P|-SLIRS
+\begin{frame}{Global stability theorem for |S||P|-SLIRS}
+\textbf{Theorem:} For the $|\mathcal{S}||\mathcal{P}|$-SLIRS model, define $\mathcal{R}_0$ as above. If $\mathcal{R}_0<1$, then the DFE is GAS.
+\end{frame}
+
+% Proof for |S||P|-SLIRS
+\begin{frame}{Proof for |S||P|-SLIRS}
+To establish GAS of the DFE when $\mathcal{R}_0<1$, consider the non-autonomous system consisting of the equations for $L_{sp}$, $I_{sp}$, $R_{sp}$, where $L_{sp}$ is written as
+$$
+L_{sp}' = \sum_{j\in\mathcal{S}}\beta_{sjp}(N_{sp}-L_{sp}-I_{sp}-R_{sp})\frac{I_{jp}}{N_{jp}} -(d_{sp}+\varepsilon_{sp})L_{sp} +\sum_{q\in\mathcal{P}} m_{spq}L_{sq} -\sum_{q\in\mathcal{P}} m_{sqp}L_{sp}
+$$
+where $S_{sp}$ is replaced by $N_{sp}-L_{sp}-I_{sp}-R_{sp}$, and $N_{sp}$ solves
+$$
+\frac{d}{dt}N_{sp}=\sum_{q\in\mathcal{P}}m_{spq}N_{sq}
+$$
+\end{frame}
+
+% Proof continued
+\begin{frame}{Proof continued}
+By similar reasoning as for the DFE, we have
+$$
+\lim_{t\to\infty}N_{sp}(t)=N_{sp}^\star>0
+$$
+Write the non-autonomous system as
+$$
+x' = f(t,x)
+$$
+where $x$ is the $3|\mathcal{S}||\mathcal{P}|$-dimensional vector of $L_{sp}$, $I_{sp}$, $R_{sp}$.
+The DFE corresponds to $x=0$.
+$N_{sp}(t)\to N_{sp}^\star$ as $t\to\infty$.
+\end{frame}
+
+% Proof continued 2
+\begin{frame}{Proof continued 2}
+Substitute the limit $N_{sp}^\star$ for $N_{sp}$ in the equation for $L_{sp}$:
+$$
+L_{sp}' = \sum_{j\in\mathcal{S}}\beta_{sjp}(N_{sp}^\star-L_{sp}-I_{sp}-R_{sp})\frac{I_{jp}}{N_{jp}^\star} -(d_{sp}+\varepsilon_{sp})L_{sp}+\sum_{q\in\mathcal{P}} m_{spq}L_{sq}
+$$
+The non-autonomous system is \textit{asymptotically autonomous}, with limiting system
+$$
+x' = g(x)
+$$
+\end{frame}
+
+% Proof continued 3
+\begin{frame}{Proof continued 3}
+To show that 0 is GAS for the limiting system, consider the linear system
+$$
+x'=\mathcal{L}x
+$$
+where $x$ is the $3|\mathcal{S}||\mathcal{P}|$-dimensional vector of $L_{sp}$, $I_{sp}$, $R_{sp}$. In $\mathcal{L}$, replace $S_{sp}/N_{jp}$ by $N_{sp}^\star/N_{jp}^\star$. The equations for $I_{sp}$ and $R_{sp}$ are not affected, while the equation for $L_{sp}$ becomes
+$$
+L_{sp}' = \sum_{j\in\mathcal{S}}\beta_{sjp}\frac{N_{sp}^*}{N_{jp}^*}I_{jp}-(d_{sp}+\varepsilon_{sp})L_{sp}+\sum_{q\in\mathcal{P}} m_{spq}L_{sq}
+$$
+Comparing the nonlinear and linear systems, $g(x)\leq\mathcal{L}x$ for all $x \in \mathbb{R}_+^{3|\mathcal{S}||\mathcal{P}|}$.
+\end{frame}
+
+% Proof continued 4
+\begin{frame}{Proof continued 4}
+In the linear system, the equations for $L_{sp}$ and $I_{sp}$ do not involve $R_{sp}$. Let $\tilde x$ be the part of $x$ corresponding to $E_{sp}$ and $I_{sp}$, and $\tilde{\mathcal{L}}$ the corresponding submatrix.
+The method used for the DFE can be applied to prove stability of $\tilde x=0$ for the subsystem $\tilde x'=\tilde{\mathcal{L}}\tilde x$, with $\tilde{\mathcal{L}}=F-V$.
+If $\mathcal{R}_0<1$, then $\tilde x=0$ is a stable equilibrium of the subsystem. When $\tilde x=0$, the equation for $R_s$ becomes
+$$
+R_s' = (\mathcal{M}_s-D_s)R_s
+$$
+with $R_s=(R_{s1},\ldots,R_{s|\mathcal{P}|})^T,$ $D_s=\mathsf{diag}(d_{s1},\ldots,d_{s|\mathcal{P}|})$.
+\end{frame}
+
+% Proof continued 5
+\begin{frame}{Proof continued 5}
+From previous results, $-\mathcal{M}_s$ is a singular M-matrix and $-\mathcal{M}_s+D_s$ is a nonsingular M-matrix for all $D_s$.
+Thus, the equilibrium $R_s=0$ of this linear system is stable.
+Therefore, the equilibrium $x=0$ of the linear system is stable when $\mathcal{R}_0<1$.
+Using a standard comparison theorem, it follows that 0 is a GAS equilibrium of the limiting system.
+\end{frame}
+
+% Final conclusion
+\begin{frame}{Final conclusion}
+When $\mathcal{R}_0<1$, the linear system has a unique equilibrium (the DFE) since its coefficient matrix $F-V$ is nonsingular.
+Global stability follows from results on asymptotically autonomous systems.
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
