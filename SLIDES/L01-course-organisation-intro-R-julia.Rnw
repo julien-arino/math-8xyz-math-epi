@@ -100,6 +100,8 @@ Slides are written in \LaTeX\ and Beamer and rendered using pdf\LaTeX\ (for the 
 See the SLIDES folder on GitHub for instructions on how to compile
 \vfill
 As much as possible, I have indicated provenance (by linking the file on the original website); when not possible, the file is saved with the name of the source indicated, or the source \code{tex} or \code{md} files include the link commented
+\vfill
+Transition slide images are Gemini generated images. AI also helped with some of the code. The rest is me
 \end{frame} 
 
 \begin{frame}{Videos}
