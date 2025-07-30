@@ -84,6 +84,9 @@ if (plot_blackBG) {
 ###
 ### KNITR OPTIONS
 ###
+if (!exists("lecture_number")) {
+  lecture_number = "01"
+}
 
 opts_chunk$set(echo = TRUE, 
                warning = FALSE, 
