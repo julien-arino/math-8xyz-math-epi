@@ -611,12 +611,12 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \begin{frame}[fragile]{Last one did not go well}
     \begin{itemize}
         \item Wanted 1000 time units (days?)
-        \item Interrupted at 114.1159893 because of the test
+        \item Interrupted at 157.7971676 because of the test
         \newline (Slide with $b<d$: sim stopped because the population went extinct, I did not stop it!)
         \item At stop time
         \begin{itemize}
-            \item $N =$ 1031
-            \item $|N| =$ 1858 (and $|t|$ as well, of course!)
+            \item $N =$ 2028
+            \item $|N| =$ 3679 (and $|t|$ as well, of course!)
             \item time was moving slowly
         \end{itemize}
     \end{itemize}
@@ -628,8 +628,8 @@ if (t[length(t)]-t[(length(t)-1)] < 1e-8) {
 \hlkwd{tail}\hldef{(}\hlkwd{diff}\hldef{(results}\hlopt{$}\hldef{t))}
 \end{alltt}
 \begin{verbatim}
-## [1] 1.497551e-02 1.349073e-02 5.506925e-02 9.530629e-02 4.257897e-02
-## [6] 1.981556e-06
+## [1] 8.747757e-03 4.124682e-03 2.019042e-02 1.232319e-02 1.951702e-03
+## [6] 2.313543e-07
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

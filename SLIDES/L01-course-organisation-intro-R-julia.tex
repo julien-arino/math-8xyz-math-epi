@@ -267,44 +267,6 @@ As a modeller, you will be called on to provide guidance to public health author
 
 \maxFrameImage{FIGS/dedication-Fred-Brauer-169}
 
-\begin{frame}{Reading recommendations}
-    \begin{itemize}
-    \item Waltman. \href{https://doi.org/10.1007/978-3-642-80820-3}{Deterministic threshold models in the theory of epidemics} (1974)
-    \nocite{waltman2013deterministic}
-		\vfill
-    \item Capasso. \href{https://doi.org/10.1007/978-3-540-70514-7}{Mathematical structures of epidemic systems} (1993)
-    \nocite{capasso1993mathematical}
-		\vfill
-    \item Daley \& Gani. Epidemic modelling: An introduction (1999)
-    \nocite{daley1999epidemic}
-		\vfill
-    \item Hethcote. \href{https://doi.org/10.1137/S0036144500371907}{The mathematics of infectious diseases}. SIAM Review (2000)
-    \nocite{Hethcote2000}
-		\vfill
-    \item Brauer, PvdD \& Wu. \href{https://doi.org/10.1007/978-3-540-78911-6}{Mathematical Epidemiology} (2008)
-    \nocite{brauer2008mathematical}
-		\vfill
-    \item Brauer \& C$^3$. \href{https://doi.org/10.1007/978-1-4614-1686-9}{Mathematical Models in Population Biology and Epidemiology} (2012)
-    \nocite{brauer2012mathematical}
-		\vfill
-    \item Brauer, C$^3$ \& Feng. \href{https://doi.org/10.1007/978-1-4939-9828-9}{Mathematical Models in Epidemiology} (2019)
-    \nocite{brauer2019mathematical}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Word of warning!}
-	The references on the previous slide are \boldred{my} favourite references
-	\vfill
-	This extends to the entire content of this course: the topics I treat and the way I treat them originate in \boldred{my} personal itinerary through math epi and as a consequence
-	\begin{itemize}
-		\item Some stuff might be understood (and therefore explained) differently by someone else
-		\item I focus on some topics that I think are cool and omit others that I like less
-		\item This doesn't mean these topics are less worthy of consideration
-	\end{itemize}
-	\vfill
-	$\implies$ Don't trust me blindly and ``shop around'': other colleagues have courses that are also really worth your time
-\end{frame}
-
 \begin{frame}{Some common abbreviations}
 - EP: equilibrium point
 \vfill
@@ -315,6 +277,17 @@ As a modeller, you will be called on to provide guidance to public health author
 - LAS: locally asymptotically stable / local asymptotic stability
 \vfill
 - GAS: globally asymptotically stable / global asymptotic stability
+\end{frame}
+
+\begin{frame}{Lastly, a word of warning!}
+The topics I treat and the way I treat them originate in \boldred{my} personal itinerary through math epi and as a consequence
+	\begin{itemize}
+		\item Some stuff might be understood (and therefore explained) differently by someone else
+		\item I focus on some topics that I think are cool and omit others that I like less
+		\item This doesn't mean these topics are less worthy of consideration
+	\end{itemize}
+	\vfill
+	$\implies$ Don't trust me blindly and ``shop around'': other colleagues have courses that are also really worth your time
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -585,16 +558,16 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hldef{A}
 \end{alltt}
 \begin{verbatim}
-##    column_1 colour
-## 1 0.8926476    red
-## 2 0.8138336  green
-## 3 0.8560301    red
-## 4 0.2407296    red
-## 5 0.2420592  green
-## 6 0.8568059  green
-## 7 0.5958458  green
-## 8 0.3686444  green
-## 9 0.7785220  green
+##     column_1 colour
+## 1 0.32742374    red
+## 2 0.04061841    red
+## 3 0.09625672  green
+## 4 0.51889458    red
+## 5 0.64922023  green
+## 6 0.40416018    red
+## 7 0.55137896  green
+## 8 0.20026756    red
+## 9 0.10771359  green
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -607,13 +580,13 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hlkwd{summary}\hldef{(A)}
 \end{alltt}
 \begin{verbatim}
-##     column_1         colour         
-##  Min.   :0.2407   Length:9          
-##  1st Qu.:0.3686   Class :character  
-##  Median :0.7785   Mode  :character  
-##  Mean   :0.6272                     
-##  3rd Qu.:0.8560                     
-##  Max.   :0.8926
+##     column_1          colour         
+##  Min.   :0.04062   Length:9          
+##  1st Qu.:0.10771   Class :character  
+##  Median :0.32742   Mode  :character  
+##  Mean   :0.32177                     
+##  3rd Qu.:0.51889                     
+##  Max.   :0.64922
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -784,13 +757,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.7058228
+## [1] 0.2476149
 ## 
 ## [[2]]
-## [1] 0.4502139 0.7454907
+## [1] 0.5523801 0.9195916
 ## 
 ## [[3]]
-## [1] 0.3714351 0.4960220 0.3938558
+## [1] 0.8327557 0.4311161 0.2220789
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -804,13 +777,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.7058228
+## [1] 0.2476149
 ## 
 ## [[2]]
-## [1] 0.5978523
+## [1] 0.7359859
 ## 
 ## [[3]]
-## [1] 0.4204376
+## [1] 0.4953169
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -824,7 +797,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.7058228 0.5978523 0.4204376
+## [1] 0.2476149 0.7359859 0.4953169
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -835,7 +808,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.7058228 0.5978523 0.4204376
+## [1] 0.2476149 0.7359859 0.4953169
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -958,9 +931,7 @@ Recent movement (5-10 years): governments (local or higher) create portals where
     \hlkwc{labels} \hldef{=} \hlkwd{label_number}\hldef{(}\hlkwc{scale} \hldef{=} \hlnum{1e-6}\hldef{,} \hlkwc{suffix} \hldef{=} \hlsng{"M"}\hldef{))} \hlopt{+}
   \hlkwd{theme_minimal}\hldef{()}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in label\_number(scale = 1e-06, suffix = "{}M"{}): could not find function "{}label\_number"{}}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 \end{frame}
 
@@ -1089,9 +1060,9 @@ You can even implement your own integration method
     \end{column}
   \end{columns}
   \vfill
-  \begin{alertblock}{The Solution: Julia}
-    Julia provides the speed of C/C++ with a syntax as friendly as Python's. Write readable code that is also fast
-  \end{alertblock}
+  \begin{exampleblock}{Julia}
+    Julia aims to provide the speed of C/C++ with a syntax as friendly as Python's. Write readable code that is also fast
+  \end{exampleblock}
 \end{frame}
 
 \begin{frame}
@@ -1216,7 +1187,7 @@ The `return` keyword is optional for the last expression
     \item This allows for writing generic code that is automatically specialized and fast. It's a natural way to express many mathematical and scientific problems
   \end{itemize}
   \vfill
-  \begin{exampleblock}{Core Idea}
+  \begin{exampleblock}{Core idea}
   Instead of \code{data.process()}, you write \code{process(data)}. You can then create a new \code{process} method for a new data type without touching the original code
   \end{exampleblock}
 \end{frame}
@@ -1242,19 +1213,17 @@ combine(3, "Ha")      # Returns "HaHaHa"\end{lstlisting}
 \end{frame}
 
 \begin{frame}
-  \frametitle{A growing scientific ecosystem}
-  Rich ecosystem of packages for various domains
-  \vfill
+  \frametitle{A growing scientific ecosystem for various domains}
   \begin{itemize}
-    \item \textbf{DataFrames.jl}: For working with tabular data (like data frames in \code{R})
+    \item \code{DataFrames.jl}: for working with tabular data (like data frames in \code{R})
     \vfill
-    \item \textbf{Plots.jl}: A powerful and flexible plotting library
+    \item \code{Plots.jl}: powerful and flexible plotting library
     \vfill
-    \item \textbf{Flux.jl} \& \textbf{Lux.jl}: For machine learning and deep learning
+    \item \code{Flux.jl} \& \code{Lux.jl}: machine learning and deep learning
     \vfill
-    \item \textbf{JuMP.jl}: For mathematical optimization and modeling
+    \item \code{JuMP.jl}: mathematical optimization and modeling
     \vfill
-    \item \textbf{DifferentialEquations.jl}: State-of-the-art suite for solving differential equations
+    \item \code{DifferentialEquations.jl}: state-of-the-art suite for solving differential equations
   \end{itemize}
 \end{frame}
 
@@ -1300,7 +1269,7 @@ Executes the code block and prints the execution time, memory allocation and GC 
 \begin{frame}
   \frametitle{Solving differential equations}
   \begin{itemize}
-    \item Use the \textbf{DifferentialEquations.jl} suite
+    \item Use the \code{DifferentialEquations.jl} suite
     \vfill
     \item Feature-rich ecosystem that is often faster than traditional Fortran/C++ solvers
     \vfill
@@ -1347,20 +1316,15 @@ plot(sol, label="N(t)", lw=2)\end{lstlisting}
 \bbullet For example, we can ensure a population model never becomes negative
 \vfill
 \begin{lstlisting}
-# A condition: trigger when state is negative
-condition(u, t, integrator) = u < 0.0
+# Built-in positive domain callback
+positive_domain = PositiveDomain()
+callback = CallbackSet(positive_domain)
 
-# An affect function: what to do when triggered
-function affect!(integrator)
-  integrator.u = 0.0 # Reset state to zero
-end
-
-# Create the callback
-cb = DiscreteCallback(condition, affect!)
-
-# Solve the problem with the callback
-sol = solve(prob, callback = cb)
-plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
+# Run the simulation with the nonnegativity constraint
+sol = solve(prob, Tsit5(), callback=callback, 
+            reltol=1e-10, abstol=1e-10, saveat=0.5)
+plot(sol, label="N(t) with positivity", lw=2)
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}
@@ -1378,10 +1342,92 @@ plot(sol, label="N(t) with callback", lw=2)\end{lstlisting}
   \end{itemize}
 \end{frame}
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
+\section{Connecting R and julia}
+% The section page
+\newSectionSlide{FIGS-slides-admin/other-Gemini_Generated_Image_flhkemflhkemflhk.png}
+
+
+\begin{frame}{Calling julia from R}
+For example because you want to use a solver that handles nonnegativity natively
+\vfill
+Uses the library \code{JuliaCall}, which will automatically handle installing the necessary Julia packages on its first run
+\vfill
+Not necessarily the easiest, so I won't be detailing this yet
+\end{frame}
+
+
+\begin{frame}[fragile]{Calling R from julia}
+E.g., you have all your data manipulation code in \code{R} and just want to run some stuff
+\vfill
+\begin{lstlisting}
+# Prerequisites:
+# 1. R is installed on your system and it's in your PATH.
+# 2. Install the necessary Julia packages by running:
+#    using Pkg
+#    Pkg.add("RCall")
+#    Pkg.add("Plots")
+#    Pkg.add("DataFrames")
+
+# Import the required Julia libraries
+using RCall
+using Plots
+using DataFrames
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+# Use the R"""...""" string macro to execute R code directly.
+# Here, we create a simple data frame in the R session.
+R"""
+# Create two vectors for our data
+x_vals <- 1:10
+y_vals <- x_vals^2 + rnorm(10) # y = x^2 + some random noise
+
+# Combine them into a data frame
+my_r_df <- data.frame(X_Values = x_vals, Y_Values = y_vals)
+
+# You can even print the head of the R data frame from here
+print(head(my_r_df))
+"""
+
+# Use the @rget macro to copy the R object into a Julia variable.
+# RCall.jl automatically converts the R data.frame to a Julia DataFrame.
+@rget my_r_df\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+# Check the type of the imported object in Julia
+println("The R object 'my_r_df' was imported into Julia as type: ", typeof(my_r_df))
+
+# Create a scatter plot using the Plots.jl library.
+scatter(my_r_df.X_Values, my_r_df.Y_Values,
+        title="Data from R plotted in Julia",
+        xlabel="X Values",
+        ylabel="Y Values",
+        legend=false,
+        markersize=5,
+        markercolor=:blue)
+
+# To see the plot, Julia will typically open a plot window.
+# If running in a script, you might need to use gui() to display it
+# or save it to a file.
+savefig("julia_r_plot.png")
+\end{lstlisting}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Final remarks}
 \begin{frame}\frametitle{Can I have this wrapped up to go?}
 For each slide set including \code{R} code, we generate an \code{R} file in the \code{CODE} directory with all the code chunks in this \code{Rnw} file and no \LaTeX
 \vfill
@@ -1405,13 +1451,13 @@ Some small changes are required; for instance, when sourcing (instead of knittin
 
 
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[allowframebreaks]{Bibliography}
-\bibliographystyle{apalike}
-\bibliography{local-bibliography}
-\end{frame}
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%
+% \begin{frame}[allowframebreaks]{Bibliography}
+% \bibliographystyle{apalike}
+% \bibliography{local-bibliography}
+% \end{frame}
 
 \end{document}

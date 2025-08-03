@@ -441,12 +441,38 @@ Measles cases in the USA
 \bbullet Klaus Dietz also worked a lot on malaria
 \end{frame}
     
-    
+  
 \begin{frame}{Some activity later, but not much until 1990s}
 \bbullet In recent years, explosion
 \vfill
 \bbullet Since the beginning of COVID-19: just nuts..
 \end{frame}
+
+\begin{frame}{Reading recommendations}
+    \begin{itemize}
+    \item Waltman. \href{https://doi.org/10.1007/978-3-642-80820-3}{Deterministic threshold models in the theory of epidemics} (1974)
+    \nocite{waltman2013deterministic}
+		\vfill
+    \item Capasso. \href{https://doi.org/10.1007/978-3-540-70514-7}{Mathematical structures of epidemic systems} (1993)
+    \nocite{capasso1993mathematical}
+		\vfill
+    \item Daley \& Gani. Epidemic modelling: An introduction (1999)
+    \nocite{daley1999epidemic}
+		\vfill
+    \item Hethcote. \href{https://doi.org/10.1137/S0036144500371907}{The mathematics of infectious diseases}. SIAM Review (2000)
+    \nocite{Hethcote2000}
+		\vfill
+    \item Brauer, PvdD \& Wu. \href{https://doi.org/10.1007/978-3-540-78911-6}{Mathematical Epidemiology} (2008)
+    \nocite{brauer2008mathematical}
+		\vfill
+    \item Brauer \& C$^3$. \href{https://doi.org/10.1007/978-1-4614-1686-9}{Mathematical Models in Population Biology and Epidemiology} (2012)
+    \nocite{brauer2012mathematical}
+		\vfill
+    \item Brauer, C$^3$ \& Feng. \href{https://doi.org/10.1007/978-1-4939-9828-9}{Mathematical Models in Epidemiology} (2019)
+    \nocite{brauer2019mathematical}
+    \end{itemize}
+\end{frame}
+
 
 \begin{frame}{Some landmarks in mathematical epidemiology (IMBO)}
 \bbullet Macdonald. The epidemiology and control of malaria. 1957
