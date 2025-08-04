@@ -82,25 +82,46 @@ compile_rnw() {
         return 1
     fi
     
-    # Step 3: Clean up temporary files
-    print_status "Cleaning up temporary files..."
-    
-    # List of temporary file extensions to remove
-    temp_extensions=("aux" "bbl" "blg" "log" "nav" "out" "snm" "toc" "vrb" "fls" "fdb_latexmk" "synctex.gz" "figlist" "makefile" "concordance.tex")
-    
-    for ext in "${temp_extensions[@]}"; do
-        if [ -f "$basename.$ext" ]; then
-            rm "$basename.$ext"
-            print_status "Removed $basename.$ext"
-        fi
-    done
-        
     print_status "Successfully compiled $basename.Rnw -> $basename.pdf"
     
     # Return to original directory
     cd - > /dev/null
     
     return 0
+}
+
+# Function to clean up temporary files after all compilation is done
+cleanup_temp_files() {
+    print_status "Cleaning up temporary files from all compilations..."
+    
+    # List of temporary file extensions to remove
+    temp_extensions=("aux" "bbl" "blg" "log" "nav" "out" "snm" "toc" "vrb" "fls" "fdb_latexmk" "synctex.gz" "figlist" "makefile" "concordance.tex")
+    
+    # Clean up in SLIDES directory
+    if [ -d "../SLIDES" ]; then
+        cd "../SLIDES" || return 1
+        
+        removed_count=0
+        for ext in "${temp_extensions[@]}"; do
+            files_to_remove=$(find . -name "L??-*.$ext" -type f 2>/dev/null)
+            if [ -n "$files_to_remove" ]; then
+                echo "$files_to_remove" | while read -r file; do
+                    if [ -f "$file" ]; then
+                        rm "$file"
+                        removed_count=$((removed_count + 1))
+                    fi
+                done
+            fi
+        done
+        
+        if [ $removed_count -gt 0 ]; then
+            print_status "Removed $removed_count temporary files"
+        else
+            print_status "No temporary files to remove"
+        fi
+        
+        cd - > /dev/null
+    fi
 }
 
 # Main script logic

@@ -558,16 +558,16 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hldef{A}
 \end{alltt}
 \begin{verbatim}
-##    column_1 colour
-## 1 0.3778929    red
-## 2 0.9480250  green
-## 3 0.3294807  green
-## 4 0.9845760  green
-## 5 0.5528227  green
-## 6 0.8898816  green
-## 7 0.3826196  green
-## 8 0.7471185    red
-## 9 0.1555085    red
+##     column_1 colour
+## 1 0.94389109  green
+## 2 0.29326116    red
+## 3 0.38711047  green
+## 4 0.47149861  green
+## 5 0.06947123  green
+## 6 0.18621078    red
+## 7 0.55437792  green
+## 8 0.43060543    red
+## 9 0.89636984    red
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -580,13 +580,13 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hlkwd{summary}\hldef{(A)}
 \end{alltt}
 \begin{verbatim}
-##     column_1         colour         
-##  Min.   :0.1555   Length:9          
-##  1st Qu.:0.3779   Class :character  
-##  Median :0.5528   Mode  :character  
-##  Mean   :0.5964                     
-##  3rd Qu.:0.8899                     
-##  Max.   :0.9846
+##     column_1          colour         
+##  Min.   :0.06947   Length:9          
+##  1st Qu.:0.29326   Class :character  
+##  Median :0.43061   Mode  :character  
+##  Mean   :0.47031                     
+##  3rd Qu.:0.55438                     
+##  Max.   :0.94389
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -757,13 +757,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.2462544
+## [1] 0.1854576
 ## 
 ## [[2]]
-## [1] 0.3231861 0.4120251
+## [1] 0.2351782 0.1250389
 ## 
 ## [[3]]
-## [1] 0.2863295 0.2123512 0.0281544
+## [1] 0.8473290 0.2500401 0.1148901
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -777,13 +777,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.2462544
+## [1] 0.1854576
 ## 
 ## [[2]]
-## [1] 0.3676056
+## [1] 0.1801086
 ## 
 ## [[3]]
-## [1] 0.1756117
+## [1] 0.4040864
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -797,7 +797,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.2462544 0.3676056 0.1756117
+## [1] 0.1854576 0.1801086 0.4040864
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -808,7 +808,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.2462544 0.3676056 0.1756117
+## [1] 0.1854576 0.1801086 0.4040864
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -923,7 +923,10 @@ Recent movement (5-10 years): governments (local or higher) create portals where
 \begin{alltt}
 \hldef{pop_data_CTRY} \hlkwb{<-} \hlkwd{wb_data}\hldef{(}\hlkwc{country} \hldef{=} \hlsng{"CAN"}\hldef{,} \hlkwc{indicator} \hldef{=} \hlsng{"SP.POP.TOTL"}\hldef{,}
                          \hlkwc{mrv} \hldef{=} \hlnum{100}\hldef{,} \hlkwc{return_wide} \hldef{=} \hlnum{FALSE}\hldef{)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in curl::curl\_fetch\_memory(url, handle = handle): Timeout was reached [api.worldbank.org]:\\\#\# Operation timed out after 20002 milliseconds with 0 bytes received}}\begin{alltt}
 \hlkwd{ggplot}\hldef{(pop_data_CTRY,} \hlkwd{aes}\hldef{(}\hlkwc{x} \hldef{= date,} \hlkwc{y} \hldef{= value))} \hlopt{+}
   \hlkwd{geom_line}\hldef{()} \hlopt{+}
   \hlkwd{labs}\hldef{(}\hlkwc{title} \hldef{=} \hlsng{"Population of Canada"}\hldef{,} \hlkwc{x} \hldef{=} \hlsng{"Year"}\hldef{,} \hlkwc{y} \hldef{=} \hlsng{"Population"}\hldef{)} \hlopt{+}
@@ -931,7 +934,9 @@ Recent movement (5-10 years): governments (local or higher) create portals where
     \hlkwc{labels} \hldef{=} \hlkwd{label_number}\hldef{(}\hlkwc{scale} \hldef{=} \hlnum{1e-6}\hldef{,} \hlkwc{suffix} \hldef{=} \hlsng{"M"}\hldef{))} \hlopt{+}
   \hlkwd{theme_minimal}\hldef{()}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'pop\_data\_CTRY' not found}}\end{kframe}
 \end{knitrout}
 \end{frame}
 
