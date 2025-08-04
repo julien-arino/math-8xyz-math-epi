@@ -194,6 +194,9 @@ main() {
         done
     fi
 
+    # Clean up temporary files after all compilations are done
+    cleanup_temp_files
+
     # Return to original directory
     cd "$original_dir"
 
