@@ -25,6 +25,10 @@
 
 \usepackage{longtable}
 
+% For heavier titles
+\usepackage{helvet} % Enables Helvetica font family
+
+
 % Fields and the like
 \def\IC{\mathbb{C}}
 \def\IE{\mathbb{E}}
@@ -515,6 +519,45 @@ minimum height=2em]
 \end{frame}
 }
 % The title page with figure
+% \newcommand{\titlepagewithfigure}[1]{%
+%   \begin{frame}[noframenumbering,plain]
+%     \begin{tikzpicture}[remember picture,overlay]
+%       \node[above right,inner sep=0pt,opacity=0.1] at (current page.south west)
+%       {
+%           \includegraphics[height=\paperheight,width=\paperwidth]{#1}
+%       };
+%       \node[anchor=north east,
+%       inner sep=5pt,
+%       opacity=0.9] at (current page.north east)
+%       {
+%           \includegraphics[width=0.2\textwidth]{FIGS-slides-admin/UM-logo-horizontal-CMYK.png}
+%       };
+%       \node[anchor=south, 
+%       align=justify, 
+%       text=black, 
+%       text width=1.1\textwidth,
+%       font=\footnotesize]  (land_acknowledgement)
+%       at (current page.south) 
+%       {The University of Manitoba campuses are located on original lands of Anishinaabeg, Ininew, Anisininew, Dakota and Dene peoples, and on the National Homeland of the Red River Métis.
+%       We respect the Treaties that were made on these territories, we acknowledge the harms and mistakes of the past, and we dedicate ourselves to move forward in partnership with Indigenous communities in a spirit of Reconciliation and collaboration.};  
+%       % \node[align=center, anchor=south,
+%       % above=0.5cm of land_acknowledgement,
+%       % text=black,
+%       % font=\bfseries] {\insertdate};
+%   \end{tikzpicture}
+%   \setbeamercolor{title}{fg=title_page_title_colour}
+%   \setbeamerfont{title}{size=\Large,series=\bfseries}
+%   \setbeamercolor{author}{fg=title_page_author_colour}
+%   \setbeamerfont{author}{size=\large,series=\bfseries}
+%   \setbeamercolor{institute}{fg=title_page_institute_colour}
+%   \setbeamerfont{institute}{size=\large,series=\bfseries}
+%   \setbeamercolor{date}{fg=title_page_date_colour}
+%   \setbeamerfont{date}{series=\bfseries}
+% 	\titlepage
+% \end{frame}
+% \addtocounter{page}{-1}
+% }
+
 \newcommand{\titlepagewithfigure}[1]{%
   \begin{frame}[noframenumbering,plain]
     \begin{tikzpicture}[remember picture,overlay]
@@ -542,19 +585,33 @@ minimum height=2em]
       % font=\bfseries] {\insertdate};
   \end{tikzpicture}
   \setbeamercolor{title}{fg=title_page_title_colour}
-  \setbeamerfont{title}{size=\Large,series=\bfseries}
+  \setbeamerfont{title}{size=\Large,series=\bfseries,family=\usefont{T1}{phv}{b}{n}}
   \setbeamercolor{author}{fg=title_page_author_colour}
-  \setbeamerfont{author}{size=\large,series=\bfseries}
+  \setbeamerfont{author}{size=\large,series=\bfseries,family=\usefont{T1}{phv}{b}{n}}
   \setbeamercolor{institute}{fg=title_page_institute_colour}
-  \setbeamerfont{institute}{size=\large,series=\bfseries}
+  \setbeamerfont{institute}{size=\large,series=\bfseries,family=\usefont{T1}{phv}{b}{n}}
   \setbeamercolor{date}{fg=title_page_date_colour}
-  \setbeamerfont{date}{series=\bfseries}
+  \setbeamerfont{date}{series=\bfseries,family=\usefont{T1}{phv}{b}{n}}
 	\titlepage
 \end{frame}
 \addtocounter{page}{-1}
 }
-
-
+% The outline page, with figure
+% \newcommand{\outlinepage}[1]{%
+% \begin{frame}[noframenumbering,plain]
+%   \begin{tikzpicture}[remember picture,overlay]
+%     \node[above right,inner sep=0pt,opacity=0.2] at (current page.south west)
+%     {
+%         \includegraphics[height=\paperheight,width=\paperwidth]{#1}
+%     };
+%   \end{tikzpicture}
+%   \setbeamercolor{section in toc}{fg=outline_page_list_colour}
+%   \setbeamerfont{section in toc}{size=\Large,series=\bfseries,family=\sffamily}
+%   \frametitle{\textcolor{outline_page_title_colour}{\LARGE\bfseries Outline}}
+%   \tableofcontents[hideallsubsections]
+% \end{frame}
+% \addtocounter{page}{-1}
+% }
 % The outline page, with figure
 \newcommand{\outlinepage}[1]{%
 \begin{frame}[noframenumbering,plain]
@@ -565,13 +622,14 @@ minimum height=2em]
     };
   \end{tikzpicture}
   \setbeamercolor{section in toc}{fg=outline_page_list_colour}
-  \setbeamerfont{section in toc}{size=\Large,series=\bfseries}
-  \frametitle{\textcolor{outline_page_title_colour}{\LARGE\bfseries Outline}}
+  % Use Helvetica Bold only for the outline slide TOC
+  \setbeamerfont{section in toc}{size=\Large,family=\usefont{T1}{phv}{b}{n}}
+  % Use Helvetica Bold for the outline title
+  \frametitle{\textcolor{outline_page_title_colour}{\usefont{T1}{phv}{b}{n}\LARGE Outline}}
   \tableofcontents[hideallsubsections]
 \end{frame}
 \addtocounter{page}{-1}
 }
-
 
 
 %\let\oldsection\section
