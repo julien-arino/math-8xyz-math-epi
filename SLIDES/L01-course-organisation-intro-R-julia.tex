@@ -55,7 +55,10 @@
 
 % Part common to all the lectures
 \subtitle{MATH 8xyz -- Lecture 01}
-\author{\texorpdfstring{Julien Arino\newline Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\author{\texorpdfstring{Julien Arino\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
+\institute{Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS}
+% \author{Julien Arino}
+% \affiliation{Department of Mathematics @ University of Manitoba \newline Maud Menten Institute @ PIMS}
 \date{Winter 20XX}
 
 % Title of the lecture
@@ -74,6 +77,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4qvst54qvst54qvs.png}
+%\tikztitlepage{FIGS-slides-admin/Gemini_Generated_Image_4qvst54qvst54qvs.png}
 \outlinepage{FIGS-slides-admin/Gemini_Generated_Image_d0uu54d0uu54d0uu.png}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -137,11 +141,9 @@ One remark: I sometimes refer to Wikipedia. For the younger students here: this 
     
     
 \begin{frame}{Slides}
-Slides are written in \LaTeX\ and Beamer and rendered using pdf\LaTeX\ (for the pdf slides) or \LaTeX\ and \code{knitr} and rendered \code{R} (typically in \code{RStudio})
+Slides are written in \LaTeX\ and \code{knitr} and rendered \code{R} (typically in \code{RStudio})
 \vfill
 See the SLIDES folder on GitHub for instructions on how to compile
-\vfill
-As much as possible, I have indicated provenance (by linking the file on the original website); when not possible, the file is saved with the name of the source indicated, or the source \code{tex} or \code{md} files include the link commented
 \end{frame} 
 
 \begin{frame}{Videos}
@@ -365,10 +367,6 @@ The topics I treat and the way I treat them originate in \boldred{my} personal i
 % \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_5yvymh5yvymh5yvy.jpeg}
 
 
-\begin{frame}{R is similar to matlab..}
-.. with some differences, of course! Otherwise, where would the fun be? \code{;)}
-\end{frame} 
-
 \begin{frame}[fragile]{Assignment}
 Two ways:
 \begin{knitrout}
@@ -558,16 +556,16 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hldef{A}
 \end{alltt}
 \begin{verbatim}
-##     column_1 colour
-## 1 0.94389109  green
-## 2 0.29326116    red
-## 3 0.38711047  green
-## 4 0.47149861  green
-## 5 0.06947123  green
-## 6 0.18621078    red
-## 7 0.55437792  green
-## 8 0.43060543    red
-## 9 0.89636984    red
+##    column_1 colour
+## 1 0.1516385  green
+## 2 0.7914020    red
+## 3 0.6835775    red
+## 4 0.4153579  green
+## 5 0.1850620    red
+## 6 0.7341087  green
+## 7 0.9250533    red
+## 8 0.8670210    red
+## 9 0.2297644    red
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -580,13 +578,13 @@ Beware of this in particular when addressing sets of indices in lists, vectors o
 \hlkwd{summary}\hldef{(A)}
 \end{alltt}
 \begin{verbatim}
-##     column_1          colour         
-##  Min.   :0.06947   Length:9          
-##  1st Qu.:0.29326   Class :character  
-##  Median :0.43061   Mode  :character  
-##  Mean   :0.47031                     
-##  3rd Qu.:0.55438                     
-##  Max.   :0.94389
+##     column_1         colour         
+##  Min.   :0.1516   Length:9          
+##  1st Qu.:0.2298   Class :character  
+##  Median :0.6836   Mode  :character  
+##  Mean   :0.5537                     
+##  3rd Qu.:0.7914                     
+##  Max.   :0.9251
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -757,13 +755,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.1854576
+## [1] 0.0008227844
 ## 
 ## [[2]]
-## [1] 0.2351782 0.1250389
+## [1] 0.5789695 0.8460168
 ## 
 ## [[3]]
-## [1] 0.8473290 0.2500401 0.1148901
+## [1] 0.4147000 0.7233269 0.6593857
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -777,13 +775,13 @@ There are parallel versions (\code{future\_lapply} \& \code{parLapply}) $\implie
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.1854576
+## [1] 0.0008227844
 ## 
 ## [[2]]
-## [1] 0.1801086
+## [1] 0.7124931
 ## 
 ## [[3]]
-## [1] 0.4040864
+## [1] 0.5991375
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -797,7 +795,7 @@ To make a vector
 \hlkwd{unlist}\hldef{(}\hlkwd{lapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.1854576 0.1801086 0.4040864
+## [1] 0.0008227844 0.7124931440 0.5991375494
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -808,7 +806,7 @@ or
 \hlkwd{sapply}\hldef{(}\hlkwc{X} \hldef{= L,} \hlkwc{FUN} \hldef{= mean)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.1854576 0.1801086 0.4040864
+## [1] 0.0008227844 0.7124931440 0.5991375494
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -923,10 +921,7 @@ Recent movement (5-10 years): governments (local or higher) create portals where
 \begin{alltt}
 \hldef{pop_data_CTRY} \hlkwb{<-} \hlkwd{wb_data}\hldef{(}\hlkwc{country} \hldef{=} \hlsng{"CAN"}\hldef{,} \hlkwc{indicator} \hldef{=} \hlsng{"SP.POP.TOTL"}\hldef{,}
                          \hlkwc{mrv} \hldef{=} \hlnum{100}\hldef{,} \hlkwc{return_wide} \hldef{=} \hlnum{FALSE}\hldef{)}
-\end{alltt}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in curl::curl\_fetch\_memory(url, handle = handle): Timeout was reached [api.worldbank.org]:\\\#\# Operation timed out after 20002 milliseconds with 0 bytes received}}\begin{alltt}
 \hlkwd{ggplot}\hldef{(pop_data_CTRY,} \hlkwd{aes}\hldef{(}\hlkwc{x} \hldef{= date,} \hlkwc{y} \hldef{= value))} \hlopt{+}
   \hlkwd{geom_line}\hldef{()} \hlopt{+}
   \hlkwd{labs}\hldef{(}\hlkwc{title} \hldef{=} \hlsng{"Population of Canada"}\hldef{,} \hlkwc{x} \hldef{=} \hlsng{"Year"}\hldef{,} \hlkwc{y} \hldef{=} \hlsng{"Population"}\hldef{)} \hlopt{+}
@@ -934,9 +929,7 @@ Recent movement (5-10 years): governments (local or higher) create portals where
     \hlkwc{labels} \hldef{=} \hlkwd{label_number}\hldef{(}\hlkwc{scale} \hldef{=} \hlnum{1e-6}\hldef{,} \hlkwc{suffix} \hldef{=} \hlsng{"M"}\hldef{))} \hlopt{+}
   \hlkwd{theme_minimal}\hldef{()}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'pop\_data\_CTRY' not found}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 \end{frame}
 
